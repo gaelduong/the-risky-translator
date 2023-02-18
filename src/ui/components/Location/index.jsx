@@ -1,18 +1,19 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AppContext } from '../../../context'
-import { LOCATIONS } from '../../../data/locations'
+import { getRequiredMoneyForLocation } from '../../../data/items'
 
-const Location = ({ indices, locationId, name, fromMapId, currentMoney }) => {
+const Location = ({ locationId, locatioName, fromMapId }) => {
   const { state } = useContext(AppContext)
 
-  if (LOCATIONS[locationId].requiredMoney > state.money.money) {
-    return <div>{name}</div>
+  if (getRequiredMoneyForLocation(locationId) > state.money) {
+    return <div>{locatioName}</div>
   }
+
   return (
     <div>
-      <Link to="/work" state={{ fromMapId, indices }}>
-        {name}
+      <Link to="/work" state={{ fromMapId, locationId }}>
+        {locatioName}
       </Link>
     </div>
   )

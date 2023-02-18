@@ -9,13 +9,8 @@ const CityMap1 = () => {
   return (
     <div>
       <h1>CityMap1</h1>
-      Money:{state.money.money}
-      <Location
-        indices={{ start: 0, end: 9 }}
-        locationId={0}
-        name={'Restaurant'}
-        fromMapId={1}
-      />
+      Money:{state.money}
+      <Location locationId={0} locatioName={'Restaurant'} fromMapId={1} />
       <Link to="/city1">
         <button>Back</button>
       </Link>
