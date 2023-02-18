@@ -3,6 +3,7 @@ import './App.css'
 import CityMap1 from './ui/screens/CityMap1'
 import CityMap2 from './ui/screens/CityMap2'
 import Work from './ui/screens/Work'
+import './algorithm'
 
 function App() {
   return (
