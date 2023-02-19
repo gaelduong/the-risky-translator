@@ -8,7 +8,7 @@ const Header = () => {
     state.money < 0 ? `-$${state.money * -1}` : `$${state.money}`
 
   return (
-    <div style={{ marginTop: 'env(safe-area-inset-top)' }}>
+    <div style={{ paddingTop: 'env(safe-area-inset-top)' }}>
       Money: {displayMoney}
     </div>
   )
