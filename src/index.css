@@ -1,3 +1,12 @@
+/* Disable scrolling in all mobile devices */
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  position: relative;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
