@@ -1,11 +1,11 @@
 import './App.css'
 import './algorithm'
-import Map from './ui/screens/Map'
+import Game from './ui/screens/Game'
 
 function App() {
   return (
     <div className="App">
-      <Map />
+      <Game />
     </div>
   )
 }

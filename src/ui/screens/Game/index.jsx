@@ -3,6 +3,7 @@ import { CityMapData } from '../../../data/cityMapData'
 import { LocationData } from '../../../data/locationData'
 
 import CityMap from '../CityMap'
+import Home from '../Home'
 import Work from '../Work'
 
 const MapData = CityMapData.map(cityMap => ({
@@ -12,7 +13,7 @@ const MapData = CityMapData.map(cityMap => ({
   )
 }))
 
-const Map = () => {
+const Game = () => {
   const cityMapList = MapData.map(cityMap => {
     return (
       <CityMap
@@ -26,6 +27,7 @@ const Map = () => {
 
   return (
     <Routes>
+      <Route path="/" element={<Home />} />
       {cityMapList.map(cityMap => (
         <Route
           key={cityMap.props.route}
@@ -38,4 +40,4 @@ const Map = () => {
   )
 }
 
-export default Map
+export default Game
