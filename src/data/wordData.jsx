@@ -1,5 +1,3 @@
-import { LocationMapData } from './locationMapData'
-
 const WORDS = [
   {
     id: 0,
@@ -603,48 +601,4 @@ const WORDS = [
   }
 ]
 
-function getId(item) {
-  if (typeof item !== 'object' || !item) return -1
-  if (!(typeof item.id === 'number' && !isNaN(item.id))) return -1
-  return item.id
-}
-
-function getWord(item) {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.word || ''
-}
-
-function getMeaning(item) {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.meaning || ''
-}
-
-function getStats(item) {
-  return item.stats
-}
-
-function getActivityHistory(item) {
-  return item.history
-}
-
-function getWordList(words, locationId) {
-  const {
-    partition: { start, end }
-  } = LocationMapData[locationId]
-  return words.slice(start, end)
-}
-
-function getRequiredMoneyForLocation(locationId) {
-  return LocationMapData[locationId].requiredMoney
-}
-
-export {
-  WORDS,
-  getId,
-  getWord,
-  getMeaning,
-  getStats,
-  getActivityHistory,
-  getWordList,
-  getRequiredMoneyForLocation
-}
+export { WORDS }
