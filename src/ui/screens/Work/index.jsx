@@ -2,7 +2,13 @@ import React, { useState, useEffect, useContext, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { selectWord } from '../../../algorithm'
 import { AppContext } from '../../../context'
-import { getId, getMeaning, getWord, getWordList } from '../../../data/items'
+import {
+  getWordId,
+  getWordMeaning,
+  getWordText,
+  getWordListPool
+} from '../../../functions/wordUtils'
+import Header from '../../components/Header'
 
 const Work = () => {
   const {
@@ -11,7 +17,7 @@ const Work = () => {
   const { state, dispatch } = useContext(AppContext)
 
   const wordList = useMemo(
-    () => getWordList(state.items, locationId),
+    () => getWordListPool(state.items, locationId),
     [state, locationId]
   )
   console.log('WL', wordList)
@@ -20,6 +26,10 @@ const Work = () => {
   const [answer, setAnswer] = useState('')
   const [message, setMessage] = useState('')
   const [showAnswer, setShowAnswer] = useState(false)
+
+  useEffect(() => {
+    setCurrentword(selectWord(wordList))
+  }, [])
 
   useEffect(() => {
     if (checkAnswer(answer)) {
@@ -31,7 +41,7 @@ const Work = () => {
   }, [wordList])
 
   function checkAnswer(answer) {
-    return getMeaning(currentWord).toLowerCase() === answer.toLowerCase()
+    return getWordMeaning(currentWord).toLowerCase() === answer.toLowerCase()
   }
 
   function onAnswerChange(e) {
@@ -44,7 +54,7 @@ const Work = () => {
     if (answer === '') return
 
     if (checkAnswer(answer)) {
-      setMessage('Correct!')
+      setMessage(`Correct! ${showAnswer ? '+$0' : '+$1'}`)
       setTimeout(() => {
         if (!showAnswer) {
           dispatch({ type: 'INCREMENT' })
@@ -66,7 +76,7 @@ const Work = () => {
         }
       }, 500)
     } else {
-      setMessage('Wrong!')
+      setMessage('Wrong! -$5')
       dispatch({ type: 'DECREMENT' })
       dispatch({
         type: 'TRACK_ACTIVITY',
@@ -80,23 +90,23 @@ const Work = () => {
 
   return (
     <div>
-      Money: {state.money}
+      <Header />
       <h1>Work</h1>
-      <h2>{getWord(currentWord)}</h2>
+      <h2>{getWordText(currentWord)}</h2>
       <div>
-        <form onSubmit={e => submitAnswer(e, getId(currentWord))}>
+        <form onSubmit={e => submitAnswer(e, getWordId(currentWord))}>
           <input
             type="text"
             value={answer}
             onChange={onAnswerChange}
-            onSubmit={e => submitAnswer(e, getId(currentWord))}
+            onSubmit={e => submitAnswer(e, getWordId(currentWord))}
           />
-          <button onSubmit={e => submitAnswer(e, getId(currentWord))}>
+          <button onSubmit={e => submitAnswer(e, getWordId(currentWord))}>
             Submit
           </button>
         </form>
         <button onClick={() => setShowAnswer(true)}>Show answer</button>
-        {showAnswer ? getMeaning(currentWord) : ''}
+        {showAnswer ? getWordMeaning(currentWord) : ''}
         <h3>{message}</h3>
       </div>
       <Link to={`/city${fromMapId}`}>Done</Link>

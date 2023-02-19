@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from 'react'
-import { WORDS } from '../data/items'
+import { WORDS } from '../data/wordData'
 
-// Create a context to hold the money state and dispatch function
 export const AppContext = createContext()
 
 const resultsMap = {
