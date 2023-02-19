@@ -9,11 +9,16 @@ import {
   getWordListPool
 } from '../../../functions/wordUtils'
 import Header from '../../components/Header'
+import correctSound from '../../../assets/audios/correct.mp3'
+import wrongSound from '../../../assets/audios/wrong.mp3'
 
 const Work = () => {
   const {
     state: { fromMapId, locationId }
   } = useLocation()
+  const [correctAudio] = useState(new Audio(correctSound))
+  const [wrongAudio] = useState(new Audio(wrongSound))
+
   const { state, dispatch } = useContext(AppContext)
 
   const wordList = useMemo(
@@ -54,6 +59,7 @@ const Work = () => {
     if (answer === '') return
 
     if (checkAnswer(answer)) {
+      correctAudio.play()
       setMessage(`Correct! ${showAnswer ? '+$0' : '+$1'}`)
       setTimeout(() => {
         if (!showAnswer) {
@@ -76,6 +82,7 @@ const Work = () => {
         }
       }, 500)
     } else {
+      wrongAudio.play()
       setMessage('Wrong! -$5')
       dispatch({ type: 'DECREMENT' })
       dispatch({
