@@ -6,7 +6,7 @@ const Home = () => {
     <div>
       {' '}
       <Link to="/city0">
-        <button>Play</button>
+        <button style={{ marginTop: 'env(safe-area-inset-top)' }}>Play</button>
       </Link>
     </div>
   )
