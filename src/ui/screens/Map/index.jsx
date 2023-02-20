@@ -19,7 +19,7 @@ export default function Map() {
   return (
     <MapContainer
       className="markercluster-map"
-      center={[51.0, 19.0]}
+      center={[43, -71]}
       zoom={4}
       maxZoom={18}
     >
