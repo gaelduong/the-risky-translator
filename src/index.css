@@ -1,10 +1,6 @@
 /* Disable scrolling in all mobile devices */
-html,
-body {
-  overflow-y: hidden;
-}
-body {
-  position: relative;
+* {
+  box-sizing: border-box;
 }
 
 body {

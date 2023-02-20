@@ -3,7 +3,6 @@
   /* background-color: red; */
   max-width: 500px;
   margin: 0 auto;
-  padding-top: 10px;
   /* border: 1px solid #282c34; */
   /* background-image: url('./assets/images/background.jpeg'); */
   background: #f6f8fc;
@@ -80,5 +79,5 @@ a:visited {
 }
 
 .markercluster-map {
-  height: 90vh;
+  height: 100vh;
 }
