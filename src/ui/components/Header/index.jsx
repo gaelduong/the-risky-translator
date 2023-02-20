@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { AppContext } from '../../../context'
 import moneyImg from '../../../assets/images/money.png'
 import flashImg from '../../../assets/images/flash.png'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   const { state } = useContext(AppContext)
@@ -12,7 +13,7 @@ const Header = () => {
   return (
     <div
       style={{
-        width: 200,
+        width: 300,
         display: 'flex',
         // justifyContent: 'center'
         // alignItems: 'center',
@@ -78,6 +79,9 @@ const Header = () => {
           <b>{10}</b>
         </span>
       </div>
+      <Link to="/map">
+        <button>Map</button>
+      </Link>
     </div>
   )
 }
