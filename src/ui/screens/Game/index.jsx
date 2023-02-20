@@ -4,6 +4,7 @@ import { LocationData } from '../../../data/locationData'
 
 import CityMap from '../CityMap'
 import Home from '../Home'
+import Map from '../Map'
 import Work from '../Work'
 
 const MapData = CityMapData.map(cityMap => ({
@@ -36,6 +37,7 @@ const Game = () => {
         />
       ))}
       <Route path="/work" element={<Work />} />
+      <Route path="/map" element={<Map />} />
     </Routes>
   )
 }

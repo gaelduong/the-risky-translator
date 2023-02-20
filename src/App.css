@@ -3,8 +3,10 @@
   /* background-color: red; */
   max-width: 500px;
   margin: 0 auto;
+  padding-top: 10px;
   /* border: 1px solid #282c34; */
-  background-image: url('./assets/background.jpeg');
+  /* background-image: url('./assets/images/background.jpeg'); */
+  background: #f6f8fc;
   background-size: cover;
   height: 100vh;
   position: relative;
@@ -67,4 +69,16 @@ button:hover {
 button:active {
   background-color: #0039d7;
   border-color: #0039d7;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: black;
+}
+
+.markercluster-map {
+  height: 90vh;
 }
