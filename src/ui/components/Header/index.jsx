@@ -18,6 +18,7 @@ const Header = () => {
         // justifyContent: 'center'
         // alignItems: 'center',
         margin: '0 auto',
+        paddingTop: 40,
         gap: 10
       }}
     >
