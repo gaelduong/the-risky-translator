@@ -11,6 +11,7 @@ import {
 import Header from '../../components/Header'
 import correctSound from '../../../assets/audios/correct.mp3'
 import wrongSound from '../../../assets/audios/wrong.mp3'
+import personImg from '../../../assets/images/person.png'
 
 const Work = () => {
   const {
@@ -98,11 +99,20 @@ const Work = () => {
   return (
     <div>
       <Header />
-      <h1>Work</h1>
+      <h2>Help me translate...</h2>
+      <img
+        style={{ height: 200, width: 'auto' }}
+        src={personImg}
+        alt="person"
+      />
       <h2>{getWordText(currentWord)}</h2>
       <div>
-        <form onSubmit={e => submitAnswer(e, getWordId(currentWord))}>
+        <form
+          style={{ margin: 20 }}
+          onSubmit={e => submitAnswer(e, getWordId(currentWord))}
+        >
           <input
+            style={{ height: 24 }}
             type="text"
             value={answer}
             onChange={onAnswerChange}

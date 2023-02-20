@@ -3,34 +3,30 @@ import { Link } from 'react-router-dom'
 import { AppContext } from '../../../context'
 import { checkLocationUnlocked } from '../../../functions/locationUtils'
 
-import houseImg from '../../../assets/house.png'
-
-const Location = ({ locationId, locationName, position, fromMapId }) => {
+const Location = ({ locationId, locationName, position, image, fromMapId }) => {
   const { state } = useContext(AppContext)
-  const { x, y } = position
+  //   const { x, y } = position
 
   const isUnlocked = checkLocationUnlocked(locationId, state)
 
   const locationDisplay = (
-    <div style={{ top: y, left: x, position: 'absolute' }}>
+    <div>
       <img
         style={{
-          width: 50,
-          aspectRatio: 1 / 1,
-          filter: isUnlocked ? '' : 'grayscale(100%)'
+          width: 100,
+          aspectRatio: 1 / 1
+          //   filter: isUnlocked ? '' : 'grayscale(100%)'
         }}
-        src={houseImg}
+        src={image}
         alt="location"
       />
       <div>{locationName}</div>
     </div>
   )
 
-  if (!checkLocationUnlocked(locationId, state)) {
-    return locationDisplay
-  }
-
-  return (
+  return false && !isUnlocked ? (
+    locationDisplay
+  ) : (
     <div>
       <Link to="/work" state={{ fromMapId, locationId }}>
         {locationDisplay}

@@ -46,7 +46,11 @@ const formattedWords = words.map(word => {
 // console.log(formattedWords)
 
 function selectWord(words) {
-  return selectLeastExposuresWord(words)
+  return selectRandom(words)
+}
+
+function selectRandom(words) {
+  return words.at(Math.floor(Math.random() * words.length - 1))
 }
 
 function selectLeastExposuresWord(words) {
