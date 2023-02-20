@@ -1,0 +1,7 @@
+export { default as houseImg } from './house1.png'
+export { default as restaurantImg } from './restaurant.png'
+export { default as casinoImg } from './casino.png'
+export { default as parkImg } from './park.png'
+export { default as schoolImg } from './school.png'
+export { default as storeImg } from './store.png'
+export { default as hospitalImg } from './hospital.png'
