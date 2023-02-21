@@ -32,11 +32,27 @@ const getWordListPool = (words, locationId) => {
   return words.slice(start, end)
 }
 
+const getRandomWordList = (words, numWords, exceptWordId = -1) => {
+  if (numWords > words.length) return []
+
+  const hasExceptWord = exceptWordId !== -1
+  const newWords = hasExceptWord
+    ? words.filter(word => word.id !== exceptWordId)
+    : [...words]
+
+  // Shuffle array
+  const shuffled = newWords.sort(() => 0.5 - Math.random())
+
+  // Get sub-array of first n elements after shuffled
+  return shuffled.slice(0, numWords)
+}
+
 export {
   getWordId,
   getWordText,
   getWordMeaning,
   getWordStats,
   getWordActivityHistory,
-  getWordListPool
+  getWordListPool,
+  getRandomWordList
 }

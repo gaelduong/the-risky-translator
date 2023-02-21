@@ -28,7 +28,10 @@ const Location = ({ locationId, locationName, position, image, fromMapId }) => {
     locationDisplay
   ) : (
     <div>
-      <Link to="/work" state={{ fromMapId, locationId }}>
+      <Link
+        to="/work"
+        state={{ fromMapId, locationId, workType: 'recog_multiple_choice' }}
+      >
         {locationDisplay}
       </Link>
     </div>
