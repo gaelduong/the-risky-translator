@@ -126,7 +126,7 @@ const Work = () => {
         {showAnswer ? getWordMeaning(currentWord) : ''}
         <h3>{message}</h3>
       </div>
-      <Link to={`/city${fromMapId}`}>Done</Link>
+      <Link to={`/city${fromMapId}`}>Finish Job</Link>
     </div>
   )
 }
