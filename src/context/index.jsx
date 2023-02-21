@@ -9,15 +9,25 @@ const resultsMap = {
   REVEAL: 'reveals'
 }
 
-const initialState = { money: 0, items: WORDS }
+const initialState = {
+  money: parseInt(localStorage.getItem('money')) || 0,
+  items: WORDS
+}
 
 // Define the reducer functions for each state
 const appReducer = (state, action) => {
   switch (action.type) {
+    case 'RESET':
+      return { ...state, money: 0 }
+
     case 'INCREMENT':
+      localStorage.setItem('money', state.money + 1)
       return { ...state, money: state.money + 1 }
+
     case 'DECREMENT':
+      localStorage.setItem('money', state.money - 5)
       return { ...state, money: state.money - 5 }
+
     case 'TRACK_ACTIVITY':
       const { id, log } = action.payload
       const key = resultsMap[log.result]

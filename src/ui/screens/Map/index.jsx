@@ -42,7 +42,13 @@ export default function Map() {
           icon={iconPerson}
           eventHandlers={{
             click: e => {
-              navigate('/work', { state: { fromMapId: 0, locationId: 0 } })
+              navigate('/work', {
+                state: {
+                  fromMapId: 0,
+                  locationId: 0,
+                  workType: 'recog_multiple_choice'
+                }
+              })
             }
           }}
         />
