@@ -54,7 +54,8 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
       correctAudio.play()
       setMessage(`Correct! ${answerRevealed ? '+$0' : '+$1'}`)
       setTimeout(() => {
-        dispatch({ type: 'INCREMENT' })
+        dispatch({ type: 'UPDATE_MONEY', payload: 1 })
+        dispatch({ type: 'UPDATE_ENERGY', payload: 2 })
         dispatch({
           type: 'TRACK_ACTIVITY',
           payload: {
@@ -68,7 +69,8 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
       wrongAudio.play()
       setMessage('Wrong! -$5')
       setTimeout(() => {
-        dispatch({ type: 'DECREMENT' })
+        dispatch({ type: 'UPDATE_MONEY', payload: -5 })
+        dispatch({ type: 'UPDATE_ENERGY', payload: -1 })
         dispatch({
           type: 'TRACK_ACTIVITY',
           payload: {
@@ -99,6 +101,7 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
                   : 'button1'
                 : 'button1'
             }
+            disabled={showResult}
             onClick={() => submitAnswer(getWordMeaning(choice), wordId)}
           >
             {getWordMeaning(choice)}

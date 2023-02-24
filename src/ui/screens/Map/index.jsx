@@ -46,7 +46,7 @@ export default function Map() {
                 state: {
                   fromMapId: 0,
                   locationId: 0,
-                  workType: 'recog_multiple_choice'
+                  jobType: 'recog_multiple_choice'
                 }
               })
             }

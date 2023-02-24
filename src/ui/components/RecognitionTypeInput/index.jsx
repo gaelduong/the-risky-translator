@@ -52,7 +52,7 @@ const RecognitionTypeInput = ({ wordListPool }) => {
       setMessage(`Correct! ${showAnswer ? '+$0' : '+$1'}`)
       setTimeout(() => {
         if (!showAnswer) {
-          dispatch({ type: 'INCREMENT' })
+          dispatch({ type: 'UPDATE_MONEY', payload: 1 })
           dispatch({
             type: 'TRACK_ACTIVITY',
             payload: {
@@ -73,7 +73,7 @@ const RecognitionTypeInput = ({ wordListPool }) => {
     } else {
       wrongAudio.play()
       setMessage('Wrong! -$5')
-      dispatch({ type: 'DECREMENT' })
+      dispatch({ type: 'UPDATE_MONEY', payload: -5 })
       dispatch({
         type: 'TRACK_ACTIVITY',
         payload: {

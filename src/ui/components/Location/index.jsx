@@ -30,7 +30,7 @@ const Location = ({ locationId, locationName, position, image, fromMapId }) => {
     <div>
       <Link
         to="/work"
-        state={{ fromMapId, locationId, workType: 'recog_multiple_choice' }}
+        state={{ fromMapId, locationId, jobType: 'recog_multiple_choice' }}
       >
         {locationDisplay}
       </Link>

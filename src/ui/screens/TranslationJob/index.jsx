@@ -6,34 +6,38 @@ import Header from '../../components/Header'
 import RecognitionMultipleChoice from '../../components/RecognitionMultipleChoice'
 import RecognitionTypeInput from '../../components/RecognitionTypeInput'
 
-const Work = () => {
+const TranslationJob = () => {
+  // window.addEventListener('scroll', e => {
+  //   e.preventDefault()
+  //   window.scrollTo(0, 0)
+  // })
   const {
-    state: { fromMapId, locationId, workType }
+    state: { fromMapId, locationId, jobType }
   } = useLocation()
 
   const { state } = useContext(AppContext)
 
   const wordListPool = useMemo(
-    () => getWordListPool(state.items, locationId),
+    () => getWordListPool(state.vocabulary, locationId),
     [state, locationId]
   )
   console.log('WL', wordListPool)
 
-  const getWorkType = (workType, wordListPool) => {
-    if (!workType) return <></>
+  const getWorkType = (jobType, wordListPool) => {
+    if (!jobType) return <></>
     const workTypeMap = {
       recog_type_input: <RecognitionTypeInput wordListPool={wordListPool} />,
       recog_multiple_choice: (
         <RecognitionMultipleChoice wordListPool={wordListPool} />
       )
     }
-    return workTypeMap[workType]
+    return workTypeMap[jobType]
   }
 
   return (
     <div>
       <Header />
-      {getWorkType(workType, wordListPool)}
+      {getWorkType(jobType, wordListPool)}
       <Link to={`/city${fromMapId}`}>
         <u>Finish Job</u>
       </Link>
@@ -41,4 +45,4 @@ const Work = () => {
   )
 }
 
-export default Work
+export default TranslationJob
