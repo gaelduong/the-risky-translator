@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import Header from '../../components/Header'
 import Location from '../../components/Location'
 
 // Dynamic CityMap Screen
@@ -7,7 +6,6 @@ const CityMap = ({ cityMap, numCityMaps }) => {
   const cityMapId = cityMap.cityMapId
   return (
     <div>
-      <Header />
       <h1>{cityMap.cityMapName}</h1>
       <div
         style={{

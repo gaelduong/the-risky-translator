@@ -1,8 +1,9 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { AppContext } from '../../../context'
 import moneyImg from '../../../assets/images/money.png'
 import flashImg from '../../../assets/images/flash.png'
 import { Link } from 'react-router-dom'
+import { formatNumberWithCommas } from '../../../functions/itemUtils'
 
 const Header = () => {
   const { state, dispatch } = useContext(AppContext)
@@ -50,7 +51,7 @@ const Header = () => {
             alt="money"
           />
           <span style={{ fontSize: 15 }}>
-            <b>{displayMoney}</b>
+            <b>{formatNumberWithCommas(displayMoney)}</b>
           </span>
         </div>
         <div
@@ -100,8 +101,8 @@ const Header = () => {
           </Link>
         </h2> */}
         <h2>
-          <Link to="/items">
-            <button>Items</button>
+          <Link to="/battle">
+            <button>Battle</button>
           </Link>
         </h2>
         <h2>

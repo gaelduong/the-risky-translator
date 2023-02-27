@@ -1,6 +1,7 @@
-import React, { createContext, useReducer } from 'react'
+import { createContext, useReducer } from 'react'
 import { WORDS } from '../data/wordData'
 import { ITEMS } from '../data/itemData'
+import { ANIMALS_ITEMS } from '../data/animalData'
 
 export const AppContext = createContext()
 
@@ -12,10 +13,11 @@ const resultsMap = {
 
 const initialState = {
   money: parseInt(localStorage.getItem('money')) || 0,
-  energy: parseInt(localStorage.getItem('energy')) || 1000,
+  energy: parseInt(localStorage.getItem('energy')) || 0,
   vocabulary: JSON.parse(localStorage.getItem('vocabulary')) || WORDS,
   // items: JSON.parse(localStorage.getItem('items')) || ITEMS
-  items: ITEMS
+  items: JSON.parse(localStorage.getItem('items')) || ITEMS,
+  animals: ANIMALS_ITEMS
 }
 
 // Define the reducer functions for each state
@@ -66,7 +68,11 @@ const appReducer = (state, action) => {
         if (item.id === action.payload) {
           return {
             ...item,
-            isBought: true
+            isBought: true,
+            generate: {
+              ...item.generate,
+              lastCollectionTime: Date.now()
+            }
           }
         }
         return item
@@ -80,52 +86,47 @@ const appReducer = (state, action) => {
         items: updatedItems
       }
 
-    case 'START_GENERATE':
-      const startTime = Date.now()
-      const updatedItemsBeforeGenerate = state.items.map(item => {
+    case 'UPDATE_ITEMS':
+      console.log('update items')
+      const updatedItems1 = state.items.map(item => {
         if (item.id === action.payload.id) {
           return {
             ...item,
             generate: {
               ...item.generate,
-              inProgress: true,
-              times: {
-                startTime,
-                endTime: new Date(
-                  startTime + item.generate.timeRequiredInSeconds * 1000
-                ).getTime()
-              }
+              ...action.payload.collectionData
             }
           }
         }
-
         return item
       })
-      localStorage.setItem('items', JSON.stringify(updatedItemsBeforeGenerate))
 
-      return { ...state, items: updatedItemsBeforeGenerate }
+      // Update local storage
+      localStorage.setItem('items', JSON.stringify(updatedItems1))
 
-    case 'END_GENERATE':
-      const updatedItemsAfterGenerate = state.items.map(item => {
-        if (item.id === action.payload.id) {
+      return {
+        ...state,
+        items: updatedItems1
+      }
+
+    case 'BUY_ANIMAL':
+      const updatedAnimals = state.animals.map(animal => {
+        if (animal.id === action.payload) {
           return {
-            ...item,
-            generate: {
-              ...item.generate,
-              inProgress: false,
-              times: {
-                startTime: null,
-                endTime: null
-              }
-            }
+            ...animal,
+            isBought: true
           }
         }
-
-        return item
+        return animal
       })
-      localStorage.setItem('items', JSON.stringify(updatedItemsAfterGenerate))
 
-      return { ...state, items: updatedItemsAfterGenerate }
+      // Update local storage
+      localStorage.setItem('animals', JSON.stringify(updatedAnimals))
+
+      return {
+        ...state,
+        animals: updatedAnimals
+      }
 
     default:
       return state

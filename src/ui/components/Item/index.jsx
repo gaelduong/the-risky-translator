@@ -1,74 +1,76 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
 import { useContext } from 'react'
-import { AppContext } from '../../../context'
 import {
+  formatNumberWithCommas,
   formatTime,
   getItemBuyRequirements,
-  getItemDescription,
-  getItemGeneration,
-  getItemGenerationInProgress,
   getItemId,
   getItemIsBought,
   getItemName
 } from '../../../functions/itemUtils'
+import { AppContext } from '../../../context'
+import ProgressBar from '../../components/ProgressBar'
 
-const Item = ({ item, currentTimeInMs }) => {
+const Item = ({ item }) => {
   const { state, dispatch } = useContext(AppContext)
-  const [itemIds, setItemIds] = useState([])
+  const money = state.money
 
-  const energy = state.energy
+  const id = getItemId(item)
+  const name = getItemName(item)
+  const isBought = getItemIsBought(item)
+  const buyRequirements = getItemBuyRequirements(item)
 
-  const itemId = getItemId(item)
-  const itemIsBought = getItemIsBought(item)
-  const itemGeneration = getItemGeneration(item)
   const {
-    energyRequired,
     moneyGenerated,
-    timeRequiredInSeconds,
-    times: { startTime, endTime }
-  } = itemGeneration
-  const itemGenerationInProgress = getItemGenerationInProgress(item)
+    timeRemainingInSeconds,
+    progress,
+    lastCollectionTime,
+    timeBetweenCollections,
+    moneyPerCollection
+  } = item.generate
 
-  useEffect(() => {
-    if (itemGenerationInProgress && currentTimeInMs >= endTime) {
-      endGenerate(itemId, moneyGenerated)
-    }
-  }, [currentTimeInMs >= endTime])
-
-  useEffect(() => {
-    if (itemIsBought && !itemGenerationInProgress) {
-      startGenerate(itemId, energyRequired)
-    }
-  }, [currentTimeInMs])
-
-  const startGenerate = (itemId, energyRequired) => {
-    // setItemIds(itemIds => )
-    console.log('start generate')
-    if (energy < energyRequired) {
-      setItemIds([...itemIds, itemId])
-      setTimeout(() => {
-        setItemIds(itemIds => itemIds.filter(id => itemId !== id))
-      }, 1000)
-      return
-    }
-    dispatch({ type: 'UPDATE_ENERGY', payload: -energyRequired })
-    dispatch({
-      type: 'START_GENERATE',
-      payload: { id: itemId, startTime: Date.now() }
-    })
+  const buyItem = (id, cost) => {
+    dispatch({ type: 'BUY_ITEM', payload: id })
+    dispatch({ type: 'UPDATE_MONEY', payload: -cost })
   }
 
-  const endGenerate = (itemId, moneyGenerated) => {
-    console.log('end generate')
-    dispatch({
-      type: 'END_GENERATE',
-      payload: { id: itemId }
-    })
-    dispatch({ type: 'UPDATE_MONEY', payload: moneyGenerated })
+  //   Show Buy button
+  const buyButton = (
+    <div>
+      <h3>{name}</h3>
+      <div>
+        Money Per Collection: +${formatNumberWithCommas(moneyPerCollection)}
+      </div>
+      <div> Time: {formatTime(timeBetweenCollections)}</div>
+      <button
+        key={id}
+        className="button1"
+        onClick={() => buyItem(id, buyRequirements.money)}
+        disabled={money < buyRequirements.money}
+      >
+        ${formatNumberWithCommas(buyRequirements.money)}
+      </button>
+      <hr />
+    </div>
+  )
+
+  if (!isBought) {
+    return buyButton
   }
 
-  return <></>
+  return (
+    <div key={item.id}>
+      <h3>{name}</h3>
+      <div>
+        Money Per Collection: +${formatNumberWithCommas(moneyPerCollection)}
+      </div>
+      <div>Money Generated:{moneyGenerated}</div>
+      <div>{formatTime(Math.floor(timeRemainingInSeconds))}</div>
+      {/* <div> {formatTime(timeBetweenCollections)}</div> */}
+      <ProgressBar progress={progress} />
+      {/* <div>LastC:{lastCollectionTime}</div> */}
+      <hr />
+    </div>
+  )
 }
 
 export default Item

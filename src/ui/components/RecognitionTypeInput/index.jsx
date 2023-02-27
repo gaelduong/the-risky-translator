@@ -35,7 +35,10 @@ const RecognitionTypeInput = ({ wordListPool }) => {
   }, [wordListPool])
 
   function checkAnswer(answer) {
-    return getWordMeaning(currentWord).toLowerCase() === answer.toLowerCase()
+    return (
+      answer.length > 1 &&
+      getWordMeaning(currentWord).toLowerCase().startsWith(answer.toLowerCase())
+    )
   }
 
   function onAnswerChange(e) {
@@ -49,10 +52,11 @@ const RecognitionTypeInput = ({ wordListPool }) => {
 
     if (checkAnswer(answer)) {
       correctAudio.play()
-      setMessage(`Correct! ${showAnswer ? '+$0' : '+$1'}`)
+      setMessage(`Correct!\n ${showAnswer ? '+$0' : '+$1'}`)
       setTimeout(() => {
         if (!showAnswer) {
           dispatch({ type: 'UPDATE_MONEY', payload: 1 })
+          dispatch({ type: 'UPDATE_ENERGY', payload: 2 })
           dispatch({
             type: 'TRACK_ACTIVITY',
             payload: {
@@ -72,8 +76,9 @@ const RecognitionTypeInput = ({ wordListPool }) => {
       }, 500)
     } else {
       wrongAudio.play()
-      setMessage('Wrong! -$5')
-      dispatch({ type: 'UPDATE_MONEY', payload: -5 })
+      setMessage('Wrong! -$1')
+      dispatch({ type: 'UPDATE_MONEY', payload: -1 })
+      dispatch({ type: 'UPDATE_ENERGY', payload: 0 })
       dispatch({
         type: 'TRACK_ACTIVITY',
         payload: {

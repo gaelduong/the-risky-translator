@@ -1,16 +1,23 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useState } from 'react'
+// import { Link } from 'react-router-dom'
 import { AppContext } from '../../../context'
 import { checkLocationUnlocked } from '../../../functions/locationUtils'
+import Popup from '../Popup'
 
 const Location = ({ locationId, locationName, position, image, fromMapId }) => {
   const { state } = useContext(AppContext)
   //   const { x, y } = position
 
   const isUnlocked = checkLocationUnlocked(locationId, state)
+  const [showPopup, setShowPopup] = useState(false)
+
+  const handleClose = () => {
+    console.log('Here')
+    setShowPopup(false)
+  }
 
   const locationDisplay = (
-    <div>
+    <div onClick={() => setShowPopup(true)}>
       <img
         style={{
           width: 100,
@@ -28,12 +35,19 @@ const Location = ({ locationId, locationName, position, image, fromMapId }) => {
     locationDisplay
   ) : (
     <div>
-      <Link
+      {showPopup && (
+        <Popup
+          fromMapId={fromMapId}
+          locationId={locationId}
+          onClose={handleClose}
+        />
+      )}
+      {/* <Link
         to="/work"
         state={{ fromMapId, locationId, jobType: 'recog_multiple_choice' }}
-      >
-        {locationDisplay}
-      </Link>
+      > */}
+      {locationDisplay}
+      {/* </Link> */}
     </div>
   )
 }

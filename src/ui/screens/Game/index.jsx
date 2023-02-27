@@ -1,15 +1,14 @@
-import { useContext, useState } from 'react'
-import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { AppContext } from '../../../context'
 import { CityMapData } from '../../../data/cityMapData'
 import { LocationData } from '../../../data/locationData'
-import { getItemId } from '../../../functions/itemUtils'
-import Item from '../../components/Item'
 
+import Header from '../../components/Header'
+import Animals from '../Animals'
+import Battle from '../Battle'
 import CityMap from '../CityMap'
 import Home from '../Home'
-import Items from '../Items'
+import ItemList from '../ItemList'
+import Test from '../Test'
 // import Map from '../Map'
 import TranslationJob from '../TranslationJob'
 
@@ -21,19 +20,7 @@ const MapData = CityMapData.map(cityMap => ({
 }))
 
 const Game = () => {
-  const { state, dispatch } = useContext(AppContext)
-  const [currentTimeInMs, setCurrentTimeInMs] = useState(Date.now())
-
-  const items = state.items
-
-  useEffect(() => {
-    let interval = setInterval(() => {
-      // console.log('test')
-      setCurrentTimeInMs(Date.now())
-
-      return () => clearInterval(interval)
-    }, 1000)
-  }, [])
+  // useUpdateItems()
 
   const cityMapList = MapData.map(cityMap => {
     return (
@@ -48,14 +35,7 @@ const Game = () => {
 
   return (
     <>
-      {items.map(item => (
-        <Item
-          key={getItemId(item)}
-          item={item}
-          currentTimeInMs={currentTimeInMs}
-        />
-      ))}
-
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         {cityMapList.map(cityMap => (
@@ -66,10 +46,9 @@ const Game = () => {
           />
         ))}
         <Route path="/work" element={<TranslationJob />} />
-        <Route
-          path="/items"
-          element={<Items currentTimeInMs={currentTimeInMs} />}
-        />
+        <Route path="/test" element={<Test />} />
+        <Route path="/items" element={<ItemList />} />
+        <Route path="/battle" element={<Battle />} />
         {/* <Route path="/map" element={<Map />} /> */}
       </Routes>
     </>

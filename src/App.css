@@ -170,3 +170,78 @@ a:visited {
 .markercluster-map {
   height: 100vh;
 }
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.popup p {
+  margin-top: 0;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #4286f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button.close {
+  margin-top: 20px;
+  background-color: #ff5959;
+}
+
+.creature {
+  width: 200px;
+  height: auto;
+}
+
+.creature.jiggle {
+  animation: jiggle 1s linear;
+}
+
+@keyframes jiggle {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  20% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  30% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  40% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  50% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  60% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  70% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  80% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  90% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}

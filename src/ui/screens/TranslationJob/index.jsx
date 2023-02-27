@@ -1,8 +1,7 @@
-import React, { useContext, useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AppContext } from '../../../context'
 import { getWordListPool } from '../../../functions/wordUtils'
-import Header from '../../components/Header'
 import RecognitionMultipleChoice from '../../components/RecognitionMultipleChoice'
 import RecognitionTypeInput from '../../components/RecognitionTypeInput'
 
@@ -19,9 +18,8 @@ const TranslationJob = () => {
 
   const wordListPool = useMemo(
     () => getWordListPool(state.vocabulary, locationId),
-    [state, locationId]
+    [state.vocabulary, locationId]
   )
-  console.log('WL', wordListPool)
 
   const getWorkType = (jobType, wordListPool) => {
     if (!jobType) return <></>
@@ -36,7 +34,6 @@ const TranslationJob = () => {
 
   return (
     <div>
-      <Header />
       {getWorkType(jobType, wordListPool)}
       <Link to={`/city${fromMapId}`}>
         <u>Finish Job</u>

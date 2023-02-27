@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import _ from 'lodash'
 import { selectWord } from '../../../algorithm'
 import { AppContext } from '../../../context'
@@ -39,7 +39,7 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
     setChoices(_.shuffle([currentWord, ...wrongChoices]))
     setImage(personImages[Math.floor(Math.random() * personImages.length)])
     setMessage('')
-  }, [currentWord])
+  }, [currentWord, wordListPool, wordId])
 
   useEffect(() => {
     setCurrentword(selectWord(wordListPool))
@@ -52,7 +52,7 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
   function submitAnswer(selectedAnswer, itemId) {
     if (checkAnswer(selectedAnswer)) {
       correctAudio.play()
-      setMessage(`Correct! ${answerRevealed ? '+$0' : '+$1'}`)
+      setMessage(`Correct!\n ${answerRevealed ? '+$0' : '+$1'}`)
       setTimeout(() => {
         dispatch({ type: 'UPDATE_MONEY', payload: 1 })
         dispatch({ type: 'UPDATE_ENERGY', payload: 2 })
@@ -67,10 +67,10 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
       }, 1000)
     } else {
       wrongAudio.play()
-      setMessage('Wrong! -$5')
+      setMessage('Wrong!\n -$1')
       setTimeout(() => {
-        dispatch({ type: 'UPDATE_MONEY', payload: -5 })
-        dispatch({ type: 'UPDATE_ENERGY', payload: -1 })
+        dispatch({ type: 'UPDATE_MONEY', payload: -1 })
+        dispatch({ type: 'UPDATE_ENERGY', payload: 0 })
         dispatch({
           type: 'TRACK_ACTIVITY',
           payload: {

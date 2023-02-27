@@ -1,22 +1,22 @@
-const ProgressBar = ({ start, end, current }) => {
-  const percentage = Math.round(((current - start) / (end - start)) * 100)
+const ProgressBar = ({ progress }) => {
+  const borderRadiusPx = 10
 
   return (
     <div
       style={{
-        width: '100px',
-        height: '10px',
-        backgroundColor: '#e6e6e6',
-        borderRadius: '5px',
-        margin: '10px auto'
+        width: '40%',
+        height: '15px',
+        backgroundColor: '#ddd',
+        margin: '0 auto',
+        borderRadius: borderRadiusPx
       }}
     >
       <div
         style={{
-          width: `${percentage >= 0 ? percentage : 0}%`,
+          width: `${progress * 100}%`,
           height: '100%',
-          backgroundColor: '#00bfff',
-          borderRadius: '5px 0px 0px 5px'
+          backgroundColor: '#887aff',
+          borderRadius: `${borderRadiusPx}px 0px 0px ${borderRadiusPx}px`
         }}
       ></div>
     </div>
