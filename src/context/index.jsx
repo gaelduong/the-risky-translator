@@ -1,7 +1,6 @@
 import { createContext, useReducer } from 'react'
 import { WORDS } from '../data/wordData'
 import { ITEMS } from '../data/itemData'
-import { ANIMALS_ITEMS } from '../data/animalData'
 
 export const AppContext = createContext()
 
@@ -16,29 +15,12 @@ const initialState = {
   energy: parseInt(localStorage.getItem('energy')) || 0,
   vocabulary: JSON.parse(localStorage.getItem('vocabulary')) || WORDS,
   // items: JSON.parse(localStorage.getItem('items')) || ITEMS
-  items: JSON.parse(localStorage.getItem('items')) || ITEMS,
-  animals: ANIMALS_ITEMS
+  items: JSON.parse(localStorage.getItem('items')) || ITEMS
 }
 
 // Define the reducer functions for each state
 const appReducer = (state, action) => {
   switch (action.type) {
-    case 'UPDATE_MONEY':
-      // Update local storage
-      localStorage.setItem('money', state.money + action.payload)
-      return { ...state, money: state.money + action.payload }
-
-    case 'RESET_MONEY':
-      return { ...state, money: 0 }
-
-    case 'UPDATE_ENERGY':
-      // Update local storage
-      localStorage.setItem('energy', state.energy + action.payload)
-      return { ...state, energy: Math.max(0, state.energy + action.payload) }
-
-    case 'RESET_ENERGY':
-      return { ...state, energy: 0 }
-
     case 'TRACK_ACTIVITY':
       const { id, log } = action.payload
       const key = resultsMap[log.result]
@@ -107,25 +89,6 @@ const appReducer = (state, action) => {
       return {
         ...state,
         items: updatedItems1
-      }
-
-    case 'BUY_ANIMAL':
-      const updatedAnimals = state.animals.map(animal => {
-        if (animal.id === action.payload) {
-          return {
-            ...animal,
-            isBought: true
-          }
-        }
-        return animal
-      })
-
-      // Update local storage
-      localStorage.setItem('animals', JSON.stringify(updatedAnimals))
-
-      return {
-        ...state,
-        animals: updatedAnimals
       }
 
     default:
