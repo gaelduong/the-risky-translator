@@ -57,6 +57,7 @@ const Game = () => {
         <Route path="/work" element={<TranslationJob />} />
 
         {/* New */}
+        <Route path="/" element={<Town />} />
         <Route path="/loading" element={<LoadingApp />} />
         <Route path="/story" element={<Story />} />
         <Route path="/name" element={<NameCreation />} />

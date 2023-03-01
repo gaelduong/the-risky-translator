@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Town = () => {
   return (
-    <div>
+    <div style={{ touchAction: 'none' }}>
       <Link to="/profile">Profile</Link>
       <Link to="/monster-map">MonsterMap</Link>
       <Link to="/training">Training</Link>

@@ -16,7 +16,7 @@ const Header = () => {
 
   const displayMoney = money < 0 ? `-${money * -1}` : `${money}`
 
-  return <h2>Header</h2>
+  return <h2 style={{ margin: 0 }}>Header</h2>
   return (
     <>
       <div
