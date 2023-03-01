@@ -1,5 +1,5 @@
 import './App.css'
-import './algorithm'
+import '@Algorithm'
 import Game from './ui/screens/Game'
 
 function App() {
