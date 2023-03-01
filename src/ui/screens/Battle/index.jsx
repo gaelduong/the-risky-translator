@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import monsterImage from '../../../assets/images/monster.png'
-import creatureImage from '../../../assets/images/creature.png'
-import { MAIN_CREATURE } from '../../../data/creatureData'
+import monsterImage from '@Assets/images/monster.png'
+import creatureImage from '@Assets/images/creature.png'
+import { MAIN_CREATURE } from '@Data/creatureData'
 import { useEffect } from 'react'
 
 console.log(MAIN_CREATURE)
@@ -61,7 +61,7 @@ const Battle = () => {
     const damage = Math.floor(Math.random() * 10) + 1 // Generate random damage between 1-10
     setMonsterHp(monsterHp => monsterHp - damage)
 
-    setCreatureCooldown(2000)
+    setCreatureCooldown(1000)
   }
 
   const handleMonsterAttack = () => {
@@ -93,6 +93,8 @@ const Battle = () => {
 
   return (
     <div>
+      <Link to="/monster-map">MonsterMap</Link>
+
       <div onClick={attack}>
         <div>Cooldown: {monsterCooldown}</div>
         <div>Health: {monsterHp}</div>

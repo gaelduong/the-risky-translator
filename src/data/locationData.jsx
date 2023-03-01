@@ -6,7 +6,7 @@ import {
   schoolImg,
   storeImg,
   hospitalImg
-} from '../assets/images'
+} from '@Assets/images'
 
 export const LocationData = [
   {

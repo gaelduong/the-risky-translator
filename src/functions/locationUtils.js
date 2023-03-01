@@ -1,4 +1,4 @@
-import { LocationData } from '../data/locationData'
+import { LocationData } from '@Data/locationData'
 
 const checkLocationUnlocked = (locationId, gameState) => {
   return (

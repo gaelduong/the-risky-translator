@@ -1,10 +1,9 @@
-import { useContext, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { AppContext } from '../../../context'
-import { getWordListPool } from '../../../functions/wordUtils'
+import { useSelector } from 'react-redux'
+import { getWordListPool } from '@Functions/wordUtils'
 import RecognitionMultipleChoice from '../../components/RecognitionMultipleChoice'
 import RecognitionTypeInput from '../../components/RecognitionTypeInput'
-
 const TranslationJob = () => {
   // window.addEventListener('scroll', e => {
   //   e.preventDefault()
@@ -14,11 +13,11 @@ const TranslationJob = () => {
     state: { fromMapId, locationId, jobType }
   } = useLocation()
 
-  const { state } = useContext(AppContext)
+  const { vocabulary } = useSelector(state => state.vocabulary)
 
   const wordListPool = useMemo(
-    () => getWordListPool(state.vocabulary, locationId),
-    [state.vocabulary, locationId]
+    () => getWordListPool(vocabulary, locationId),
+    [vocabulary, locationId]
   )
 
   const getWorkType = (jobType, wordListPool) => {

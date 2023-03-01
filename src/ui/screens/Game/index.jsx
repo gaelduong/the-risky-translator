@@ -1,16 +1,28 @@
 import { Route, Routes } from 'react-router-dom'
-import { CityMapData } from '../../../data/cityMapData'
-import { LocationData } from '../../../data/locationData'
 
-import Header from '../../components/Header'
-import Animals from '../Animals'
-import Battle from '../Battle'
-import CityMap from '../CityMap'
-import Home from '../Home'
-import ItemList from '../ItemList'
-import Test from '../Test'
-// import Map from '../Map'
-import TranslationJob from '../TranslationJob'
+// Data
+import { CityMapData } from '@Data/cityMapData'
+import { LocationData } from '@Data/locationData'
+
+// Components
+import Header from '@Com/Header'
+
+// Screens
+import Battle from '@Screen/Battle'
+import CityMap from '@Screen/CityMap'
+import TranslationJob from '@Screen/TranslationJob'
+import Profile from '@Screen/Profile'
+import Upgrade from '@Screen/Upgrade'
+import Town from '@Screen/Town'
+import Training from '@Screen/Training'
+import Story from '@Screen/Story'
+import NameCreation from '@Screen/NameCreation'
+import WordListView from '@Screen/WordListView'
+import BigMixes from '@Screen/BigMixes'
+import MegaMixes from '@Screen/MegaMixes'
+import LoadingApp from '@Screen/LoadingApp'
+import Everything from '@Screen/Everything'
+import MonsterMap from '@Screen/MonsterMap'
 
 const MapData = CityMapData.map(cityMap => ({
   ...cityMap,
@@ -20,8 +32,6 @@ const MapData = CityMapData.map(cityMap => ({
 }))
 
 const Game = () => {
-  // useUpdateItems()
-
   const cityMapList = MapData.map(cityMap => {
     return (
       <CityMap
@@ -37,7 +47,6 @@ const Game = () => {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
         {cityMapList.map(cityMap => (
           <Route
             key={cityMap.props.route}
@@ -46,10 +55,21 @@ const Game = () => {
           />
         ))}
         <Route path="/work" element={<TranslationJob />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/items" element={<ItemList />} />
+
+        {/* New */}
+        <Route path="/loading" element={<LoadingApp />} />
+        <Route path="/story" element={<Story />} />
+        <Route path="/name" element={<NameCreation />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/upgrade" element={<Upgrade />} />
+        <Route path="/town" element={<Town />} />
+        <Route path="/training" element={<Training />} />
+        <Route path="/word-list" element={<WordListView />} />
+        <Route path="/bigmixes" element={<BigMixes />} />
+        <Route path="/megamixes" element={<MegaMixes />} />
+        <Route path="/everything" element={<Everything />} />
+        <Route path="/monster-map" element={<MonsterMap />} />
         <Route path="/battle" element={<Battle />} />
-        {/* <Route path="/map" element={<Map />} /> */}
       </Routes>
     </>
   )

@@ -1,26 +1,27 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import _ from 'lodash'
-import { selectWord } from '../../../algorithm'
-import { AppContext } from '../../../context'
+import { selectWord } from '@Algorithm'
 import {
   getRandomWordList,
   getWordId,
   getWordMeaning,
   getWordText
-} from '../../../functions/wordUtils'
-import correctSound from '../../../assets/audios/correct.mp3'
-import wrongSound from '../../../assets/audios/wrong.mp3'
-import personImg from '../../../assets/images/person.png'
-import personImg1 from '../../../assets/images/person1.png'
-import personImg2 from '../../../assets/images/person2.png'
-import personImg3 from '../../../assets/images/person3.png'
+} from '@Functions/wordUtils'
+import correctSound from '@Assets/audios/correct.mp3'
+import wrongSound from '@Assets/audios/wrong.mp3'
+import personImg from '@Assets/images/person.png'
+import personImg1 from '@Assets/images/person1.png'
+import personImg2 from '@Assets/images/person2.png'
+import personImg3 from '@Assets/images/person3.png'
+import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 const personImages = [personImg, personImg1, personImg2, personImg3]
 
 const RecognitionMultipleChoice = ({ wordListPool }) => {
   const [correctAudio] = useState(new Audio(correctSound))
   const [wrongAudio] = useState(new Audio(wrongSound))
 
-  const { dispatch } = useContext(AppContext)
+  const dispatch = useDispatch()
 
   const [image, setImage] = useState(null)
 
@@ -54,30 +55,30 @@ const RecognitionMultipleChoice = ({ wordListPool }) => {
       correctAudio.play()
       setMessage(`Correct!\n ${answerRevealed ? '+$0' : '+$1'}`)
       setTimeout(() => {
-        dispatch({ type: 'UPDATE_MONEY', payload: 1 })
-        dispatch({ type: 'UPDATE_ENERGY', payload: 2 })
-        dispatch({
-          type: 'TRACK_ACTIVITY',
-          payload: {
-            id: itemId,
-            log: { timestamp: Date.now(), result: 'CORRECT' }
-          }
-        })
+        dispatch(updateMoney({ amount: 1 }))
+        dispatch(updateEnergy({ amount: 2 }))
+        // dispatch({
+        //   type: 'TRACK_ACTIVITY',
+        //   payload: {
+        //     id: itemId,
+        //     log: { timestamp: Date.now(), result: 'CORRECT' }
+        //   }
+        // })
         setShowResult(false)
       }, 1000)
     } else {
       wrongAudio.play()
       setMessage('Wrong!\n -$1')
       setTimeout(() => {
-        dispatch({ type: 'UPDATE_MONEY', payload: -1 })
-        dispatch({ type: 'UPDATE_ENERGY', payload: 0 })
-        dispatch({
-          type: 'TRACK_ACTIVITY',
-          payload: {
-            id: itemId,
-            log: { timestamp: Date.now(), result: 'INCORRECT' }
-          }
-        })
+        dispatch(updateMoney({ amount: -1 }))
+        dispatch(updateEnergy({ amount: 0 }))
+        // dispatch({
+        //   type: 'TRACK_ACTIVITY',
+        //   payload: {
+        //     id: itemId,
+        //     log: { timestamp: Date.now(), result: 'INCORRECT' }
+        //   }
+        // })
         setShowResult(false)
       }, 1000)
     }

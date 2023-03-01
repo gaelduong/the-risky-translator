@@ -1,13 +1,12 @@
-import { useContext, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
 // import { Link } from 'react-router-dom'
-import { AppContext } from '../../../context'
-import { checkLocationUnlocked } from '../../../functions/locationUtils'
+import { checkLocationUnlocked } from '@Functions/locationUtils'
 import Popup from '../Popup'
 
 const Location = ({ locationId, locationName, position, image, fromMapId }) => {
-  const { state } = useContext(AppContext)
   //   const { x, y } = position
-
+  const state = useSelector(currState => currState)
   const isUnlocked = checkLocationUnlocked(locationId, state)
   const [showPopup, setShowPopup] = useState(false)
 

@@ -1,21 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { selectWord } from '../../../algorithm'
-import { AppContext } from '../../../context'
-import {
-  getWordId,
-  getWordMeaning,
-  getWordText
-} from '../../../functions/wordUtils'
-import correctSound from '../../../assets/audios/correct.mp3'
-import wrongSound from '../../../assets/audios/wrong.mp3'
-import personImg from '../../../assets/images/person.png'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectWord } from '@Algorithm'
+import { getWordId, getWordMeaning, getWordText } from '@Functions/wordUtils'
+import correctSound from '@Assets/audios/correct.mp3'
+import wrongSound from '@Assets/audios/wrong.mp3'
+import personImg from '@Assets/images/person.png'
+import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 
 const RecognitionTypeInput = ({ wordListPool }) => {
   const [correctAudio] = useState(new Audio(correctSound))
   const [wrongAudio] = useState(new Audio(wrongSound))
 
-  const { dispatch } = useContext(AppContext)
-
+  const dispatch = useDispatch()
   const [currentWord, setCurrentword] = useState(null)
   const [answer, setAnswer] = useState('')
   const [message, setMessage] = useState('')
@@ -26,6 +22,7 @@ const RecognitionTypeInput = ({ wordListPool }) => {
   }, [])
 
   useEffect(() => {
+    console.log('Here')
     if (checkAnswer(answer)) {
       setAnswer('')
       setMessage('')
@@ -55,30 +52,30 @@ const RecognitionTypeInput = ({ wordListPool }) => {
       setMessage(`Correct!\n ${showAnswer ? '+$0' : '+$1'}`)
       setTimeout(() => {
         if (!showAnswer) {
-          dispatch({ type: 'UPDATE_MONEY', payload: 1 })
-          dispatch({ type: 'UPDATE_ENERGY', payload: 2 })
-          dispatch({
-            type: 'TRACK_ACTIVITY',
-            payload: {
-              id: itemId,
-              log: { timestamp: Date.now(), result: 'CORRECT' }
-            }
-          })
+          dispatch(updateMoney({ amount: 1 }))
+          dispatch(updateEnergy({ amount: 2 }))
+          // dispatch({
+          //   type: 'TRACK_ACTIVITY',
+          //   payload: {
+          //     id: itemId,
+          //     log: { timestamp: Date.now(), result: 'CORRECT' }
+          //   }
+          // })
         } else {
-          dispatch({
-            type: 'TRACK_ACTIVITY',
-            payload: {
-              id: itemId,
-              log: { timestamp: Date.now(), result: 'REVEAL' }
-            }
-          })
+          // dispatch({
+          //   type: 'TRACK_ACTIVITY',
+          //   payload: {
+          //     id: itemId,
+          //     log: { timestamp: Date.now(), result: 'REVEAL' }
+          //   }
+          // })
         }
       }, 500)
     } else {
       wrongAudio.play()
       setMessage('Wrong! -$1')
-      dispatch({ type: 'UPDATE_MONEY', payload: -1 })
-      dispatch({ type: 'UPDATE_ENERGY', payload: 0 })
+      dispatch(updateMoney({ amount: -1 }))
+      dispatch(updateEnergy({ amount: 0 }))
       dispatch({
         type: 'TRACK_ACTIVITY',
         payload: {

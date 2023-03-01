@@ -1,4 +1,4 @@
-import { LocationData } from '../data/locationData'
+import { LocationData } from '@Data/locationData'
 
 const getWordId = item => {
   if (typeof item !== 'object' || !item) return -1
