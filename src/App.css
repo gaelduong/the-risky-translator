@@ -1,12 +1,8 @@
 .App {
   text-align: center;
-  /* background-color: red; */
   max-width: 554px;
   height: max(100vh, auto);
   margin: 0 auto;
-  /* border: 1px solid #282c34; */
-  background-image: url('./assets/images/bg3.png');
-  background-size: cover;
   min-height: 100vh;
   position: relative;
 }
@@ -23,7 +19,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .container {
@@ -96,6 +92,7 @@ html {
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
+  width: 70vw;
   border: 1px solid black;
   text-align: center;
   z-index: 99999999;
@@ -204,4 +201,45 @@ html {
   100% {
     transform: translate(0px, 0px) rotate(0deg);
   }
+}
+
+/* ---------------------------- */
+/* Layout */
+
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.x-center {
+  margin: 0 auto;
+}
+
+table {
+  border-collapse: collapse;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #000;
+}
+
+th,
+td {
+  text-align: left;
+}
+
+td {
+  position: relative;
 }
