@@ -23,6 +23,7 @@ import MegaMixes from '@Screen/MegaMixes'
 import LoadingApp from '@Screen/LoadingApp'
 import Everything from '@Screen/Everything'
 import MonsterMap from '@Screen/MonsterMap'
+import PreTraining from '@Screen/PreTraining'
 
 const MapData = CityMapData.map(cityMap => ({
   ...cityMap,
@@ -57,13 +58,14 @@ const Game = () => {
         <Route path="/work" element={<TranslationJob />} />
 
         {/* New */}
-        <Route path="/" element={<Town />} />
+        <Route path="/" element={<Training />} />
         <Route path="/loading" element={<LoadingApp />} />
         <Route path="/story" element={<Story />} />
         <Route path="/name" element={<NameCreation />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upgrade" element={<Upgrade />} />
         <Route path="/town" element={<Town />} />
+        <Route path="/pre-training" element={<PreTraining />} />
         <Route path="/training" element={<Training />} />
         <Route path="/word-list" element={<WordListView />} />
         <Route path="/bigmixes" element={<BigMixes />} />

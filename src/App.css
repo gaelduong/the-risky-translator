@@ -5,7 +5,7 @@
   height: max(100vh, auto);
   margin: 0 auto;
   /* border: 1px solid #282c34; */
-  background-image: url('./assets/images/bg1.png');
+  background-image: url('./assets/images/bg3.png');
   background-size: cover;
   min-height: 100vh;
   position: relative;
@@ -80,4 +80,128 @@ html {
 .no-button {
   background-color: #cb5757;
   color: white;
+}
+
+.spotimg {
+  width: 100px;
+  height: 100px;
+}
+
+/* ------------------------ */
+
+.popup {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid black;
+  text-align: center;
+  z-index: 99999999;
+}
+
+.popup p {
+  margin-top: 0;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: #4286f4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button.close {
+  margin-top: 20px;
+  background-color: #ff5959;
+}
+
+.popup button:disabled {
+  background-color: #bfbfbf;
+}
+
+/* ------------------------ */
+.battle-creature {
+  width: 200px;
+  height: auto;
+}
+
+.battle-creature.jiggle {
+  animation: jiggle 0.2s linear;
+}
+
+@keyframes jiggle1 {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  20% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  30% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  40% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  50% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  60% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  70% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  80% {
+    transform: translate(5px, 5px) rotate(10deg);
+  }
+  90% {
+    transform: translate(-5px, -5px) rotate(-10deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+@keyframes jiggle {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  /* 10% {
+      transform: translate(-5px, -5px);
+    }
+    20% {
+      transform: translate(5px, 5px);
+    } */
+  30% {
+    transform: translate(-5px, -5px);
+  }
+  40% {
+    transform: translate(5px, 5px);
+  }
+  /* 50% {
+      transform: translate(-5px, -5px);
+    }
+    60% {
+      transform: translate(5px, 5px);
+    } */
+  70% {
+    transform: translate(-5px, -5px);
+  }
+  80% {
+    transform: translate(5px, 5px);
+  }
+  /* 90% {
+      transform: translate(-5px, -5px);
+    } */
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
 }

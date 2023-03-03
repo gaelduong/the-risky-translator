@@ -1,8 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 // import { Link } from 'react-router-dom'
+
+// Components
+import Popup from '@Com/Popup'
+
+// Functions
 import { checkLocationUnlocked } from '@Functions/locationUtils'
-import Popup from '../Popup'
 
 const Location = ({ locationId, locationName, position, image, fromMapId }) => {
   //   const { x, y } = position
