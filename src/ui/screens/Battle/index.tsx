@@ -1,115 +1,264 @@
 import React, { useState } from 'react'
 import { monsterImage } from '@Assets/images'
 import { creatureImage } from '@Assets/images'
-import { MAIN_CREATURE } from '@Data/creatureData'
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateMoney } from '@Redux/slices/resourceSlice'
+import { updateMonsterBeaten } from '@Redux/slices/monsterSlice'
 
-console.log(MAIN_CREATURE)
+const ProgressBar = ({
+  progress,
+  color
+}: {
+  progress: number
+  color: string
+}) => {
+  const borderRadiusPx = 10
+
+  return (
+    <div
+      style={{
+        width: '40%',
+        height: '15px',
+        backgroundColor: '#ddd',
+        margin: '0 auto',
+        borderRadius: borderRadiusPx
+      }}
+    >
+      <div
+        style={{
+          width: `${Math.max(progress, 0) * 100}%`,
+          height: '100%',
+          backgroundColor: color,
+          borderRadius:
+            progress > 0.98
+              ? borderRadiusPx
+              : `${borderRadiusPx}px 0px 0px ${borderRadiusPx}px`
+        }}
+      ></div>
+    </div>
+  )
+}
+
+const BATTLE_STATUSES = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  END: 'END'
+}
 
 const Battle = () => {
-  const [isCreatureJiggling, setCreatureIsJiggling] = useState(false)
-  const [isJiggling, setIsJiggling] = useState(false)
-  const [creatureHp, setCreatureHp] = useState(100)
+  //   Start & end battle
+  const [battleStatus, setBattleStatus] = useState(BATTLE_STATUSES.NOT_STARTED)
+  const [countDown, setCountDown] = useState(3)
+  const [resultMessage, setResultMessage] = useState(<></>)
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  //   Creature
+  const {
+    creature: { attributes }
+  } = useSelector((state: any) => state)
+  const creatureHealth: number = attributes.health.value
+  const creaturePower: number = attributes.power.value
+  const [creatureHp, setCreatureHp] = useState(creatureHealth)
   const [creatureCooldown, setCreatureCooldown] = useState(0)
-  const [monsterHp, setMonsterHp] = useState(100)
+  const [isCreatureJiggling, setCreatureIsJiggling] = useState(false)
+
+  // Monster
+  const { state: customProps } = useLocation()
+  const {
+    id: monsterId,
+    name: monsterName,
+    attributes: monsterAttributes
+  } = customProps
+
+  const monsterPower = monsterAttributes.power
+  const [monsterHp, setMonsterHp] = useState(monsterAttributes.health)
   const [monsterCooldown, setMonsterCooldown] = useState(0)
+  const [isMonsterJiggling, setIsMonsterJiggling] = useState(false)
+
+  const handleLeaveBattle = (result: any) => {
+    if (result.won) {
+      dispatch(updateMoney({ amount: result.reward.money }))
+    }
+    setTimeout(() => {
+      navigate('/monster-map')
+    }, 200)
+  }
+
+  // Count down before battle starts
+  useEffect(() => {
+    if (countDown === 0) {
+      setBattleStatus(BATTLE_STATUSES.IN_PROGRESS)
+    } else {
+      const timer = setInterval(() => {
+        setCountDown(countDown => countDown - 1)
+      }, 1000)
+      return () => clearTimeout(timer)
+    }
+  }, [countDown])
 
   useEffect(() => {
-    setCreatureCooldown(0)
-    setMonsterCooldown(0)
-  }, [])
+    if (monsterHp <= 0 || creatureHp <= 0) {
+      setBattleStatus('END')
+    }
 
+    // Win
+    if (monsterHp <= 0) {
+      dispatch(updateMonsterBeaten({ id: monsterId }))
+      setResultMessage(
+        <>
+          <h2>Congrats! Monster killed.</h2>
+          <button
+            onClick={() =>
+              handleLeaveBattle({ won: true, reward: { money: 25 } })
+            }
+          >
+            Earn 25C
+          </button>
+        </>
+      )
+      return
+    }
+
+    // Lose
+    if (creatureHp <= 0) {
+      setResultMessage(
+        <>
+          <h2>Oof! Creature beaten.</h2>
+          <button
+            onClick={() => handleLeaveBattle({ won: false, reward: null })}
+          >
+            Leave
+          </button>
+        </>
+      )
+      return
+    }
+  }, [monsterHp, creatureHp, monsterId, dispatch])
+
+  // Update Creature's cooldown
   useEffect(() => {
+    if (battleStatus !== BATTLE_STATUSES.IN_PROGRESS) return
     if (creatureCooldown > 0) {
       const timer = setTimeout(() => {
         setCreatureCooldown(creatureCooldown - 100) // Decrease creatureCooldown time by 100ms every 100ms
       }, 100)
       return () => clearTimeout(timer)
     }
-  }, [creatureCooldown])
+  }, [creatureCooldown, battleStatus])
 
+  // Update Monster's cooldown
   useEffect(() => {
+    if (battleStatus !== BATTLE_STATUSES.IN_PROGRESS) return
     if (monsterCooldown > 0) {
       const timer = setTimeout(() => {
         setMonsterCooldown(monsterCooldown - 100) // Decrease monster's cooldown time by 100ms every 100ms
       }, 100)
       return () => clearTimeout(timer)
     }
-  }, [monsterCooldown])
+  }, [monsterCooldown, battleStatus])
 
+  // Monster's attack every second
   useEffect(() => {
+    if (battleStatus !== BATTLE_STATUSES.IN_PROGRESS) return
     const monsterTimer = setInterval(() => {
-      handleMonsterAttack() // Call the monster's attack function every second
+      monsterAttack()
     }, 1000)
     return () => clearInterval(monsterTimer)
-  }, [])
+  }, [battleStatus])
 
-  const attack = () => {
+  const creatureAttack = () => {
+    if (battleStatus !== BATTLE_STATUSES.IN_PROGRESS) return
     if (creatureCooldown > 0) return
 
-    if (!isJiggling) {
-      setIsJiggling(true)
+    // Deal damage to monster
+    const damage = creaturePower
+    setMonsterHp((monsterHp: number) => monsterHp - damage)
+    setCreatureCooldown(1000)
+
+    // Animation Monster Shaking
+    if (!isMonsterJiggling) {
+      setIsMonsterJiggling(true)
       setTimeout(() => {
-        setIsJiggling(false)
+        setIsMonsterJiggling(false)
       }, 1000)
     } else {
-      setIsJiggling(false)
+      setIsMonsterJiggling(false)
       setTimeout(() => {
-        setIsJiggling(true)
+        setIsMonsterJiggling(true)
       }, 50)
     }
-    const damage = Math.floor(Math.random() * 10) + 1 // Generate random damage between 1-10
-    setMonsterHp(monsterHp => monsterHp - damage)
-
-    setCreatureCooldown(1000)
   }
 
-  const handleMonsterAttack = () => {
-    if (monsterCooldown <= 0) {
-      const damage = Math.floor(Math.random() * 10) + 1 // Generate random damage between 1-10
-      console.log(damage)
-      setCreatureHp(creatureHp => creatureHp - damage) // Decrease creature's HP by damage amount
-      setMonsterCooldown(1000) // Set cooldown time to 1000ms (1 second)
+  const monsterAttack = () => {
+    if (monsterCooldown > 0) return
 
-      if ('vibrate' in navigator) {
-        // Trigger vibration if available
-        const vibrate = () => navigator.vibrate(100)
-        window.addEventListener('click', vibrate, { once: true })
-      }
+    // Deal damage to creature
+    const damage = monsterPower
+    setCreatureHp(creatureHp => creatureHp - damage)
+    setMonsterCooldown(1000)
 
-      if (!isCreatureJiggling) {
-        setCreatureIsJiggling(true)
-        setTimeout(() => {
-          setCreatureIsJiggling(false)
-        }, 500)
-      } else {
+    // Animation Creature Shaking
+    if (!isCreatureJiggling) {
+      setCreatureIsJiggling(true)
+      setTimeout(() => {
         setCreatureIsJiggling(false)
-        setTimeout(() => {
-          setCreatureIsJiggling(true)
-        }, 50)
-      }
+      }, 500)
+    } else {
+      setCreatureIsJiggling(false)
+      setTimeout(() => {
+        setCreatureIsJiggling(true)
+      }, 50)
+    }
+
+    // Trigger vibration if available (mobile)
+    if ('vibrate' in navigator) {
+      const vibrate = () => navigator.vibrate(100)
+      window.addEventListener('click', vibrate, { once: true })
     }
   }
 
   return (
     <div>
-      <Link to="/monster-map">MonsterMap</Link>
-
-      <div onClick={attack}>
-        <div>Cooldown: {monsterCooldown}</div>
-        <div>Health: {monsterHp}</div>
+      {/* Monster */}
+      <h4>{monsterName}</h4>
+      <div onClick={creatureAttack}>
+        <div>Cooldown: {(monsterCooldown / 1000).toFixed(2)}</div>
+        <ProgressBar
+          progress={monsterHp / monsterAttributes.health}
+          color="#F05E67"
+        />
+        <div>
+          {Math.max(monsterHp, 0)}/{monsterAttributes.health}
+        </div>
         <img
-          className={`creature ${isJiggling ? 'jiggle' : ''}`}
+          className={`battle-creature ${isMonsterJiggling ? 'jiggle' : ''}`}
           src={monsterImage}
           alt="monster"
         />
       </div>
+
+      {/* Countdown */}
+      {battleStatus === BATTLE_STATUSES.NOT_STARTED ? (
+        <h2>Fight in {countDown} ... </h2>
+      ) : battleStatus === BATTLE_STATUSES.IN_PROGRESS ? (
+        <h2> </h2>
+      ) : (
+        resultMessage
+      )}
+
+      {/* Creature */}
       <div>
-        <div>Cooldown: {creatureCooldown}</div>
-        <div>Health: {creatureHp}</div>
+        <div>Cooldown: {(creatureCooldown / 1000).toFixed(2)}</div>
+        <ProgressBar progress={creatureHp / creatureHealth} color="#5EB3F0" />
+        <div>
+          {Math.max(creatureHp, 0)}/{creatureHealth}
+        </div>
         <img
-          className={`creature  ${isCreatureJiggling ? 'jiggle' : ''}`}
+          className={`battle-creature  ${isCreatureJiggling ? 'jiggle' : ''}`}
           src={creatureImage}
           alt="creature"
         />

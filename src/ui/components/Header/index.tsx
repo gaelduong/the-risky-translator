@@ -1,8 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+// Assets
 import { moneyImg } from '@Assets/images'
 import { flashImg } from '@Assets/images'
-import { Link } from 'react-router-dom'
-import { formatNumberWithCommas } from '@Functions/itemUtils'
+
+// Redux
 import {
   resetEnergy,
   resetMoney,
@@ -10,40 +13,35 @@ import {
   updateMoney
 } from '@Redux/slices/resourceSlice'
 
+// Functions
+import { formatNumberWithCommas } from '@Functions/itemUtils'
+
 const Header = () => {
   const { money, energy } = useSelector((state: any) => state.resource)
   const dispatch = useDispatch()
 
   const displayMoney = money < 0 ? `-${money * -1}` : `${money}`
 
-  return <h2 style={{ margin: 0 }}>Header</h2>
   return (
     <>
+      <div>Test</div>
       <div
         style={{
+          color: 'white',
           width: 200,
           display: 'flex',
-          // justifyContent: 'center'
+          justifyContent: 'center',
           // alignItems: 'center',
           margin: '0 auto',
-          paddingTop: 40,
+          padding: '20px 0',
           gap: 10
         }}
       >
         <div
           style={{
-            background: '#e6f0e7',
-            width: 95,
-            paddingTop: 'env(safe-area-inset-top)',
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '0 7px',
-            margin: '0 auto',
-            borderRadius: '10px',
-            border: '0.5px solid rgba(0, 0, 0, 0.35)',
-            boxShadow:
-              'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset'
+            gap: 5,
+            alignItems: 'center'
           }}
           onClick={() => dispatch(resetMoney())}
         >
@@ -62,18 +60,8 @@ const Header = () => {
         </div>
         <div
           style={{
-            background: '#e6f0e7',
-            width: 95,
-            paddingTop: 'env(safe-area-inset-top)',
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '0 7px',
-            margin: '0 auto',
-            borderRadius: '10px',
-            border: '0.5px solid rgba(0, 0, 0, 0.35)',
-            boxShadow:
-              'rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset'
+            alignItems: 'center'
           }}
           onClick={() => dispatch(resetEnergy())}
         >
@@ -106,16 +94,7 @@ const Header = () => {
             <button>Home</button>
           </Link>
         </h2> */}
-        <h2>
-          <Link to="/battle">
-            <button>Battle</button>
-          </Link>
-        </h2>
-        <h2>
-          <Link to="/city0">
-            <button>City</button>
-          </Link>
-        </h2>
+
         <div>
           <button
             onClick={() => dispatch(updateMoney({ amount: 1 }))}
