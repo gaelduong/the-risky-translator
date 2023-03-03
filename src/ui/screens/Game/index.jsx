@@ -38,7 +38,6 @@ import {
 } from '@Assets/images'
 
 import * as images from '@Assets/images'
-const imagePaths = Object.values(images)
 
 function ImagePreloader({ children }) {
   const [isLoading, setIsLoading] = useState(true)
@@ -139,41 +138,41 @@ const Game = () => {
 
   return (
     <>
-      <ImagePreloader>
-        <CustomLayout>
-          <Header />
-          <Routes>
-            {cityMapList.map(cityMap => (
-              <Route
-                key={cityMap.props.route}
-                path={cityMap.props.route}
-                element={cityMap}
-              />
-            ))}
-            <Route path="/work" element={<TranslationJob />} />
+      {/* <ImagePreloader> */}
+      <CustomLayout>
+        <Header />
+        <Routes>
+          {cityMapList.map(cityMap => (
+            <Route
+              key={cityMap.props.route}
+              path={cityMap.props.route}
+              element={cityMap}
+            />
+          ))}
+          <Route path="/work" element={<TranslationJob />} />
 
-            {/* New */}
-            <Route path="/" element={<LoadingApp />} />
-            <Route path="/loading" element={<LoadingApp />} />
-            <Route path="/story" element={<Story />} />
-            <Route path="/name" element={<NameCreation />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/upgrade" element={<Upgrade />} />
-            <Route path="/town" element={<Town />} />
-            <Route path="/pre-training" element={<PreTraining />} />
-            <Route path="/training" element={<Training />} />
-            <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
-            <Route path="/recog-type" element={<RecognizeType />} />
-            <Route path="/word-list" element={<WordListView />} />
-            <Route path="/word-list/:id" element={<WordDetailView />} />
-            <Route path="/bigmixes" element={<BigMixes />} />
-            <Route path="/megamixes" element={<MegaMixes />} />
-            <Route path="/everything" element={<Everything />} />
-            <Route path="/monster-map" element={<MonsterMap />} />
-            <Route path="/battle" element={<Battle />} />
-          </Routes>
-        </CustomLayout>
-      </ImagePreloader>
+          {/* New */}
+          <Route path="/" element={<LoadingApp />} />
+          <Route path="/loading" element={<LoadingApp />} />
+          <Route path="/story" element={<Story />} />
+          <Route path="/name" element={<NameCreation />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/town" element={<Town />} />
+          <Route path="/pre-training" element={<PreTraining />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
+          <Route path="/recog-type" element={<RecognizeType />} />
+          <Route path="/word-list" element={<WordListView />} />
+          <Route path="/word-list/:id" element={<WordDetailView />} />
+          <Route path="/bigmixes" element={<BigMixes />} />
+          <Route path="/megamixes" element={<MegaMixes />} />
+          <Route path="/everything" element={<Everything />} />
+          <Route path="/monster-map" element={<MonsterMap />} />
+          <Route path="/battle" element={<Battle />} />
+        </Routes>
+      </CustomLayout>
+      {/* </ImagePreloader> */}
     </>
   )
 }
