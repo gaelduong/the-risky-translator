@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { WORDS } from '@Data/wordData'
+import { WordsData } from '@Data/wordData'
 
 export const vocabularySlice = createSlice({
   name: 'vocabulary',
   initialState: {
-    vocabulary: JSON.parse(localStorage.getItem('vocabulary')) || WORDS
+    vocabulary: JSON.parse(localStorage.getItem('vocabulary')) || WordsData
   },
   reducers: {}
 })

@@ -25,6 +25,8 @@ const getWordActivityHistory = item => {
 }
 
 const getWordListPool = (words, locationId) => {
+  if (isNaN(locationId) || locationId == null) return []
+
   const location = LocationData.find(location => location.id === locationId)
   const {
     partition: { start, end }

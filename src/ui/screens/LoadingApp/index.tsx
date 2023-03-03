@@ -1,5 +1,10 @@
 const LoadingApp = () => {
-  return <div>LoadingApp</div>
+  return (
+    <div>
+      <h2>App Name</h2>
+      <p>Loading...</p>
+    </div>
+  )
 }
 
 export default LoadingApp
