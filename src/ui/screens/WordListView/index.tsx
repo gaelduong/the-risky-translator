@@ -42,7 +42,7 @@ const WordListView = () => {
         <tbody>
           {wordListPool.map((word: any) => {
             return (
-              <tr>
+              <tr key={getWordId(word)}>
                 <td onClick={() => navigateToWordDetail(word)}>
                   {getWordText(word)}
                 </td>
