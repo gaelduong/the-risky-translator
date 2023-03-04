@@ -1,6 +1,10 @@
 import { LocationData } from '@Data/locationData'
+import {
+  getLocationId,
+  getLocationImage,
+  getLocationName
+} from '@Functions/locationUtils'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const Popup = ({
@@ -10,14 +14,13 @@ const Popup = ({
   customProps: any
   onClose: any
 }) => {
-  const {
-    location: { id }
-  } = customProps
+  const { location } = customProps
+  const locationId = getLocationId(location)
 
   return (
     <div className="popup">
       <div>
-        <Link to="/word-list" state={{ locationId: id }}>
+        <Link to="/word-list" state={{ location }}>
           <button>View Word List</button>
         </Link>
       </div>
@@ -29,7 +32,7 @@ const Popup = ({
         </Link>
       </div>
       <div>
-        <Link to="/recog-mc" state={{ locationId: id }}>
+        <Link to="/recog-mc" state={{ locationId: locationId }}>
           <button>Multiple Choice</button>
         </Link>
       </div>
@@ -43,11 +46,10 @@ const Popup = ({
 }
 
 const Location = ({ location }: { location: any }) => {
-  //   const { x, y } = position
-  const state = useSelector(currState => currState)
   const [showPopup, setShowPopup] = useState(false)
 
-  const { locationName, image } = location
+  const locationName = getLocationName(location)
+  const image = getLocationImage(location)
 
   const handleClose = () => {
     setShowPopup(false)
@@ -85,7 +87,7 @@ const Town = () => {
       <hr />
       <div className="d-flex flex-wrap justify-center">
         {LocationData.map(location => {
-          return <Location key={location.id} location={location} />
+          return <Location key={getLocationId(location)} location={location} />
         })}
       </div>
     </div>

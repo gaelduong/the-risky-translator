@@ -1,11 +1,10 @@
 import { monsterImage } from '@Assets/images'
 import {
   getIsMonsterUnlocked,
-  getMonsterById,
   getRequiredMonstersToBeat
 } from '@Functions/monsterUtils'
 import { updateEnergy } from '@Redux/slices/resourceSlice'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 

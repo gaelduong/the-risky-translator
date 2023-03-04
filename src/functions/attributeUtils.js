@@ -1,4 +1,4 @@
-import { AttributesData } from '@Data/attributeData'
+// import { AttributesData } from '@Data/attributeData'
 
 const getAttributeValueAtLevel = (attribute, level) => {
   return level * 10

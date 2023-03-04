@@ -14,6 +14,7 @@ import { creatureImage } from '@Assets/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { Link, useLocation } from 'react-router-dom'
+import { updateWordStats } from '@Redux/slices/vocabularySlice'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)
@@ -67,13 +68,15 @@ const RecognizeMultipleChoice = () => {
 
   const [showPopup, setShowPopup] = useState(false)
 
+  // Generate choices for a given word
   useEffect(() => {
     const wrongChoices = getRandomWordList(wordListPool, 1, wordId)
     setChoices(_.shuffle([currentWord, ...wrongChoices]))
     setMessage('')
-  }, [currentWord, wordListPool, wordId])
+  }, [currentWord])
 
   useEffect(() => {
+    // if()
     setCurrentword(selectWord(wordListPool))
   }, [wordListPool, totalAnswered])
 
@@ -85,19 +88,18 @@ const RecognizeMultipleChoice = () => {
     if (checkAnswer(selectedAnswer)) {
       correctAudio.play()
       setMessage(`Correct!\n ${answerRevealed ? '+$0' : '+$1'}`)
+
       setTimeout(() => {
         if (!answerRevealed) {
           dispatch(updateMoney({ amount: 1 }))
           dispatch(updateEnergy({ amount: 2 }))
+          dispatch(
+            updateWordStats({
+              id: itemId,
+              log: { timestamp: Date.now(), result: 'CORRECT' }
+            })
+          )
         }
-
-        // dispatch({
-        //   type: 'TRACK_ACTIVITY',
-        //   payload: {
-        //     id: itemId,
-        //     log: { timestamp: Date.now(), result: 'CORRECT' }
-        //   }
-        // })
         setShowResult(false)
         setTotalAnswered(totalAnswered => totalAnswered + 1)
       }, 1000)
@@ -107,13 +109,13 @@ const RecognizeMultipleChoice = () => {
       setTimeout(() => {
         dispatch(updateMoney({ amount: -1 }))
         dispatch(updateEnergy({ amount: 0 }))
-        // dispatch({
-        //   type: 'TRACK_ACTIVITY',
-        //   payload: {
-        //     id: itemId,
-        //     log: { timestamp: Date.now(), result: 'INCORRECT' }
-        //   }
-        // })
+        dispatch(
+          updateWordStats({
+            id: itemId,
+            log: { timestamp: Date.now(), result: 'INCORRECT' }
+          })
+        )
+
         setShowResult(false)
         setTotalAnswered(totalAnswered => totalAnswered + 1)
       }, 1000)
@@ -122,30 +124,44 @@ const RecognizeMultipleChoice = () => {
     setShowResult(true)
   }
 
+  const handleRevealAnswer = (itemId: number) => {
+    setAnswerRevealed(true)
+    // dispatch(
+    //   updateWordStats({
+    //     id: itemId,
+    //     log: { timestamp: Date.now(), result: 'REVEAL' }
+    //   })
+    // )
+  }
+
   return (
     <>
-      <h2></h2>
-      <button className="leave" onClick={() => setShowPopup(true)}>
-        Leave
-      </button>
-      <h2>Help me select...</h2>
-      <img
-        style={{ height: 200, width: 'auto' }}
-        src={creatureImage}
-        alt="person"
-      />
-      <h2>{wordText}</h2>
+      <div>
+        <button className="leave" onClick={() => setShowPopup(true)}>
+          Leave
+        </button>
+      </div>
+      <img className="creature" src={creatureImage} alt="person" />
+
+      <h2 className="header">{wordText}</h2>
 
       {choices.map(choice => (
         <div key={getWordId(choice)}>
           <button
-            className={
+            className={`mc-select-button ${
               showResult
                 ? wordMeaning === getWordMeaning(choice)
-                  ? 'button2'
-                  : 'button1'
-                : 'button1'
-            }
+                  ? 'mc-correct'
+                  : 'mc-wrong'
+                : ''
+            }`}
+            // className={
+            //   'mc-select-button ' + showResult
+            //     ? wordMeaning === getWordMeaning(choice)
+            //       ? 'button2'
+            //       : 'button1'
+            //     : 'mc-select-button'
+            // }
             disabled={showResult}
             onClick={() => submitAnswer(getWordMeaning(choice), wordId)}
           >
@@ -155,7 +171,12 @@ const RecognizeMultipleChoice = () => {
       ))}
 
       <div style={{ marginTop: 20 }}>
-        <button onClick={() => setAnswerRevealed(true)}>Cheat</button>
+        <span
+          className="reveal"
+          onClick={() => handleRevealAnswer(getWordId(currentWord))}
+        >
+          <u>reveal</u>
+        </span>
         {answerRevealed ? getWordMeaning(currentWord) : ''}
         <h3>{message}</h3>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+// import { useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 
 // Data
@@ -37,33 +37,33 @@ import {
   bgImage6
 } from '@Assets/images'
 
-import * as images from '@Assets/images'
+// import * as images from '@Assets/images'
 
-function ImagePreloader({ children }) {
-  const [isLoading, setIsLoading] = useState(true)
+// function ImagePreloader({ children }) {
+//   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const imagePaths = Object.values(images)
-    let loadedImages = 0
+//   useEffect(() => {
+//     const imagePaths = Object.values(images)
+//     let loadedImages = 0
 
-    const preloadImage = image => {
-      const img = new Image()
-      img.onload = () => {
-        loadedImages++
-        if (loadedImages === imagePaths.length) {
-          setIsLoading(false)
-        }
-      }
-      img.src = image
-    }
+//     const preloadImage = image => {
+//       const img = new Image()
+//       img.onload = () => {
+//         loadedImages++
+//         if (loadedImages === imagePaths.length) {
+//           setIsLoading(false)
+//         }
+//       }
+//       img.src = image
+//     }
 
-    imagePaths.forEach(image => {
-      preloadImage(image)
-    })
-  }, [])
+//     imagePaths.forEach(image => {
+//       preloadImage(image)
+//     })
+//   }, [])
 
-  return isLoading ? <p>Loading...</p> : <>{children}</>
-}
+//   return isLoading ? <p>Loading...</p> : <>{children}</>
+// }
 
 const MapData = CityMapData.map(cityMap => ({
   ...cityMap,

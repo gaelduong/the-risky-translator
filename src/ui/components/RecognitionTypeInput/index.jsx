@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { selectWord } from '@Algorithm'
 import { getWordId, getWordMeaning, getWordText } from '@Functions/wordUtils'
 import correctSound from '@Assets/audios/correct.mp3'

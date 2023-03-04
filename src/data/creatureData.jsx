@@ -33,11 +33,3 @@ export const CreatureData = {
     }
   }
 }
-
-const SKILLS = [
-  {
-    name: 'Restore health',
-    acquireRequirements: {},
-    effect: '   '
-  }
-]

@@ -3,7 +3,7 @@
 // export { default as casinoImg } from './casino.png'
 export { default as parkImg } from './park.png'
 // export { default as schoolImg } from './school.png'
-// export { default as storeImg } from './store.png'
+export { default as storeImg } from './store.png'
 // export { default as hospitalImg } from './hospital.png'
 
 export { default as moneyImg } from './money.png'
