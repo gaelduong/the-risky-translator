@@ -18,3 +18,5 @@ export { default as bgImage3 } from './bg3.jpg'
 export { default as bgImage4 } from './bg4.jpg'
 export { default as bgImage5 } from './bg5.jpg'
 export { default as bgImage6 } from './bg6.jpg'
+
+export { default as backImage } from './back.png'

@@ -28,16 +28,7 @@ const WordListView = () => {
   )
 
   const [displayWords, setDisplayWords] = useState(wordListPool)
-  const [currentPage, setCurrentPage] = useState(1)
-  const wordsPerPage = 10
 
-  const indexOfLastWord = currentPage * wordsPerPage
-  const indexOfFirstWord = indexOfLastWord - wordsPerPage
-  const currentWords = displayWords.slice(indexOfFirstWord, indexOfLastWord)
-
-  const paginate = (pageNumber: number) => {
-    setCurrentPage(pageNumber)
-  }
   const [sort, setSort] = useState('default')
 
   const handleSetSort = (e: any) => {
@@ -48,7 +39,7 @@ const WordListView = () => {
     setDisplayWords(sortedWordList)
   }
 
-  const handleApply = () => {}
+  // const handleApply = () => {}
 
   const navigateToWordDetail = (word: any) => {
     navigate(`/word-list/${getWordId(word)}`, { state: { word } })
@@ -98,16 +89,16 @@ const WordListView = () => {
       <select id="sorter" value={sort} onChange={handleSetSort}>
         <option value="default">Default</option>
         <option value="random">Random order</option>
-        <option value="corrects">Corrects</option>
+        {/* <option value="corrects">Corrects</option> */}
         <option value="incorrects">Incorrects</option>
-        <option value="reveals">Reveals</option>
-        <option value="exposures">Exposures</option>
+        {/* <option value="reveals">Reveals</option>  */}
+        {/* <option value="exposures">Exposures</option> */}
         <option value="corrects_exposures_ratio">
           Corrects/exposures ratio
         </option>
-        <option value="incorrects_exposures_ratio">
+        {/* <option value="incorrects_exposures_ratio">
           Incorrects/exposures ratio
-        </option>
+        </option> */}
         <option value="alphabetical">Alphabetical</option>
       </select>
       <hr />

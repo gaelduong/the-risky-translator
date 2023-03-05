@@ -11,7 +11,6 @@ import Header from '@Com/Header'
 // Screens
 import Battle from '@Screen/Battle'
 import CityMap from '@Screen/CityMap'
-import TranslationJob from '@Screen/TranslationJob'
 import Profile from '@Screen/Profile'
 import Upgrade from '@Screen/Upgrade'
 import Town from '@Screen/Town'
@@ -33,8 +32,8 @@ import {
   bgImage2,
   bgImage3,
   bgImage4,
-  bgImage5,
-  bgImage6
+  bgImage5
+  // bgImage6
 } from '@Assets/images'
 import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
 
@@ -150,7 +149,6 @@ const Game = () => {
               element={cityMap}
             />
           ))}
-          <Route path="/work" element={<TranslationJob />} />
 
           {/* New */}
           <Route path="/" element={<LoadingApp />} />

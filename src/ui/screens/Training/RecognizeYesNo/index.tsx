@@ -1,41 +1,22 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import _ from 'lodash'
 import { selectWord } from '@Algorithm/index'
 import {
-  getRandomWordList,
   getWordId,
   getWordListPool,
   getWordMeaning,
   getWordText
 } from '@Functions/wordUtils'
-import { correctSound, wrongSound } from '@Assets/audios'
+import { wrongSound } from '@Assets/audios'
 import { creatureImage } from '@Assets/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
+import BackWithPopup from '@Com/BackWithPopup'
 
 // Sound effects
-const correctAudio = new Audio(correctSound)
 const wrongAudio = new Audio(wrongSound)
-
-const Popup = ({ onClose }: { onClose: any }) => {
-  return (
-    <div className="popup">
-      <p> Are you sure you want to leave your training?</p>
-      <div>
-        <Link to="/town">
-          <button className="close">Leave</button>
-        </Link>
-      </div>
-
-      <div>
-        <button onClick={onClose}>Stay</button>
-      </div>
-    </div>
-  )
-}
 
 const RecognizeYesNo = () => {
   const {
@@ -61,8 +42,6 @@ const RecognizeYesNo = () => {
   const wordId = getWordId(currentWord)
   const wordText = getWordText(currentWord)
   const wordMeaning = getWordMeaning(currentWord)
-
-  const [showPopup, setShowPopup] = useState(false)
 
   useEffect(() => {
     if (!movedToNext) return
@@ -104,11 +83,7 @@ const RecognizeYesNo = () => {
 
   return (
     <>
-      <div>
-        <button className="leave" onClick={() => setShowPopup(true)}>
-          Leave
-        </button>
-      </div>
+      <BackWithPopup />
       <img className="creature" src={creatureImage} alt="person" />
 
       <h2 className="header">{wordText}</h2>
@@ -140,8 +115,6 @@ const RecognizeYesNo = () => {
         </div>
       )}
       {answerRevealed ? wordMeaning : ''}
-
-      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
     </>
   )
 }

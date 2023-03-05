@@ -27,7 +27,7 @@ const Popup = ({
       <hr />
       <p> Or, select a training type:</p>
       <div>
-        <Link to="/recog-type">
+        <Link to="/recog-type" state={{ locationId: locationId }}>
           <button>Typing</button>
         </Link>
       </div>
