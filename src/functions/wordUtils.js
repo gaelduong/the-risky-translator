@@ -39,6 +39,12 @@ const getWordGroups = item => {
   return item.content.groups
 }
 
+const getWordExposures = word => word.stats.exposures
+
+const getWordCorrects = word => word.stats.corrects
+
+const getWordIncorrects = word => word.stats.incorrects
+
 const getWordCorrectsExposuresRatio = word =>
   word.stats.exposures === 0 ? 0 : word.stats.corrects / word.stats.exposures
 
@@ -122,6 +128,9 @@ export {
   getWordLongMeaning,
   getWordAudio,
   getWordStats,
+  getWordCorrects,
+  getWordIncorrects,
+  getWordExposures,
   getWordActivityHistory,
   getWordListPool,
   getRandomWordList,

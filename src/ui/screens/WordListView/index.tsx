@@ -110,16 +110,17 @@ const WordListView = () => {
         </option>
         <option value="alphabetical">Alphabetical</option>
       </select>
+      <hr />
       {/* Search */}
-      <div>
+      {/* <div>
         <label>Search:</label>
         <input type="search" />
-      </div>
+      </div> */}
 
       {/* Search */}
-      <div>
+      {/* <div>
         <button onClick={handleApply}>Search</button>
-      </div>
+      </div> */}
 
       {/* Table */}
       <table className="x-center">

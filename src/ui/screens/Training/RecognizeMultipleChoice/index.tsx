@@ -55,7 +55,7 @@ const RecognizeMultipleChoice = () => {
   const [totalAnswered, setTotalAnswered] = useState<number>(0)
   const [currentWord, setCurrentword] = useState(null)
   const [choices, setChoices] = useState<string[]>([])
-  const [answerRevealed, setAnswerRevealed] = useState(false)
+  const [answerRevealed, setAnswerRevealed] = useState<boolean>(false)
 
   //   Results
   const [showResult, setShowResult] = useState(false)
@@ -77,7 +77,7 @@ const RecognizeMultipleChoice = () => {
 
   useEffect(() => {
     // if()
-    setCurrentword(selectWord(wordListPool))
+    setCurrentword(selectWord(wordListPool, totalAnswered))
   }, [wordListPool, totalAnswered])
 
   function checkAnswer(answer: string) {
@@ -155,13 +155,6 @@ const RecognizeMultipleChoice = () => {
                   : 'mc-wrong'
                 : ''
             }`}
-            // className={
-            //   'mc-select-button ' + showResult
-            //     ? wordMeaning === getWordMeaning(choice)
-            //       ? 'button2'
-            //       : 'button1'
-            //     : 'mc-select-button'
-            // }
             disabled={showResult}
             onClick={() => submitAnswer(getWordMeaning(choice), wordId)}
           >

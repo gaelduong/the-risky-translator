@@ -8,11 +8,15 @@ enum WordResultEnum {
 }
 
 const storedVocabulary = localStorage.getItem('vocabulary')
+// const initialState = {
+//   vocabulary: storedVocabulary ? JSON.parse(storedVocabulary) : WordsData
+// }
+
 const initialState = {
-  vocabulary: storedVocabulary ? JSON.parse(storedVocabulary) : WordsData
+  vocabulary: WordsData
 }
 
-localStorage.setItem('vocabulary', JSON.stringify(initialState.vocabulary))
+// localStorage.setItem('vocabulary', JSON.stringify(initialState.vocabulary))
 
 export const vocabularySlice = createSlice({
   name: 'vocabulary',
@@ -30,6 +34,7 @@ export const vocabularySlice = createSlice({
 
       if (wordIndex > -1) {
         state.vocabulary[wordIndex].stats.exposures++
+        // @ts-ignore
         state.vocabulary[wordIndex].stats[value]++
       }
 

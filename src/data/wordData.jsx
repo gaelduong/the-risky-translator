@@ -2,16 +2,27 @@ import randomWords from 'random-words'
 import { wordSound } from '@Assets/audios'
 
 const words = [
-  { word: 'un abricot', meaning: 'apricot', groups: [0] },
-  { word: 'une adresse', meaning: 'address', groups: [0] },
-  { word: 'un âge', meaning: 'age', groups: [0] },
-  { word: 'un ami', meaning: 'friend', groups: [0] },
-  { word: 'une année', meaning: 'year', groups: [0] },
-  { word: 'un arbre', meaning: 'tree', groups: [0] },
-  { word: 'un avion', meaning: 'plane', groups: [0] },
-  { word: 'un bébé', meaning: 'baby', groups: [0] },
-  { word: 'un bateau', meaning: 'boat', groups: [0] },
-  { word: 'un beau-père', meaning: 'father-in-law', groups: [0] },
+  { word: 'azas', meaning: 'apricot', groups: [0] },
+  { word: 'rero', meaning: 'address', groups: [0] },
+  { word: 'trer', meaning: 'age', groups: [0] },
+  { word: 'tikuunri', meaning: 'friend', groups: [0] },
+  { word: 'tielo', meaning: 'year', groups: [0] },
+  { word: 'juieno', meaning: 'tree', groups: [0] },
+  { word: 'tresrro', meaning: 'plane', groups: [0] },
+  { word: 'juerr', meaning: 'baby', groups: [0] },
+  { word: 'poopo', meaning: 'boat', groups: [0] },
+  { word: 'rappze', meaning: 'father-in-law', groups: [0] },
+
+  // { word: 'un abricot', meaning: 'apricot', groups: [0] },
+  // { word: 'une adresse', meaning: 'address', groups: [0] },
+  // { word: 'un âge', meaning: 'age', groups: [0] },
+  // { word: 'un ami', meaning: 'friend', groups: [0] },
+  // { word: 'une année', meaning: 'year', groups: [0] },
+  // { word: 'un arbre', meaning: 'tree', groups: [0] },
+  // { word: 'un avion', meaning: 'plane', groups: [0] },
+  // { word: 'un bébé', meaning: 'baby', groups: [0] },
+  // { word: 'un bateau', meaning: 'boat', groups: [0] },
+  // { word: 'un beau-père', meaning: 'father-in-law', groups: [0] },
   { word: 'une bête', meaning: 'animal', groups: [1] },
   { word: 'un bijou', meaning: 'jewel', groups: [1] },
   { word: 'un blouson', meaning: 'jacket', groups: [1] },
@@ -261,23 +272,48 @@ const words = [
   { word: 'un pont', meaning: 'bridge', groups: [25] }
 ]
 
-const WordsData1 = words.map((item, index) => {
-  return {
-    id: index,
-    content: item,
-    history: [],
-    stats: { exposures: 0, corrects: 0, incorrects: 0, reveals: 0 }
-  }
-})
+// const WordsData1 = words.map((item, index) => {
+//   return {
+//     id: index,
+//     content: item,
+//     history: [],
+//     stats: { exposures: 0, corrects: 0, incorrects: 0, reveals: 0 }
+//   }
+// })
 
-WordsData1[0] = WordsData1[1]
+// WordsData1[0] = WordsData1[1]
 
-const WordsData = [...Array(1920)].map((_, index) => {
+const WordsData1 = [...Array(1920)].map((_, index) => {
   return {
     id: index,
     content: {
       word: randomWords(),
       meaning: randomWords(),
+      long_meaning:
+        'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
+      examples: [
+        'quisquam est qui dolorem ipsum',
+        'quisquam est qui dolorem ipsum'
+      ],
+      audio: wordSound,
+      groups: [Math.floor(index / 10)]
+    },
+    history: [],
+    stats: {
+      exposures: 0,
+      corrects: 0, //Math.floor(Math.random() * 100),
+      incorrects: 0,
+      reveals: 0
+    }
+  }
+})
+
+const WordsData = words.map((word, index) => {
+  return {
+    id: index,
+    content: {
+      word: word.word,
+      meaning: word.meaning,
       long_meaning:
         'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
       examples: [

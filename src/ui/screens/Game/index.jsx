@@ -36,6 +36,7 @@ import {
   bgImage5,
   bgImage6
 } from '@Assets/images'
+import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
 
 // import * as images from '@Assets/images'
 
@@ -93,7 +94,7 @@ function CustomLayout({ children }) {
         return `url(${bgImage4})`
 
       case '/town':
-        return `url(${bgImage6})`
+        return ``
 
       case '/monster-map':
         return `url(${bgImage5})`
@@ -161,6 +162,7 @@ const Game = () => {
           <Route path="/town" element={<Town />} />
           <Route path="/pre-training" element={<PreTraining />} />
           <Route path="/training" element={<Training />} />
+          <Route path="/recog-yesno" element={<RecognizeYesNo />} />
           <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
           <Route path="/recog-type" element={<RecognizeType />} />
           <Route path="/word-list" element={<WordListView />} />

@@ -1,3 +1,10 @@
+import { shuffleArray } from '@Functions/generalUtils'
+import {
+  getWordCorrects,
+  getWordExposures,
+  getWordIncorrects,
+  getWordInCorrectsExposuresRatio
+} from '@Functions/wordUtils'
 import { words } from './data'
 import { enums } from './enums'
 
@@ -45,36 +52,61 @@ const formattedWords = words.map(word => {
 
 // console.log(formattedWords)
 
-function selectWord(words) {
-  return selectRandom(words)
+function selectWord(words, turn) {
+  const shuffledWords = shuffleArray(words)
+
+  // Cycle: le - hie - random - random - hie - mc ...
+  if (turn % 4 === 0) {
+    return selectLeastExposures(shuffledWords)
+  }
+  if (turn % 4 === 1) {
+    return selectHighestIncorrectsExposuresRatio(shuffledWords)
+  }
+  if (turn % 4 === 2) {
+    return selectRandom(shuffledWords)
+  }
+  if (turn % 4 === 3) {
+    return selectRandom(shuffledWords)
+  }
+  if (turn % 4 === 4) {
+    return selectHighestIncorrectsExposuresRatio(shuffledWords)
+  }
+  if (turn % 4 === 5) {
+    return selectMostCorrects(shuffledWords)
+  }
 }
 
 function selectRandom(words) {
   return words.at(Math.floor(Math.random() * words.length - 1))
 }
 
-function selectLeastExposuresWord(words) {
+function selectLeastExposures(words) {
   const wordWithLeastExposures = words.reduce((min, word) => {
-    return word.stats.exposures < min.stats.exposures ? word : min
+    return getWordExposures(word) < getWordExposures(min) ? word : min
   }, words[0])
 
   return wordWithLeastExposures
 }
 
-function selectHighestRatioIncorrectsToExposures(words) {
+function selectMostCorrects(words) {
+  const wordWithMostCorrects = words.reduce((min, word) => {
+    return getWordCorrects(word) > getWordCorrects(min) ? word : min
+  }, words[0])
+
+  return wordWithMostCorrects
+}
+
+function selectHighestIncorrectsExposuresRatio(words) {
   let ratios = words.map(word => ({
     ...word,
-    ratio:
-      word.stats.exposures > 0
-        ? word.stats.incorrects / word.stats.exposures
-        : 0
+    ratio: getWordInCorrectsExposuresRatio(word)
   }))
   ratios.sort((a, b) => {
     if (a.ratio > b.ratio) return -1
     if (a.ratio < b.ratio) return 1
-    // in case of ties, prioritize words with fewer exposures
-    if (a.stats.exposures < b.stats.exposures) return -1
-    if (a.stats.exposures > b.stats.exposures) return 1
+    // in case of ties, prioritize words with higher incorrects
+    if (getWordIncorrects(a) > getWordIncorrects(b)) return -1
+    if (getWordIncorrects(a) < getWordIncorrects(b)) return 1
     return 0
   })
   return ratios[0]

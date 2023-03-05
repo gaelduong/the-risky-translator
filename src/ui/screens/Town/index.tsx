@@ -37,6 +37,11 @@ const Popup = ({
         </Link>
       </div>
       <div>
+        <Link to="/recog-yesno" state={{ locationId: locationId }}>
+          <button>Yes/No</button>
+        </Link>
+      </div>
+      <div>
         <button className="close" onClick={onClose}>
           Close
         </button>
