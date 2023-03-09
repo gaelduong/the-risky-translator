@@ -63,7 +63,7 @@ const AudioMultipleChoice = ({ audioObjects }: { audioObjects: any }) => {
   useEffect(() => {
     const selectedWord = selectWord(wordListPool, totalAnswered)
     setCurrentword(selectedWord)
-    playAudio(getWordAudio(selectedWord))
+    playAudio2(getWordId(selectedWord))
   }, [totalAnswered])
 
   const playAudio = async (audio: any) => {
