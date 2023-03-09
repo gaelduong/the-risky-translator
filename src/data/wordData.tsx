@@ -1,5 +1,6 @@
 import randomWords from 'random-words'
 import { wordSound } from '@Assets/audios'
+import { Word } from '@Types/word'
 
 const words = [
   { word: 'azas', meaning: 'apricot', groups: [0] },
@@ -283,12 +284,12 @@ const words = [
 
 // WordsData1[0] = WordsData1[1]
 
-const WordsData = [...Array(1920)].map((_, index) => {
+const WordsData: Word[] = [...Array(1920)].map((_, index) => {
   return {
     id: index,
     content: {
-      word: randomWords(1),
-      meaning: randomWords(1),
+      word: randomWords(1)[0],
+      meaning: randomWords(1)[0],
       long_meaning:
         'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
       examples: [

@@ -16,7 +16,7 @@ const getWordText = (word: Word | null) => {
 
 const getWordMeaning = (word: Word | null) => {
   if (typeof word !== 'object' || !word) return ''
-  return word.content?.meaning || ''
+  return word.content.meaning || ''
 }
 
 const getWordLongMeaning = (word: Word | null) => {

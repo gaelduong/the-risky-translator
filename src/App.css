@@ -228,6 +228,7 @@ a {
   width: 12rem;
   max-height: 50%;
   object-fit: contain;
+  margin-top: -2rem;
 }
 
 .upgrade-btn {
@@ -285,6 +286,10 @@ a {
 
 .items-start {
   align-items: start;
+}
+
+.gap-0 {
+  gap: 0.25rem;
 }
 
 .gap-1 {

@@ -8,6 +8,8 @@ import {
 import { upgradeAttribute } from '@Redux/slices/creatureSlice'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 import CustomBackIcon from '@Com/CustomBackIcon'
+import './index.css'
+import { coinImage, creature2Image, energyImage } from '@Assets/images'
 
 const Upgrade = () => {
   const { state } = useLocation()
@@ -34,7 +36,9 @@ const Upgrade = () => {
       <CustomBackIcon linkTo="/profile" state={{ townId }} />
 
       <h2>{name}</h2>
-      <h2>Attributes</h2>
+      <img className="profile-image" src={creature2Image} alt="creature" />
+
+      <h3>Attributes</h3>
 
       {Object.keys(creature.attributes).map(key => {
         const attribute = creature.attributes[key]
@@ -42,33 +46,53 @@ const Upgrade = () => {
           getAttributeReqsAtLevel(key, attribute.level)
 
         return (
-          <p key={key}>
-            <span>{attribute.displayName}</span>,
+          <div className="upgrade-line" key={key}>
+            <div className="upgrade-col-1">
+              <div>
+                <b>{attribute.displayName}</b>
+              </div>
+              <div>
+                Lv: {attribute.level}/{getAttributeMaxLevel(key)}
+              </div>
+            </div>
+
             <span>
-              Lv:{attribute.level}/{getAttributeMaxLevel(key)}
+              <span className="current-value">{attribute.value}</span>
+              {' → '}
+              <span className="new-value">
+                {getAttributeValueAtLevel(key, attribute.level + 1)}
+              </span>
             </span>
-            ,
-            <span>
-              {attribute.value} to{' '}
-              {getAttributeValueAtLevel(key, attribute.level + 1)}
-            </span>
+
             <span>
               <button
+                className="upgrade-btn-action"
                 disabled={money < moneyRequired || energy < energyRequired}
                 onClick={() =>
                   handleUpgradeAttribute(key, moneyRequired, energyRequired)
                 }
               >
-                Cost:
-                {moneyRequired}(M)
-                {energyRequired}(E)
+                <div className="d-flex items-center gap-0 ">
+                  {moneyRequired}
+                  <img
+                    src={coinImage}
+                    style={{ width: '0.75rem' }}
+                    alt="coin"
+                  />
+                  {energyRequired}{' '}
+                  <img
+                    src={energyImage}
+                    style={{ width: '0.75rem' }}
+                    alt="energy"
+                  />
+                </div>
               </button>
             </span>
-          </p>
+          </div>
         )
       })}
 
-      <h2>Skills</h2>
+      <h3>Skills</h3>
     </div>
   )
 }

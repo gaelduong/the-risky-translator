@@ -1,8 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 // Assets
-import { moneyImg } from '@Assets/images'
-import { flashImg } from '@Assets/images'
+import { coinImage, energyImage } from '@Assets/images'
 
 // Redux
 import {
@@ -22,8 +21,7 @@ const Header = () => {
   const displayMoney = money < 0 ? `-${money * -1}` : `${money}`
 
   return (
-    <>
-      {/* <div>Test</div> */}
+    <div style={{ marginTop: '1rem' }}>
       <div
         style={{
           color: 'white',
@@ -47,10 +45,9 @@ const Header = () => {
           <img
             style={{
               width: 'auto',
-              height: 20,
-              transform: 'rotate(-5deg)'
+              height: 20
             }}
-            src={moneyImg}
+            src={coinImage}
             alt="money"
           />
           <span style={{ fontSize: 15 }}>
@@ -60,6 +57,7 @@ const Header = () => {
         <div
           style={{
             display: 'flex',
+            gap: 5,
             alignItems: 'center'
           }}
           onClick={() => dispatch(resetEnergy())}
@@ -70,7 +68,7 @@ const Header = () => {
               height: 20,
               transform: 'rotate(0deg)'
             }}
-            src={flashImg}
+            src={energyImage}
             alt="energy"
           />
           <span style={{ fontSize: 15 }}>
@@ -95,35 +93,35 @@ const Header = () => {
         </h2> */}
 
         <div>
-          <button
+          {/* <button
             onClick={() => dispatch(updateMoney({ amount: 1 }))}
             className="button2"
           >
             +1
-          </button>
+          </button> */}
           <button
             onClick={() => dispatch(updateMoney({ amount: 1000 }))}
             className="button2"
           >
             +1000
           </button>
-          <button
+          {/* <button
             onClick={() => dispatch(updateMoney({ amount: -5 }))}
             className="button2"
           >
             -5
-          </button>
+          </button> */}
 
           <button
-            onClick={() => dispatch(updateEnergy({ amount: 10 }))}
+            onClick={() => dispatch(updateEnergy({ amount: 100 }))}
             className="button2"
-            style={{ background: 'orange' }}
+            style={{ background: 'lightblue' }}
           >
-            +10
+            +100
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -6,7 +6,7 @@ import {
   getWordInCorrectsExposuresRatio
 } from '@Functions/wordUtils'
 import { Word } from '@Types/word'
-import { words } from './data'
+// import { words } from './data'
 
 // let formattedWords = [
 //   {

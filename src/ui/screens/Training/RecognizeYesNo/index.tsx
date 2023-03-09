@@ -88,7 +88,7 @@ const RecognizeYesNo = () => {
       <CustomBackIcon
         linkTo={`/town/${townId}`}
         popup={{
-          prompt: 'Are you sure you want to leave your training',
+          prompt: 'Are you sure you want to leave your training?',
           yesText: 'Leave',
           noText: 'Stay'
         }}
