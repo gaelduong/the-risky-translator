@@ -23,7 +23,7 @@ import { shuffleArray } from '@Functions/generalUtils'
 const correctAudio = new Audio(correctSound)
 const wrongAudio = new Audio(wrongSound)
 
-const AudioMultipleChoice = () => {
+const AudioMultipleChoice = ({ audioObjects }: { audioObjects: any }) => {
   const {
     state: { locationId, townId }
   } = useLocation()
@@ -70,6 +70,10 @@ const AudioMultipleChoice = () => {
     const module = await import(`@Assets/audios/words/${audio}`)
     const audioToPlay = new Audio(module.default)
     audioToPlay.play()
+  }
+
+  const playAudio2 = (wordId: number) => {
+    audioObjects[wordId].play()
   }
 
   function checkAnswer(answer: string) {
@@ -139,7 +143,7 @@ const AudioMultipleChoice = () => {
       <img className="creature" src={creatureImage} alt="person" />
 
       {/* <h2 className="header">{wordText}</h2> */}
-      <div onClick={() => playAudio(wordAudio)}>
+      <div onClick={() => playAudio2(wordId)}>
         <img
           style={{ width: '3rem', margin: '2rem' }}
           src={speakerImage}

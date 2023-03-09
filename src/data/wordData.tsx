@@ -323,7 +323,6 @@ const words2 = [
   'feel',
   'feeling',
   'file',
-  'file.txt',
   'find',
   'finish',
   'first',
