@@ -308,7 +308,7 @@ const WordsData = [...Array(1920)].map((_, index) => {
   }
 })
 
-const WordsData1 = words.map((word, index) => {
+export const WordsData1 = words.map((word, index) => {
   return {
     id: index,
     content: {

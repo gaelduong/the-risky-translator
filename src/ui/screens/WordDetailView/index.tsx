@@ -47,10 +47,10 @@ const WordDetailView = () => {
       <div>...</div>
 
       <h3>Stats</h3>
-      <div>Total exposures: {stats.exposures}</div>
-      <div>Corrects: {stats.corrects}</div>
-      <div>Incorrects: {stats.incorrects}</div>
-      <div>Reveals: {stats.reveals}</div>
+      <div>Total exposures: {stats?.exposures}</div>
+      <div>Corrects: {stats?.corrects}</div>
+      <div>Incorrects: {stats?.incorrects}</div>
+      <div>Reveals: {stats?.reveals}</div>
       <div>
         Corrects/Exposure:{' '}
         {(getWordCorrectsExposuresRatio(word) * 100).toFixed(1)}%

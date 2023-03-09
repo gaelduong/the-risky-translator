@@ -1,17 +1,24 @@
-const getMonsterById = (monsters, id) => {
+import { Monster } from '@Types/monster'
+
+const getMonsterById = (monsters: Monster[], id: number) => {
   return monsters.find(monster => monster.id === id)
 }
 
-const getIsMonsterUnlocked = (monsters, currentMonster) => {
+const getMonsterIsBeaten = (monster: Monster) => {
+  return monster.isBeaten
+}
+
+const getIsMonsterUnlocked = (monsters: Monster[], currentMonster: Monster) => {
   const shouldBeatMonsterIds = currentMonster.battleReqs.monsterIdsToBeat
 
   return shouldBeatMonsterIds.every(monsterId => {
     const currentMonster = monsters.find(monster => monster.id === monsterId)
-    return currentMonster.isBeaten
+    if (!currentMonster) return false
+    return getMonsterIsBeaten(currentMonster)
   })
 }
 
-const getRequiredMonstersToBeat = (monsters, monster) => {
+const getRequiredMonstersToBeat = (monsters: Monster[], monster: Monster) => {
   return monster.battleReqs.monsterIdsToBeat.map(monsterIdToBeat =>
     getMonsterById(monsters, monsterIdToBeat)
   )

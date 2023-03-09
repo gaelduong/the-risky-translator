@@ -11,7 +11,7 @@ const LoadingApp = () => {
     if (!isLoading) {
       navigate('/name')
     }
-  }, [isLoading])
+  }, [isLoading, navigate])
 
   useEffect(() => {
     const imagePaths = Object.values(images)

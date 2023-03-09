@@ -13,7 +13,7 @@ import {
 } from '@Redux/slices/resourceSlice'
 
 // Functions
-import { formatNumberWithCommas } from '@Functions/itemUtils'
+import { formatNumberWithCommas } from '@Functions/generalUtils'
 
 const Header = () => {
   const { money, energy } = useSelector((state: any) => state.resource)

@@ -1,1 +1,1 @@
-# The Risky Translator
+# Krulo Lingo

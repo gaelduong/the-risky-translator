@@ -5,9 +5,12 @@ import {
 } from '@Functions/attributeUtils'
 import { createSlice } from '@reduxjs/toolkit'
 
+const storedCreature = localStorage.getItem('creature')
+const initialState = storedCreature ? JSON.parse(storedCreature) : CreatureData
+
 export const creatureSlice = createSlice({
   name: 'creature',
-  initialState: JSON.parse(localStorage.getItem('creature')) || CreatureData,
+  initialState,
   reducers: {
     updateName: (state, action) => {
       state.name = action.payload.name

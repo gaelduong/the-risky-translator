@@ -5,10 +5,8 @@ import {
   getWordIncorrects,
   getWordInCorrectsExposuresRatio
 } from '@Functions/wordUtils'
+import { Word } from '@Types/word'
 import { words } from './data'
-import { enums } from './enums'
-
-const { CORRECT, INCORRECT, REVEAL } = enums
 
 // let formattedWords = [
 //   {
@@ -31,28 +29,28 @@ const { CORRECT, INCORRECT, REVEAL } = enums
 //   }
 // ]
 
-const formattedWords = words.map(word => {
-  const { history } = word
+// const formattedWords = words.map(word => {
+//   const { history } = word
 
-  const corrects = history.filter(h => h.result === CORRECT).length
-  const incorrects = history.filter(h => h.result === INCORRECT).length
-  const reveals = history.filter(h => h.result === REVEAL).length
-  const exposures = corrects + incorrects + reveals
+//   const corrects = history.filter(h => h.result === CORRECT).length
+//   const incorrects = history.filter(h => h.result === INCORRECT).length
+//   const reveals = history.filter(h => h.result === REVEAL).length
+//   const exposures = corrects + incorrects + reveals
 
-  return {
-    ...word,
-    stats: {
-      exposures: exposures,
-      corrects: corrects,
-      incorrects: incorrects,
-      reveals: reveals
-    }
-  }
-})
+//   return {
+//     ...word,
+//     stats: {
+//       exposures: exposures,
+//       corrects: corrects,
+//       incorrects: incorrects,
+//       reveals: reveals
+//     }
+//   }
+// })
 
 // console.log(formattedWords)
 
-function selectWord(words, turn) {
+function selectWord(words: Word[], turn: number): any {
   const shuffledWords = shuffleArray(words)
 
   // Cycle: le - hie - random - random - hie - mc ...
@@ -76,11 +74,11 @@ function selectWord(words, turn) {
   }
 }
 
-function selectRandom(words) {
-  return words.at(Math.floor(Math.random() * words.length - 1))
+function selectRandom(words: Word[]) {
+  return words.at(Math.floor(Math.random() * words.length - 1)) || null
 }
 
-function selectLeastExposures(words) {
+function selectLeastExposures(words: Word[]) {
   const wordWithLeastExposures = words.reduce((min, word) => {
     return getWordExposures(word) < getWordExposures(min) ? word : min
   }, words[0])
@@ -88,7 +86,7 @@ function selectLeastExposures(words) {
   return wordWithLeastExposures
 }
 
-function selectMostCorrects(words) {
+function selectMostCorrects(words: Word[]) {
   const wordWithMostCorrects = words.reduce((min, word) => {
     return getWordCorrects(word) > getWordCorrects(min) ? word : min
   }, words[0])
@@ -96,7 +94,7 @@ function selectMostCorrects(words) {
   return wordWithMostCorrects
 }
 
-function selectHighestIncorrectsExposuresRatio(words) {
+function selectHighestIncorrectsExposuresRatio(words: Word[]) {
   let ratios = words.map(word => ({
     ...word,
     ratio: getWordInCorrectsExposuresRatio(word)

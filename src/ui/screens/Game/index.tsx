@@ -9,7 +9,6 @@ import Battle from '@Screen/Battle'
 import Profile from '@Screen/Profile'
 import Upgrade from '@Screen/Upgrade'
 import Town from '@Screen/Town'
-import Training from '@Screen/Training'
 import Story from '@Screen/Story'
 import NameCreation from '@Screen/NameCreation'
 import WordListView from '@Screen/WordListView'
@@ -163,7 +162,6 @@ const Game = () => {
           <Route path="/upgrade" element={<Upgrade />} />
           <Route path="/town/:townId" element={<Town />} />
           <Route path="/pre-training" element={<PreTraining />} />
-          <Route path="/training" element={<Training />} />
           <Route path="/recog-yesno" element={<RecognizeYesNo />} />
           <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
           <Route path="/recog-type" element={<RecognizeType />} />

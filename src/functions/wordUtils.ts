@@ -1,61 +1,64 @@
 import { LocationData } from '@Data/locationData'
 import { shuffleArray } from './generalUtils'
 
-const getWordId = item => {
-  if (typeof item !== 'object' || !item) return -1
-  if (!(typeof item.id === 'number' && !isNaN(item.id))) return -1
-  return item.id
+import { Word } from '@Types/word'
+
+const getWordId = (word: Word | null) => {
+  if (typeof word !== 'object' || !word) return -1
+  if (!(typeof word.id === 'number' && !isNaN(word.id))) return -1
+  return word.id
 }
 
-const getWordText = item => {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.word || ''
+const getWordText = (word: Word | null) => {
+  if (typeof word !== 'object' || !word) return ''
+  return word.content?.word || ''
 }
 
-const getWordMeaning = item => {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.meaning || ''
+const getWordMeaning = (word: Word | null) => {
+  if (typeof word !== 'object' || !word) return ''
+  return word.content?.meaning || ''
 }
 
-const getWordLongMeaning = item => {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.long_meaning
+const getWordLongMeaning = (word: Word | null) => {
+  if (typeof word !== 'object' || !word) return ''
+  return word.content?.long_meaning
 }
 
-const getWordAudio = item => {
-  if (typeof item !== 'object' || !item) return ''
-  return item.content?.audio
+const getWordAudio = (word: Word | null) => {
+  if (typeof word !== 'object' || !word) return ''
+  return word.content?.audio
 }
 
-const getWordStats = item => {
-  return item.stats
+const getWordStats = (word: Word | null) => {
+  return word?.stats
 }
 
-const getWordActivityHistory = item => {
-  return item.history
+const getWordActivityHistory = (word: Word | null) => {
+  return word?.history || []
 }
 
-const getWordGroups = item => {
-  return item.content.groups
+const getWordGroups = (word: Word) => {
+  return word.content.groups
 }
 
-const getWordExposures = word => word.stats.exposures
+const getWordExposures = (word: Word) => word.stats.exposures
 
-const getWordCorrects = word => word.stats.corrects
+const getWordCorrects = (word: Word) => word.stats.corrects
 
-const getWordIncorrects = word => word.stats.incorrects
+const getWordIncorrects = (word: Word) => word.stats.incorrects
 
-const getWordCorrectsExposuresRatio = word =>
+const getWordCorrectsExposuresRatio = (word: Word) =>
   word.stats.exposures === 0 ? 0 : word.stats.corrects / word.stats.exposures
 
-const getWordInCorrectsExposuresRatio = word =>
+const getWordInCorrectsExposuresRatio = (word: Word) =>
   word.stats.exposures === 0 ? 0 : word.stats.incorrects / word.stats.exposures
 
-const getWordListPool = (allWords, locationId) => {
+const getWordListPool = (allWords: Word[], locationId: number) => {
   if (isNaN(locationId) || locationId == null) return []
 
   const location = LocationData.find(loc => loc.id === locationId)
 
+  if (!location) return []
   if (location.type === 'EVERYTHING') return [...allWords]
 
   const locationGroups = location.hasGroups
@@ -70,7 +73,11 @@ const getWordListPool = (allWords, locationId) => {
   return pool
 }
 
-const getRandomWordList = (words, numWords, exceptWordId = -1) => {
+const getRandomWordList = (
+  words: Word[],
+  numWords: number,
+  exceptWordId = -1
+) => {
   if (numWords > words.length) return []
 
   const hasExceptWord = exceptWordId !== -1
@@ -85,7 +92,7 @@ const getRandomWordList = (words, numWords, exceptWordId = -1) => {
   return shuffled.slice(0, numWords)
 }
 
-const getSortedWordList = (words, sort) => {
+const getSortedWordList = (words: Word[], sort: string) => {
   switch (sort) {
     case 'default':
       return words

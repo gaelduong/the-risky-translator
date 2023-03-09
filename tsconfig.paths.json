@@ -8,7 +8,8 @@
       "@Screen/*": ["./ui/screens/*"],
       "@Redux/*": ["./redux/*"],
       "@Functions/*": ["./functions/*"],
-      "@Data/*": ["./data/*"]
+      "@Data/*": ["./data/*"],
+      "@Types/*": ["./types/*"]
     }
   }
 }

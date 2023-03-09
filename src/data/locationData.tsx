@@ -1,4 +1,5 @@
 import { parkImg, storeImg } from '@Assets/images'
+import { Location } from '@Types/location'
 
 enum LocationType {
   REGULAR = 'REGULAR',
@@ -52,7 +53,7 @@ mixIndices.forEach((mixIdx, idx) => {
 
 CombinedLocationData.push(EverythingData)
 
-const LocationData = CombinedLocationData.map((location, idx) => {
+const LocationData: Location[] = CombinedLocationData.map((location, idx) => {
   return {
     id: idx,
     ...location

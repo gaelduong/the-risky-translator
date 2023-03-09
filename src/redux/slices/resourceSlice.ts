@@ -9,19 +9,19 @@ export const resourceSlice = createSlice({
   reducers: {
     updateMoney: (state, action) => {
       state.money += action.payload.amount
-      localStorage.setItem('money', state.money)
+      localStorage.setItem('money', state.money.toString())
     },
     resetMoney: state => {
       state.money = 0
-      localStorage.setItem('money', state.money)
+      localStorage.setItem('money', state.money.toString())
     },
     updateEnergy: (state, action) => {
       state.energy += action.payload.amount
-      localStorage.setItem('energy', state.energy)
+      localStorage.setItem('energy', state.energy.toString())
     },
     resetEnergy: state => {
       state.energy = 0
-      localStorage.setItem('energy', state.energy)
+      localStorage.setItem('energy', state.energy.toString())
     }
   }
 })

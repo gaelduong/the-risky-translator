@@ -1,25 +1,18 @@
-import { LocationData } from '@Data/locationData'
+import { Location } from '@Types/location'
 
-const getLocationId = location => {
+const getLocationId = (location: Location) => {
   return location.id
 }
 
-const getLocationName = location => {
+const getLocationName = (location: Location) => {
   return location.locationName
 }
 
-const getLocationImage = location => {
+const getLocationImage = (location: Location) => {
   return location.image
 }
 
-const checkLocationUnlocked = (locationId, gameState) => {
-  return (
-    LocationData.find(location => location.id === locationId).requirements
-      .minMoney <= gameState.money
-  )
-}
-
-const getLocationsByTownId = (townId, allLocations) => {
+const getLocationsByTownId = (townId: number, allLocations: Location[]) => {
   const start = townId * 9
   const end = start + 8
   const locations = []
@@ -37,11 +30,11 @@ const getLocationsByTownId = (townId, allLocations) => {
   }
 }
 
-const getMaxLocationPage = allLocations => {
+const getMaxLocationPage = (allLocations: Location[]) => {
   return 24
 }
 
-const getTownNameByTownId = townId => {
+const getTownNameByTownId = (townId: number) => {
   return `Town ${townId}`
 }
 
@@ -49,7 +42,6 @@ export {
   getLocationId,
   getLocationName,
   getLocationImage,
-  checkLocationUnlocked,
   getLocationsByTownId,
   getMaxLocationPage,
   getTownNameByTownId

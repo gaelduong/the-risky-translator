@@ -1,14 +1,19 @@
+import { createSlice } from '@reduxjs/toolkit'
+import { Monster } from '@Types/monster'
 import { MonstersData } from '@Data/monsterData'
 
-import { createSlice } from '@reduxjs/toolkit'
+const storedMonsters = localStorage.getItem('monsters')
+const initialState = storedMonsters ? JSON.parse(storedMonsters) : MonstersData
 
 export const monstersSlice = createSlice({
   name: 'monsters',
-  initialState: JSON.parse(localStorage.getItem('monsters')) || MonstersData,
+  initialState,
   reducers: {
     updateMonsterBeaten: (state, action) => {
       const monsterId = action.payload.id
-      const monsterIndex = state.findIndex(monster => monster.id === monsterId)
+      const monsterIndex = state.findIndex(
+        (monster: Monster) => monster.id === monsterId
+      )
       if (monsterIndex !== -1) {
         state[monsterIndex].isBeaten = true
         localStorage.setItem('monsters', JSON.stringify(state))

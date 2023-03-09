@@ -24,7 +24,7 @@ const Board = () => {
 
       requestAnimationFrame(render)
     }
-    // render()
+    render()
   }, [])
 
   return (

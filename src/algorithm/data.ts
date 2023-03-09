@@ -1,6 +1,10 @@
-import { enums } from './enums'
+enum RESULT {
+  CORRECT = 'CORRECT',
+  INCORRECT = 'INCORRECT',
+  REVEAL = 'REVEAL'
+}
 
-const { CORRECT, INCORRECT, REVEAL } = enums
+const [CORRECT, INCORRECT, REVEAL] = Object.keys(RESULT)
 
 export const words = [
   {

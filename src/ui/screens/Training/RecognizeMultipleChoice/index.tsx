@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import _ from 'lodash'
 import { selectWord } from '@Algorithm/index'
 import {
   getRandomWordList,
@@ -16,6 +15,8 @@ import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
 import CustomBackIcon from '@Com/CustomBackIcon'
+import { Word } from '@Types/word'
+import { shuffleArray } from '@Functions/generalUtils'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)
@@ -28,7 +29,7 @@ const RecognizeMultipleChoice = () => {
 
   const { vocabulary } = useSelector((state: any) => state.vocabulary)
 
-  const wordListPool = useMemo(
+  const wordListPool: Word[] = useMemo(
     () => getWordListPool(vocabulary, locationId),
     [vocabulary, locationId]
   )
@@ -38,7 +39,7 @@ const RecognizeMultipleChoice = () => {
   //   Word, choices, reveals
   const [totalAnswered, setTotalAnswered] = useState<number>(0)
   const [currentWord, setCurrentword] = useState(null)
-  const [choices, setChoices] = useState<string[]>([])
+  const [choices, setChoices] = useState<Word[]>([])
   const [answerRevealed, setAnswerRevealed] = useState<boolean>(false)
 
   //   Results
@@ -53,7 +54,7 @@ const RecognizeMultipleChoice = () => {
   // Generate choices for a given word
   useEffect(() => {
     const wrongChoices = getRandomWordList(wordListPool, 1, wordId)
-    setChoices(_.shuffle([currentWord, ...wrongChoices]))
+    setChoices(shuffleArray([currentWord, ...wrongChoices]))
     setMessage('')
   }, [currentWord])
 
