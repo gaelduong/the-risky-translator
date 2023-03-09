@@ -12,7 +12,7 @@ import {
 } from '@Functions/wordUtils'
 import { useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const WordListView = () => {
   const {

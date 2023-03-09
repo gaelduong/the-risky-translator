@@ -1,4 +1,4 @@
-const r = [
+const madeUpWords = [
   'Fang',
   'Splash',
   'Blazeonite',
@@ -101,7 +101,7 @@ const r = [
   'Thunderfly'
 ]
 
-console.log(r.length)
+console.log(madeUpWords.length)
 
 const e = [
   'Door',
@@ -512,7 +512,7 @@ const WORDS = [
   }
 ]
 
-const WORDS = [
+const WORDS1 = [
   {
     id: 0,
     content: { word: 'Fang', meaning: 'Door' },
@@ -1114,3 +1114,5 @@ const WORDS = [
     stats: { exposures: 0, corrects: 0, incorrects: 0, reveals: 0 }
   }
 ]
+
+export { madeUpWords }

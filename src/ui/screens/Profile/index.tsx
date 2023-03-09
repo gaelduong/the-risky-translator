@@ -15,36 +15,44 @@ const Profile = () => {
   } = creature
 
   return (
-    <div>
+    <div className="d-flex d-col items-center">
       <CustomBackIcon linkTo={`/town/${townId}`} />
       <h2>{name}</h2>
       <img className="profile-image" src={creature2Image} alt="creature" />
       <Link to="/upgrade" state={{ townId }}>
         <div>
-          <button>Upgrade</button>
+          <button className="upgrade-btn">Upgrade</button>
         </div>
       </Link>
 
-      <h2>Attributes</h2>
-      <div>
-        <span>{health.value}</span> <span>{health.displayName}</span>
+      <h3 className="profile-header">Attributes</h3>
+      <div className="d-flex d-col items-start gap-1">
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{health.value}</div>
+          <span className="f-12">{health.displayName}</span>
+        </div>
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{defence.value}</div>{' '}
+          <span className="f-12">{defence.displayName}</span>
+        </div>
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{power.value}</div>{' '}
+          <span className="f-12">{power.displayName}</span>
+        </div>
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{accuracy.value}</div>{' '}
+          <span className="f-12">{accuracy.displayName}</span>
+        </div>
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{attackCount.value}</div>{' '}
+          <span className="f-12">{attackCount.displayName}</span>
+        </div>
+        <div className="d-flex items-center gap-2">
+          <div className="circle">{cooldown.value}</div>{' '}
+          <span className="f-12">{cooldown.displayName}</span>
+        </div>
       </div>
-      <div>
-        <span>{defence.value}</span> <span>{defence.displayName}</span>
-      </div>
-      <div>
-        <span>{power.value}</span> <span>{power.displayName}</span>
-      </div>
-      <div>
-        <span>{accuracy.value}</span> <span>{accuracy.displayName}</span>
-      </div>
-      <div>
-        <span>{attackCount.value}</span> <span>{attackCount.displayName}</span>
-      </div>
-      <div>
-        <span>{cooldown.value}</span> <span>{cooldown.displayName}</span>
-      </div>
-      <h2>Skills</h2>
+      <h3 className="profile-header">Skills</h3>
     </div>
   )
 }

@@ -23,7 +23,7 @@ const CustomBackIcon = ({
 
   if (!popup) {
     return (
-      <div style={{ display: 'flex' }}>
+      <div className="back-image">
         <Link to={linkTo} state={state}>
           <img style={{ marginLeft: '1rem' }} src={backImage} alt="back" />
         </Link>
@@ -33,9 +33,9 @@ const CustomBackIcon = ({
 
   return (
     <>
-      <div style={{ display: 'flex' }}>
+      <div className="back-image">
         <img
-          style={{ marginLeft: '1rem' }}
+          // style={{ marginLeft: '1rem' }}
           src={backImage}
           alt="back"
           onClick={() => setShowPopup(true)}
@@ -51,7 +51,9 @@ const CustomBackIcon = ({
           </div>
 
           <div>
-            <button onClick={handlePopupClose}>{popup.noText}</button>
+            <button className="stay" onClick={handlePopupClose}>
+              {popup.noText}
+            </button>
           </div>
         </div>
       )}

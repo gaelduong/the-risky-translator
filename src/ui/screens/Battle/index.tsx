@@ -41,10 +41,10 @@ const ProgressBar = ({
   )
 }
 
-const BATTLE_STATUSES = {
-  NOT_STARTED: 'NOT_STARTED',
-  IN_PROGRESS: 'IN_PROGRESS',
-  END: 'END'
+enum BATTLE_STATUSES {
+  NOT_STARTED = 'NOT_STARTED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  END = 'END'
 }
 
 const Battle = () => {
@@ -102,7 +102,7 @@ const Battle = () => {
 
   useEffect(() => {
     if (monsterHp <= 0 || creatureHp <= 0) {
-      setBattleStatus('END')
+      setBattleStatus(BATTLE_STATUSES.END)
     }
 
     // Win

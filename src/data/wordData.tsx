@@ -287,8 +287,8 @@ const WordsData = [...Array(1920)].map((_, index) => {
   return {
     id: index,
     content: {
-      word: randomWords(),
-      meaning: randomWords(),
+      word: randomWords(1),
+      meaning: randomWords(1),
       long_meaning:
         'Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit',
       examples: [

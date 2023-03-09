@@ -50,25 +50,30 @@ const Popup = ({ customProps, onClose }: any) => {
   return (
     <div className="popup">
       <h3>{name}</h3>
-      <p> Attributes</p>
-      <div>Health:{attributes.health}</div>
-      <div>Defence:{attributes.defence}</div>
-      <div>Power:{attributes.power}</div>
-      <div>Accuracy: {attributes.accuracy}</div>
-      <div>Attack Count:{attributes.attackCount}</div>
-      <div>Cooldown:{attributes.cooldown}</div>
-      <Link to="/battle" state={monster}>
-        <button
-          disabled={energy < battleReqs.energy}
-          onClick={() => handleEnterBattle(battleReqs)}
-        >
-          Battle -{battleReqs.energy}(E)
+      <h4> Attributes</h4>
+      <div style={{ width: '80%', margin: '0 auto', textAlign: 'left' }}>
+        <div>Health: {attributes.health}</div>
+        <div>Defence: {attributes.defence}</div>
+        <div>Power: {attributes.power}</div>
+        <div>Accuracy: {attributes.accuracy}</div>
+        <div>Attack Count: {attributes.attackCount}</div>
+        <div>Cooldown: {attributes.cooldown}</div>
+      </div>
+      <div>
+        <Link to="/battle" state={monster}>
+          <button
+            disabled={energy < battleReqs.energy}
+            onClick={() => handleEnterBattle(battleReqs)}
+          >
+            Battle -{battleReqs.energy}(E)
+          </button>
+        </Link>
+      </div>
+      <div>
+        <button className="close" onClick={onClose}>
+          Close
         </button>
-      </Link>
-
-      <button className="close" onClick={onClose}>
-        Close
-      </button>
+      </div>
     </div>
   )
 }
@@ -101,9 +106,7 @@ const MonsterMap = () => {
     <div>
       <CustomBackIcon linkTo={`/town/${townId}`} />
 
-      <div
-        style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
-      >
+      <div className="d-grid-3 px-1 py-1">
         {monsters.map((monster: any) => {
           return (
             <div key={monster.name}>

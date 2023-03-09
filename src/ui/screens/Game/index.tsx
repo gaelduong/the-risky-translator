@@ -32,6 +32,8 @@ import {
   // bgImage6
 } from '@Assets/images'
 import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
+import Board from '../../../game/Board'
+import { ReactNode } from 'react'
 
 // // Initialize the S3 client with the desired region
 // const s3 = new AWS.S3({
@@ -94,10 +96,10 @@ const useCurrentPath = () => {
   return route.path
 }
 
-function CustomLayout({ children }) {
+function CustomLayout({ children }: { children: ReactNode }) {
   const currentPath = useCurrentPath()
 
-  const getBackgroundImage = path => {
+  const getBackgroundImage = (path: string) => {
     switch (path) {
       case '/':
         return `url(${bgImage3})`
@@ -172,6 +174,7 @@ const Game = () => {
           <Route path="/everything" element={<Everything />} />
           <Route path="/monster-map" element={<MonsterMap />} />
           <Route path="/battle" element={<Battle />} />
+          <Route path="/game" element={<Board />} />
           <Route path="*" element={<Town />} />
         </Routes>
       </CustomLayout>

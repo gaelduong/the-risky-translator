@@ -30,6 +30,7 @@ const Popup = ({
   return (
     <div className="popup">
       <h3>{getLocationName(location)}</h3>
+
       <div>
         <Link to="/word-list" state={{ location, townId }}>
           <button>View Word List</button>
@@ -38,13 +39,13 @@ const Popup = ({
       <hr />
       <p> Or, select a training type:</p>
       <div>
-        <Link to="/recog-type" state={{ locationId: locationId, townId }}>
-          <button>Typing</button>
+        <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
+          <button>Multiple Choice</button>
         </Link>
       </div>
       <div>
-        <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
-          <button>Multiple Choice</button>
+        <Link to="/recog-type" state={{ locationId: locationId, townId }}>
+          <button>Typing</button>
         </Link>
       </div>
       <div>
@@ -101,13 +102,13 @@ const TownHeader = ({ townId }: { townId: number }) => {
   return (
     <div className="town-header">
       <Link to="/profile" state={{ townId }}>
-        <div className="d-flex d-col">
+        <div className="d-flex d-col items-center">
           <img className="icon-map" src={creature2Image} alt="creature2" />
           <span>{creature.name}</span>
         </div>
       </Link>{' '}
       <Link to="/monster-map" state={{ townId }}>
-        <div className="d-flex d-col">
+        <div className="d-flex d-col items-center">
           <img className="icon-map" src={monsterImage} alt="monster-map" />
           <span>Monsters</span>
         </div>
@@ -124,7 +125,7 @@ const Town = () => {
   const maxLocationPage = getMaxLocationPage(LocationData)
 
   return (
-    <div>
+    <div className="d-flex d-col items-center">
       <TownHeader townId={townId} />
       {/* Arrows */}
       <div>

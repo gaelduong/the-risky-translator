@@ -1,4 +1,4 @@
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress }: { progress: number }) => {
   const borderRadiusPx = 10
 
   return (
