@@ -1,11 +1,21 @@
+import {
+  creature2Image,
+  leftArrowImage,
+  monsterImage,
+  rightArrowImage
+} from '@Assets/images'
 import { LocationData } from '@Data/locationData'
 import {
   getLocationId,
   getLocationImage,
-  getLocationName
+  getLocationName,
+  getLocationsByTownId,
+  getMaxLocationPage,
+  getTownNameByTownId
 } from '@Functions/locationUtils'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
 
 const Popup = ({
   customProps,
@@ -14,30 +24,31 @@ const Popup = ({
   customProps: any
   onClose: any
 }) => {
-  const { location } = customProps
+  const { location, townId } = customProps
   const locationId = getLocationId(location)
 
   return (
     <div className="popup">
+      <h3>{getLocationName(location)}</h3>
       <div>
-        <Link to="/word-list" state={{ location }}>
+        <Link to="/word-list" state={{ location, townId }}>
           <button>View Word List</button>
         </Link>
       </div>
       <hr />
       <p> Or, select a training type:</p>
       <div>
-        <Link to="/recog-type" state={{ locationId: locationId }}>
+        <Link to="/recog-type" state={{ locationId: locationId, townId }}>
           <button>Typing</button>
         </Link>
       </div>
       <div>
-        <Link to="/recog-mc" state={{ locationId: locationId }}>
+        <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
           <button>Multiple Choice</button>
         </Link>
       </div>
       <div>
-        <Link to="/recog-yesno" state={{ locationId: locationId }}>
+        <Link to="/recog-yesno" state={{ locationId: locationId, townId }}>
           <button>Yes/No</button>
         </Link>
       </div>
@@ -50,7 +61,7 @@ const Popup = ({
   )
 }
 
-const Location = ({ location }: { location: any }) => {
+const Location = ({ location, townId }: { location: any; townId: number }) => {
   const [showPopup, setShowPopup] = useState(false)
 
   const locationName = getLocationName(location)
@@ -61,7 +72,7 @@ const Location = ({ location }: { location: any }) => {
   }
 
   const locationDisplay = (
-    <div onClick={() => setShowPopup(true)}>
+    <div className="location" onClick={() => setShowPopup(true)}>
       <img
         style={{
           width: 100,
@@ -77,22 +88,79 @@ const Location = ({ location }: { location: any }) => {
 
   return (
     <div>
-      {showPopup && <Popup customProps={{ location }} onClose={handleClose} />}
+      {showPopup && (
+        <Popup customProps={{ location, townId }} onClose={handleClose} />
+      )}
       {locationDisplay}
     </div>
   )
 }
 
+const TownHeader = ({ townId }: { townId: number }) => {
+  const { creature } = useSelector((state: any) => state)
+  return (
+    <div className="town-header">
+      <Link to="/profile" state={{ townId }}>
+        <div className="d-flex d-col">
+          <img className="icon-map" src={creature2Image} alt="creature2" />
+          <span>{creature.name}</span>
+        </div>
+      </Link>{' '}
+      <Link to="/monster-map" state={{ townId }}>
+        <div className="d-flex d-col">
+          <img className="icon-map" src={monsterImage} alt="monster-map" />
+          <span>Monsters</span>
+        </div>
+      </Link>
+    </div>
+  )
+}
+
 const Town = () => {
+  const params = useParams()
+  const townId = parseInt(params.townId || '0')
+
+  const locations = getLocationsByTownId(townId, LocationData)
+  const maxLocationPage = getMaxLocationPage(LocationData)
+
   return (
     <div>
-      <h2> Town </h2>
-      <Link to="/profile">Profile</Link>{' '}
-      <Link to="/monster-map">MonsterMap</Link>
-      <hr />
-      <div className="d-flex flex-wrap justify-center">
-        {LocationData.map(location => {
-          return <Location key={getLocationId(location)} location={location} />
+      <TownHeader townId={townId} />
+      {/* Arrows */}
+      <div>
+        {townId > 0 && (
+          <Link to={`/town/${townId - 1}`}>
+            <img
+              className="arrow left-arrow"
+              src={leftArrowImage}
+              alt="left-arrow"
+            />
+          </Link>
+        )}
+        {townId < maxLocationPage && (
+          <Link to={`/town/${townId + 1}`}>
+            <img
+              className="arrow right-arrow"
+              src={rightArrowImage}
+              alt="right-arrow"
+            />
+          </Link>
+        )}
+      </div>
+
+      {/* Town Name */}
+      <h2> {getTownNameByTownId(townId)} </h2>
+
+      {/* Locations Display */}
+      <div className="d-grid-3 flex-wrap justify-center">
+        {locations.map(location => {
+          return (
+            <Location
+              key={getLocationId(location)}
+              location={location}
+              townId={townId}
+            />
+          )
         })}
       </div>
     </div>

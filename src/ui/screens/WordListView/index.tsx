@@ -1,3 +1,4 @@
+import CustomBackIcon from '@Com/CustomBackIcon'
 import { getLocationId, getLocationName } from '@Functions/locationUtils'
 import {
   getSortedWordList,
@@ -15,8 +16,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const WordListView = () => {
   const {
-    state: { location }
+    state: { location, townId }
   } = useLocation()
+
   const locationId = getLocationId(location)
   const audioRef = useRef<HTMLAudioElement>(null)
   const navigate = useNavigate()
@@ -80,7 +82,7 @@ const WordListView = () => {
   return (
     <div>
       <div>
-        <Link to="/town">Back</Link>
+        <CustomBackIcon linkTo={`/town/${townId}`} />
       </div>
       <h2>{getLocationName(location)}</h2>
 

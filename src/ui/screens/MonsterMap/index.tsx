@@ -1,4 +1,5 @@
 import { monsterImage } from '@Assets/images'
+import CustomBackIcon from '@Com/CustomBackIcon'
 import {
   getIsMonsterUnlocked,
   getRequiredMonstersToBeat
@@ -6,7 +7,7 @@ import {
 import { updateEnergy } from '@Redux/slices/resourceSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Popup = ({ customProps, onClose }: any) => {
   const { energy } = useSelector((state: any) => state.resource)
@@ -73,6 +74,9 @@ const Popup = ({ customProps, onClose }: any) => {
 }
 
 const MonsterMap = () => {
+  const { state } = useLocation()
+  const townId = state?.townId || 0
+
   const { monsters } = useSelector((state: any) => state)
 
   const [monsterPopups, setMonsterPopups] = useState<{
@@ -95,8 +99,7 @@ const MonsterMap = () => {
 
   return (
     <div>
-      <Link to="/town">BackToTowns</Link>
-      <hr></hr>
+      <CustomBackIcon linkTo={`/town/${townId}`} />
 
       <div
         style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}

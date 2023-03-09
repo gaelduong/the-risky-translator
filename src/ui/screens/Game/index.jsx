@@ -1,16 +1,11 @@
 // import { useEffect, useState } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
-
-// Data
-import { CityMapData } from '@Data/cityMapData'
-import { LocationData } from '@Data/locationData'
+import { matchRoutes, Route, Routes, useLocation } from 'react-router-dom'
 
 // Components
 import Header from '@Com/Header'
 
 // Screens
 import Battle from '@Screen/Battle'
-import CityMap from '@Screen/CityMap'
 import Profile from '@Screen/Profile'
 import Upgrade from '@Screen/Upgrade'
 import Town from '@Screen/Town'
@@ -32,10 +27,32 @@ import {
   bgImage2,
   bgImage3,
   bgImage4,
-  bgImage5
+  bgImage5,
+  bgImage6
   // bgImage6
 } from '@Assets/images'
 import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
+
+// // Initialize the S3 client with the desired region
+// const s3 = new AWS.S3({
+//   region: 'us-east-2'
+// })
+
+// // Define the object key and expiration time for the pre-signed URL
+// const objectKey = 'example-object-key'
+// const expirationTime = 3600 // 1 hour
+
+// // Generate the pre-signed URL for uploading the file
+// const params = {
+//   Bucket: 'presigned-test-gael',
+//   Key: objectKey,
+//   ContentType: 'text/plain', // Replace with the desired content type of the file
+//   Expires: expirationTime,
+//   ACL: 'public-read' // Replace with the desired access control list for the object
+// }
+// const uploadUrl = s3.getSignedUrl('putObject', params)
+
+// console.log(uploadUrl)
 
 // import * as images from '@Assets/images'
 
@@ -65,18 +82,23 @@ import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
 //   return isLoading ? <p>Loading...</p> : <>{children}</>
 // }
 
-const MapData = CityMapData.map(cityMap => ({
-  ...cityMap,
-  locations: cityMap.locationIds.map(locationId =>
-    LocationData.find(location => location.id === locationId)
-  )
-}))
+const useCurrentPath = () => {
+  // town routes
+  const routes = [{ path: '/town/:id' }]
+
+  const location = useLocation()
+  const result = matchRoutes(routes, location)
+  if (!result) return location.pathname
+
+  const [{ route }] = result
+  return route.path
+}
 
 function CustomLayout({ children }) {
-  const location = useLocation()
+  const currentPath = useCurrentPath()
 
   const getBackgroundImage = path => {
-    switch (location.pathname) {
+    switch (path) {
       case '/':
         return `url(${bgImage3})`
 
@@ -92,8 +114,8 @@ function CustomLayout({ children }) {
       case '/upgrade':
         return `url(${bgImage4})`
 
-      case '/town':
-        return ``
+      case '/town/:id':
+        return `url(${bgImage6})`
 
       case '/monster-map':
         return `url(${bgImage5})`
@@ -108,7 +130,7 @@ function CustomLayout({ children }) {
         return `url(${bgImage1})`
     }
   }
-  const backgroundImage = getBackgroundImage(location.path)
+  const backgroundImage = getBackgroundImage(currentPath)
 
   return (
     <div
@@ -125,39 +147,19 @@ function CustomLayout({ children }) {
 }
 
 const Game = () => {
-  const cityMapList = MapData.map(cityMap => {
-    return (
-      <CityMap
-        cityMap={cityMap}
-        numCityMaps={MapData.length}
-        key={cityMap.cityMapId}
-        route={cityMap.route}
-      />
-    )
-  })
-
   return (
     <>
       {/* <ImagePreloader> */}
       <CustomLayout>
         <Header />
         <Routes>
-          {cityMapList.map(cityMap => (
-            <Route
-              key={cityMap.props.route}
-              path={cityMap.props.route}
-              element={cityMap}
-            />
-          ))}
-
-          {/* New */}
           <Route path="/" element={<LoadingApp />} />
           <Route path="/loading" element={<LoadingApp />} />
           <Route path="/story" element={<Story />} />
           <Route path="/name" element={<NameCreation />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/upgrade" element={<Upgrade />} />
-          <Route path="/town" element={<Town />} />
+          <Route path="/town/:townId" element={<Town />} />
           <Route path="/pre-training" element={<PreTraining />} />
           <Route path="/training" element={<Training />} />
           <Route path="/recog-yesno" element={<RecognizeYesNo />} />
@@ -170,6 +172,7 @@ const Game = () => {
           <Route path="/everything" element={<Everything />} />
           <Route path="/monster-map" element={<MonsterMap />} />
           <Route path="/battle" element={<Battle />} />
+          <Route path="*" element={<Town />} />
         </Routes>
       </CustomLayout>
       {/* </ImagePreloader> */}

@@ -11,6 +11,13 @@ html {
   font-size: 18px;
 }
 
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/* ----------- */
+
 .container {
   /* background: rgba(0, 0, 0, 0.2); */
   width: 90%;
@@ -125,7 +132,7 @@ html {
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
-  width: 70vw;
+  width: min(70vw, calc(0.7 * 554px));
   border: 1px solid black;
   text-align: center;
   z-index: 99999999;
@@ -162,6 +169,46 @@ html {
 
 .battle-creature.jiggle {
   animation: jiggle 0.2s linear;
+}
+
+/* ----------Map---------- */
+.town-header {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+.icon-map {
+  width: 7rem;
+  object-fit: contain;
+}
+
+.arrow {
+  position: absolute;
+  top: 65vh;
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
+
+/* ----Location------ */
+
+.location {
+  flex-basis: 33.333333%;
+}
+
+/* ----Profile----- */
+
+.profile-image {
+  width: 50%;
+  max-height: 50%;
+  object-fit: contain;
 }
 
 @keyframes jiggle1 {
@@ -241,6 +288,16 @@ html {
 
 .d-flex {
   display: flex;
+}
+
+.d-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0 1rem;
+}
+
+.d-col {
+  flex-direction: column;
 }
 
 .flex-wrap {

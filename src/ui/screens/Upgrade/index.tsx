@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import {
   getAttributeValueAtLevel,
   getAttributeMaxLevel,
@@ -7,8 +7,12 @@ import {
 } from '@Functions/attributeUtils'
 import { upgradeAttribute } from '@Redux/slices/creatureSlice'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
+import CustomBackIcon from '@Com/CustomBackIcon'
 
 const Upgrade = () => {
+  const { state } = useLocation()
+  const townId = state?.townId || 0
+
   const { creature } = useSelector((state: any) => state)
   const dispatch = useDispatch()
 
@@ -27,7 +31,8 @@ const Upgrade = () => {
 
   return (
     <div>
-      <Link to="/profile">Back</Link>
+      <CustomBackIcon linkTo="/profile" state={{ townId }} />
+
       <h2>{name}</h2>
       <h2>Attributes</h2>
 

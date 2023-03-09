@@ -13,14 +13,14 @@ import { creatureImage } from '@Assets/images'
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import BackWithPopup from '@Com/BackWithPopup'
+import CustomBackIcon from '@Com/CustomBackIcon'
 
 // Sound effects
 const wrongAudio = new Audio(wrongSound)
 
 const RecognizeYesNo = () => {
   const {
-    state: { locationId }
+    state: { locationId, townId }
   } = useLocation()
 
   const { vocabulary } = useSelector((state: any) => state.vocabulary)
@@ -81,9 +81,18 @@ const RecognizeYesNo = () => {
     setAnswerRevealed(true)
   }
 
+  console.log(townId)
+
   return (
     <>
-      <BackWithPopup />
+      <CustomBackIcon
+        linkTo={`/town/${townId}`}
+        popup={{
+          prompt: 'Are you sure you want to leave your training',
+          yesText: 'Leave',
+          noText: 'Stay'
+        }}
+      />
       <img className="creature" src={creatureImage} alt="person" />
 
       <h2 className="header">{wordText}</h2>

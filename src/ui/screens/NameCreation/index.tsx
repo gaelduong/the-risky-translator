@@ -11,7 +11,7 @@ const NameCreation = () => {
     dispatch(updateName({ name }))
 
     setTimeout(() => {
-      navigate('/town')
+      navigate('/town/0')
     }, 1000)
   }
   return (

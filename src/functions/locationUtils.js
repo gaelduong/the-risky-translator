@@ -19,9 +19,38 @@ const checkLocationUnlocked = (locationId, gameState) => {
   )
 }
 
+const getLocationsByTownId = (townId, allLocations) => {
+  const start = townId * 9
+  const end = start + 8
+  const locations = []
+
+  for (let i = start; i <= end; i++) {
+    locations.push(allLocations[i])
+  }
+
+  const remaining = (townId + 1) * 9
+
+  if (remaining <= allLocations.length) {
+    return locations
+  } else {
+    return locations.slice(0, allLocations.length % 9)
+  }
+}
+
+const getMaxLocationPage = allLocations => {
+  return 24
+}
+
+const getTownNameByTownId = townId => {
+  return `Town ${townId}`
+}
+
 export {
   getLocationId,
   getLocationName,
   getLocationImage,
-  checkLocationUnlocked
+  checkLocationUnlocked,
+  getLocationsByTownId,
+  getMaxLocationPage,
+  getTownNameByTownId
 }

@@ -1,8 +1,12 @@
 import { useSelector } from 'react-redux'
-import { creatureImage } from '@Assets/images'
-import { Link } from 'react-router-dom'
+import { creature2Image } from '@Assets/images'
+import { Link, useLocation } from 'react-router-dom'
+import CustomBackIcon from '@Com/CustomBackIcon'
 
 const Profile = () => {
+  const { state } = useLocation()
+  const townId = state?.townId || 0
+
   const { creature } = useSelector((state: any) => state)
 
   const {
@@ -12,11 +16,10 @@ const Profile = () => {
 
   return (
     <div>
-      <Link to="/town">Back</Link>
-      <h2>Profile</h2>
+      <CustomBackIcon linkTo={`/town/${townId}`} />
       <h2>{name}</h2>
-      <img style={{ width: 100 }} src={creatureImage} alt="creature" />
-      <Link to="/upgrade">
+      <img className="profile-image" src={creature2Image} alt="creature" />
+      <Link to="/upgrade" state={{ townId }}>
         <div>
           <button>Upgrade</button>
         </div>

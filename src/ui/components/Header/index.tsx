@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <>
-      <div>Test</div>
+      {/* <div>Test</div> */}
       <div
         style={{
           color: 'white',
@@ -94,7 +94,7 @@ const Header = () => {
           </Link>
         </h2> */}
 
-        <div>
+        {/* <div>
           <button
             onClick={() => dispatch(updateMoney({ amount: 1 }))}
             className="button2"
@@ -121,7 +121,7 @@ const Header = () => {
           >
             +10
           </button>
-        </div>
+        </div> */}
       </div>
     </>
   )

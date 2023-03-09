@@ -283,7 +283,7 @@ const words = [
 
 // WordsData1[0] = WordsData1[1]
 
-const WordsData1 = [...Array(1920)].map((_, index) => {
+const WordsData = [...Array(1920)].map((_, index) => {
   return {
     id: index,
     content: {
@@ -308,7 +308,7 @@ const WordsData1 = [...Array(1920)].map((_, index) => {
   }
 })
 
-const WordsData = words.map((word, index) => {
+const WordsData1 = words.map((word, index) => {
   return {
     id: index,
     content: {
