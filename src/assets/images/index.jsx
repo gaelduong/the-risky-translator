@@ -11,6 +11,7 @@ export { default as flashImg } from './flash.png'
 
 export { default as monsterImage } from './monster.png'
 export { default as creatureImage } from './creature.png'
+export { default as creature2Image } from './creature2.png'
 
 export { default as bgImage1 } from './bg1.jpg'
 export { default as bgImage2 } from './bg2.jpg'
@@ -20,3 +21,6 @@ export { default as bgImage5 } from './bg5.jpg'
 export { default as bgImage6 } from './bg6.jpg'
 
 export { default as backImage } from './back.png'
+
+export { default as leftArrowImage } from './leftArrow.png'
+export { default as rightArrowImage } from './rightArrow.png'
