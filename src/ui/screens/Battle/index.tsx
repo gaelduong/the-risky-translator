@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import { monsterImage } from '@Assets/images'
-import { creatureImage } from '@Assets/images'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+
+// Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { updateMoney } from '@Redux/slices/resourceSlice'
 import { updateMonsterBeaten } from '@Redux/slices/monsterSlice'
+
+// Assets
+import { creatureImage, monsterImage } from '@Assets/images'
 
 const ProgressBar = ({
   progress,

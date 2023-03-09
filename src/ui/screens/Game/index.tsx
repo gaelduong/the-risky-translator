@@ -1,5 +1,5 @@
-// import { useEffect, useState } from 'react'
-import { matchRoutes, Route, Routes, useLocation } from 'react-router-dom'
+import { ReactNode } from 'react'
+import { Route, Routes } from 'react-router-dom'
 
 // Components
 import Header from '@Com/Header'
@@ -20,7 +20,10 @@ import MonsterMap from '@Screen/MonsterMap'
 import PreTraining from '@Screen/PreTraining'
 import RecognizeMultipleChoice from '@Screen/Training/RecognizeMultipleChoice'
 import RecognizeType from '@Screen/Training/RecognizeType'
+import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
 import WordDetailView from '@Screen/WordDetailView'
+
+// Assets
 import {
   bgImage1,
   bgImage2,
@@ -30,9 +33,9 @@ import {
   bgImage6
   // bgImage6
 } from '@Assets/images'
-import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
+
 import Board from '../../../game/Board'
-import { ReactNode } from 'react'
+import { useCurrentPath } from '../../../hooks/useCurrentPath'
 
 // // Initialize the S3 client with the desired region
 // const s3 = new AWS.S3({
@@ -83,18 +86,6 @@ import { ReactNode } from 'react'
 //   return isLoading ? <p>Loading...</p> : <>{children}</>
 // }
 
-const useCurrentPath = () => {
-  // town routes
-  const routes = [{ path: '/town/:id' }]
-
-  const location = useLocation()
-  const result = matchRoutes(routes, location)
-  if (!result) return location.pathname
-
-  const [{ route }] = result
-  return route.path
-}
-
 function CustomLayout({ children }: { children: ReactNode }) {
   const currentPath = useCurrentPath()
 
@@ -142,7 +133,18 @@ function CustomLayout({ children }: { children: ReactNode }) {
         minHeight: '100vh'
       }}
     >
-      {children}
+      <div
+        style={{
+          position: 'absolute',
+          background: 'rgba(255,255,255,0.12)',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100vh'
+        }}
+      >
+        {children}
+      </div>
     </div>
   )
 }

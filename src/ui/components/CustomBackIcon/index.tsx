@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { backImage } from '@Assets/images'
+import { backImage, backArrow } from '@Assets/images'
 
 const CustomBackIcon = ({
   linkTo,
@@ -25,7 +25,7 @@ const CustomBackIcon = ({
     return (
       <div className="back-image">
         <Link to={linkTo} state={state}>
-          <img style={{ marginLeft: '1rem' }} src={backImage} alt="back" />
+          <img style={{ marginLeft: '1rem' }} src={backArrow} alt="back" />
         </Link>
       </div>
     )
@@ -36,7 +36,7 @@ const CustomBackIcon = ({
       <div className="back-image">
         <img
           // style={{ marginLeft: '1rem' }}
-          src={backImage}
+          src={backArrow}
           alt="back"
           onClick={() => setShowPopup(true)}
         />

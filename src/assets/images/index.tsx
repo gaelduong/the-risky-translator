@@ -24,3 +24,5 @@ export { default as backImage } from './back.png'
 
 export { default as leftArrowImage } from './leftArrow.png'
 export { default as rightArrowImage } from './rightArrow.png'
+
+export { default as backArrow } from './backArrow.svg'
