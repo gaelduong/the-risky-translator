@@ -17,13 +17,12 @@ const WordDetailView = () => {
 
   const navigate = useNavigate()
 
-  const audioRef = useRef<HTMLAudioElement>(null)
   const stats = getWordStats(word)
 
-  const playAudio = (audio: any) => {
-    if (!audioRef.current) return
-    audioRef.current.src = audio
-    audioRef.current?.play()
+  const playAudio = async (audio: any) => {
+    const module = await import(`@Assets/audios/words/${audio}`)
+    const audioToPlay = new Audio(module.default)
+    audioToPlay.play()
   }
 
   return (
@@ -35,9 +34,6 @@ const WordDetailView = () => {
       <h2>{getWordText(word)}</h2>
 
       <button onClick={() => playAudio(getWordAudio(word))}>Listen</button>
-      <audio ref={audioRef}>
-        <source type="audio/mpeg" />
-      </audio>
 
       <h3>Meaning:</h3>
       <p>{getWordMeaning(word)}</p>

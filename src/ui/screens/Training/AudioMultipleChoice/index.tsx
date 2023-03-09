@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectWord } from '@Algorithm/index'
 import {
   getRandomWordList,
+  getWordAudio,
   getWordId,
   getWordListPool,
   getWordMeaning,
   getWordText
 } from '@Functions/wordUtils'
 import { correctSound, wrongSound } from '@Assets/audios'
-import { creatureImage } from '@Assets/images'
+import { creatureImage, speakerImage } from '@Assets/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
@@ -22,7 +23,7 @@ import { shuffleArray } from '@Functions/generalUtils'
 const correctAudio = new Audio(correctSound)
 const wrongAudio = new Audio(wrongSound)
 
-const RecognizeMultipleChoice = () => {
+const AudioMultipleChoice = () => {
   const {
     state: { locationId, townId }
   } = useLocation()
@@ -38,7 +39,7 @@ const RecognizeMultipleChoice = () => {
 
   //   Word, choices, reveals
   const [totalAnswered, setTotalAnswered] = useState<number>(0)
-  const [currentWord, setCurrentword] = useState(null)
+  const [currentWord, setCurrentword] = useState<Word | null>(null)
   const [choices, setChoices] = useState<Word[]>([])
   const [answerRevealed, setAnswerRevealed] = useState<boolean>(false)
 
@@ -50,6 +51,7 @@ const RecognizeMultipleChoice = () => {
   const wordId = getWordId(currentWord)
   const wordText = getWordText(currentWord)
   const wordMeaning = getWordMeaning(currentWord)
+  const wordAudio = getWordAudio(currentWord)
 
   // Generate choices for a given word
   useEffect(() => {
@@ -59,8 +61,16 @@ const RecognizeMultipleChoice = () => {
   }, [currentWord])
 
   useEffect(() => {
-    setCurrentword(selectWord(wordListPool, totalAnswered))
+    const selectedWord = selectWord(wordListPool, totalAnswered)
+    setCurrentword(selectedWord)
+    playAudio(getWordAudio(selectedWord))
   }, [totalAnswered])
+
+  const playAudio = async (audio: any) => {
+    const module = await import(`@Assets/audios/words/${audio}`)
+    const audioToPlay = new Audio(module.default)
+    audioToPlay.play()
+  }
 
   function checkAnswer(answer: string) {
     return getWordMeaning(currentWord).toLowerCase() === answer.toLowerCase()
@@ -128,7 +138,14 @@ const RecognizeMultipleChoice = () => {
       />
       <img className="creature" src={creatureImage} alt="person" />
 
-      <h2 className="header">{wordText}</h2>
+      {/* <h2 className="header">{wordText}</h2> */}
+      <div onClick={() => playAudio(wordAudio)}>
+        <img
+          style={{ width: '3rem', margin: '2rem' }}
+          src={speakerImage}
+          alt="spealer"
+        />
+      </div>
 
       {choices.map(choice => (
         <div key={getWordId(choice)}>
@@ -162,4 +179,4 @@ const RecognizeMultipleChoice = () => {
   )
 }
 
-export default RecognizeMultipleChoice
+export default AudioMultipleChoice

@@ -44,6 +44,11 @@ const Popup = ({
         </Link>
       </div>
       <div>
+        <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
+          <button>Audio</button>
+        </Link>
+      </div>
+      <div>
         <Link to="/recog-type" state={{ locationId: locationId, townId }}>
           <button>Typing</button>
         </Link>

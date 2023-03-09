@@ -25,6 +25,8 @@ export { default as backImage } from './back.png'
 export { default as leftArrowImage } from './leftArrow.png'
 export { default as rightArrowImage } from './rightArrow.png'
 
+export { default as speakerImage } from './speaker.png'
+
 export { default as backArrow } from './backArrow.svg'
 export { default as coinImage } from './coin.svg'
 export { default as energyImage } from './energy.svg'

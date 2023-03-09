@@ -36,6 +36,7 @@ import {
 
 import Board from '../../../game/Board'
 import { useCurrentPath } from '../../../hooks/useCurrentPath'
+import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
 
 // // Initialize the S3 client with the desired region
 // const s3 = new AWS.S3({
@@ -167,6 +168,7 @@ const Game = () => {
           <Route path="/recog-yesno" element={<RecognizeYesNo />} />
           <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
           <Route path="/recog-type" element={<RecognizeType />} />
+          <Route path="/recog-audio" element={<AudioMultipleChoice />} />
           <Route path="/word-list" element={<WordListView />} />
           <Route path="/word-list/:id" element={<WordDetailView />} />
           <Route path="/bigmixes" element={<BigMixes />} />

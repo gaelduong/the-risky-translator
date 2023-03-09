@@ -20,7 +20,6 @@ const WordListView = () => {
   } = useLocation()
 
   const locationId = getLocationId(location)
-  const audioRef = useRef<HTMLAudioElement>(null)
   const navigate = useNavigate()
 
   const { vocabulary } = useSelector((state: any) => state.vocabulary)
@@ -47,10 +46,10 @@ const WordListView = () => {
     navigate(`/word-list/${getWordId(word)}`, { state: { word } })
   }
 
-  const playAudio = (audio: any) => {
-    if (!audioRef.current) return
-    audioRef.current.src = audio
-    audioRef.current?.play()
+  const playAudio = async (audio: any) => {
+    const module = await import(`@Assets/audios/words/${audio}`)
+    const audioToPlay = new Audio(module.default)
+    audioToPlay.play()
   }
 
   const getStatDisplay = (word: any, sort: string) => {
@@ -142,11 +141,6 @@ const WordListView = () => {
           })}
         </tbody>
       </table>
-
-      {/* Audio */}
-      <audio ref={audioRef}>
-        <source type="audio/mpeg" />
-      </audio>
     </div>
   )
 }
