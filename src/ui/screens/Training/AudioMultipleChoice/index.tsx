@@ -64,18 +64,13 @@ const AudioMultipleChoice = () => {
   useEffect(() => {
     const selectedWord = selectWord(wordListPool, totalAnswered)
     setCurrentword(selectedWord)
-    playAudio2(getWordAudio(selectedWord))
+    playAudio(getWordAudio(selectedWord))
   }, [totalAnswered])
 
-  const playAudio2 = async (audio: any) => {
-    // const module = await import(`@Asset/audios/words/${audio}`)
+  const playAudio = async (audio: any) => {
     const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
     audioToPlay.play()
   }
-
-  // const playAudio = (wordId: number) => {
-  //   audioObjects[wordId]?.play()
-  // }
 
   function checkAnswer(answer: string) {
     return getWordMeaning(currentWord).toLowerCase() === answer.toLowerCase()
@@ -144,7 +139,7 @@ const AudioMultipleChoice = () => {
       <img className="creature" src={creatureImage} alt="person" />
 
       {/* <h2 className="header">{wordText}</h2> */}
-      <div onClick={() => playAudio2(wordAudio)}>
+      <div onClick={() => playAudio(wordAudio)}>
         <img
           style={{ width: '3rem', margin: '2rem' }}
           src={speakerImage}
