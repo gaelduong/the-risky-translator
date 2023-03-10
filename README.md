@@ -2,6 +2,8 @@
 
 (Description)
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-typescript.svg)](https://forthebadge.com)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)

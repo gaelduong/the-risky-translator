@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   getWordAudio,
@@ -9,6 +8,7 @@ import {
   getWordStats,
   getWordText
 } from '@Functions/wordUtils'
+import { S3_BASE_AUDIO_URL } from '@Constant/index'
 
 const WordDetailView = () => {
   const {
@@ -20,8 +20,7 @@ const WordDetailView = () => {
   const stats = getWordStats(word)
 
   const playAudio = async (audio: any) => {
-    const module = await import(`@Assets/audios/words/${audio}`)
-    const audioToPlay = new Audio(module.default)
+    const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
     audioToPlay.play()
   }
 

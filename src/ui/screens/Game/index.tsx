@@ -36,7 +36,7 @@ import {
 } from '@Assets/images'
 
 import Board from '../../../game/Board'
-import { useCurrentPath } from '../../../hooks/useCurrentPath'
+import { useCurrentPath } from '@Hooks/useCurrentPath'
 import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
 import { getWordAudio, getWordId } from '@Functions/wordUtils'
 
@@ -153,28 +153,28 @@ function CustomLayout({ children }: { children: ReactNode }) {
 }
 
 const Game = () => {
-  const { vocabulary } = useSelector((state: any) => state.vocabulary)
-  const [audioObjects, setAudioObjects] = useState<any>([])
+  // const { vocabulary } = useSelector((state: any) => state.vocabulary)
+  // const [audioObjects, setAudioObjects] = useState<any>([])
 
-  useEffect(() => {
-    async function loadAudios() {
-      const audioObject = await vocabulary.reduce(
-        async (acc: Promise<any>, word: any) => {
-          const resolvedAcc = await acc
-          const audioFile = await import(
-            `@Assets/audios/words/${getWordAudio(word)}`
-          )
-          const audio = new Audio(audioFile.default)
-          audio.load()
-          const wordId = getWordId(word)
-          return { ...resolvedAcc, [wordId]: audio }
-        },
-        Promise.resolve({})
-      )
-      setAudioObjects(audioObject)
-    }
-    loadAudios()
-  }, [])
+  // useEffect(() => {
+  //   async function loadAudios() {
+  //     const audioObject = await vocabulary.reduce(
+  //       async (acc: Promise<any>, word: any) => {
+  //         const resolvedAcc = await acc
+  //         const audioFile = await import(
+  //           `@Assets/audios/words/${getWordAudio(word)}`
+  //         )
+  //         const audio = new Audio(audioFile.default)
+  //         audio.load()
+  //         const wordId = getWordId(word)
+  //         return { ...resolvedAcc, [wordId]: audio }
+  //       },
+  //       Promise.resolve({})
+  //     )
+  //     setAudioObjects(audioObject)
+  //   }
+  //   loadAudios()
+  // }, [])
 
   // console.log(audioObjects)
 
@@ -183,7 +183,7 @@ const Game = () => {
       {/* <ImagePreloader> */}
       <CustomLayout>
         <Header />
-        {Object.keys(audioObjects).length}
+        {/* {Object.keys(audioObjects).length} */}
         <Routes>
           <Route path="/" element={<LoadingApp />} />
           <Route path="/loading" element={<LoadingApp />} />
@@ -196,10 +196,7 @@ const Game = () => {
           <Route path="/recog-yesno" element={<RecognizeYesNo />} />
           <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
           <Route path="/recog-type" element={<RecognizeType />} />
-          <Route
-            path="/recog-audio"
-            element={<AudioMultipleChoice audioObjects={audioObjects} />}
-          />
+          <Route path="/recog-audio" element={<AudioMultipleChoice />} />
           <Route path="/word-list" element={<WordListView />} />
           <Route path="/word-list/:id" element={<WordDetailView />} />
           <Route path="/bigmixes" element={<BigMixes />} />

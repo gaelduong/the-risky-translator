@@ -1,4 +1,5 @@
 import CustomBackIcon from '@Com/CustomBackIcon'
+import { S3_BASE_AUDIO_URL } from '@Constant/index'
 import { getLocationId, getLocationName } from '@Functions/locationUtils'
 import {
   getSortedWordList,
@@ -10,7 +11,7 @@ import {
   getWordMeaning,
   getWordText
 } from '@Functions/wordUtils'
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -47,8 +48,7 @@ const WordListView = () => {
   }
 
   const playAudio = async (audio: any) => {
-    const module = await import(`@Assets/audios/words/${audio}`)
-    const audioToPlay = new Audio(module.default)
+    const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
     audioToPlay.play()
   }
 
