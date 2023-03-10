@@ -2,15 +2,16 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "@Assets/*": ["./assets/*"],
+      "@Asset/*": ["./assets/*"],
       "@Algorithm/*": ["./algorithm/*"],
+      "@Constant/*": ["./constants/*"],
       "@Com/*": ["./ui/components/*"],
       "@Screen/*": ["./ui/screens/*"],
       "@Redux/*": ["./redux/*"],
-      "@Functions/*": ["./functions/*"],
-      "@Hooks/*": ["./hooks/*"],
+      "@Function/*": ["./functions/*"],
+      "@Hook/*": ["./hooks/*"],
       "@Data/*": ["./data/*"],
-      "@Types/*": ["./types/*"]
+      "@Type/*": ["./types/*"]
     }
   }
 }

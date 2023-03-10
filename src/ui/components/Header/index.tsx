@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 // Assets
-import { coinImage, energyImage } from '@Assets/images'
+import { coinImage, energyImage } from '@Asset/images'
 
 // Redux
 import {
@@ -12,7 +12,7 @@ import {
 } from '@Redux/slices/resourceSlice'
 
 // Functions
-import { formatNumberWithCommas } from '@Functions/generalUtils'
+import { formatNumberWithCommas } from '@Function/generalUtils'
 
 const Header = () => {
   const { money, energy } = useSelector((state: any) => state.resource)

@@ -1,6 +1,6 @@
 import randomWords from 'random-words'
-import { wordSound } from '@Assets/audios'
-import { Word } from '@Types/word'
+import { wordSound } from '@Asset/audios'
+import { Word } from '@Type/word'
 
 const words = [
   { word: 'azas', meaning: 'apricot', groups: [0] },

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Monster } from '@Types/monster'
+import { Monster } from '@Type/monster'
 import { MonstersData } from '@Data/monsterData'
 
 const storedMonsters = localStorage.getItem('monsters')

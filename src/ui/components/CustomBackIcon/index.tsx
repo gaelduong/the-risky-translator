@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { backArrow } from '@Assets/images'
+import { backArrow } from '@Asset/images'
 
 const CustomBackIcon = ({
   linkTo,

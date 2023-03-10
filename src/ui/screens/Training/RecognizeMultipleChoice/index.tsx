@@ -7,16 +7,16 @@ import {
   getWordListPool,
   getWordMeaning,
   getWordText
-} from '@Functions/wordUtils'
-import { correctSound, wrongSound } from '@Assets/audios'
-import { creatureImage } from '@Assets/images'
+} from '@Function/wordUtils'
+import { correctSound, wrongSound } from '@Asset/audios'
+import { creatureImage } from '@Asset/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
 import CustomBackIcon from '@Com/CustomBackIcon'
-import { Word } from '@Types/word'
-import { shuffleArray } from '@Functions/generalUtils'
+import { Word } from '@Type/word'
+import { shuffleArray } from '@Function/generalUtils'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)

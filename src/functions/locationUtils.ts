@@ -1,4 +1,4 @@
-import { Location } from '@Types/location'
+import { Location } from '@Type/location'
 
 const getLocationId = (location: Location) => {
   return location.id

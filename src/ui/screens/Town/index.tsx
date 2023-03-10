@@ -3,7 +3,7 @@ import {
   leftArrowImage,
   monsterImage,
   rightArrowImage
-} from '@Assets/images'
+} from '@Asset/images'
 import { LocationData } from '@Data/locationData'
 import {
   getLocationId,
@@ -12,7 +12,7 @@ import {
   getLocationsByTownId,
   getMaxLocationPage,
   getTownNameByTownId
-} from '@Functions/locationUtils'
+} from '@Function/locationUtils'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'

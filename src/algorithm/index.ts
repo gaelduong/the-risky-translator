@@ -1,11 +1,11 @@
-import { shuffleArray } from '@Functions/generalUtils'
+import { shuffleArray } from '@Function/generalUtils'
 import {
   getWordCorrects,
   getWordExposures,
   getWordIncorrects,
   getWordInCorrectsExposuresRatio
-} from '@Functions/wordUtils'
-import { Word } from '@Types/word'
+} from '@Function/wordUtils'
+import { Word } from '@Type/word'
 // import { words } from './data'
 
 // let formattedWords = [

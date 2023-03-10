@@ -12,8 +12,8 @@ export const MAP_URLS = {
 }
 
 const iconPerson = new L.Icon({
-  iconUrl: require('@Assets/images/restaurant.png'),
-  //   iconRetinaUrl: require('@Assets/images/restaurant.png'),
+  iconUrl: require('@Asset/images/restaurant.png'),
+  //   iconRetinaUrl: require('@Asset/images/restaurant.png'),
   iconAnchor: null,
   popupAnchor: null,
   shadowUrl: null,

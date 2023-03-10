@@ -7,7 +7,7 @@ import {
   getWordMeaning,
   getWordStats,
   getWordText
-} from '@Functions/wordUtils'
+} from '@Function/wordUtils'
 import { S3_BASE_AUDIO_URL } from '@Constant/index'
 
 const WordDetailView = () => {

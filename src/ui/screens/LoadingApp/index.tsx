@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import * as images from '@Assets/images'
+import * as images from '@Asset/images'
 
 const LoadingApp = () => {
   const [isLoading, setIsLoading] = useState(true)

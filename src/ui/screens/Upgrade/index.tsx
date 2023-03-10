@@ -4,12 +4,12 @@ import {
   getAttributeValueAtLevel,
   getAttributeMaxLevel,
   getAttributeReqsAtLevel
-} from '@Functions/attributeUtils'
+} from '@Function/attributeUtils'
 import { upgradeAttribute } from '@Redux/slices/creatureSlice'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 import CustomBackIcon from '@Com/CustomBackIcon'
 import './index.css'
-import { coinImage, creature2Image, energyImage } from '@Assets/images'
+import { coinImage, creature2Image, energyImage } from '@Asset/images'
 
 const Upgrade = () => {
   const { state } = useLocation()

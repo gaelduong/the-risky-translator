@@ -1,9 +1,9 @@
-import { monsterImage } from '@Assets/images'
+import { monsterImage } from '@Asset/images'
 import CustomBackIcon from '@Com/CustomBackIcon'
 import {
   getIsMonsterUnlocked,
   getRequiredMonstersToBeat
-} from '@Functions/monsterUtils'
+} from '@Function/monsterUtils'
 import { updateEnergy } from '@Redux/slices/resourceSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'

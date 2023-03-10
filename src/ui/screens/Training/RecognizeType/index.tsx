@@ -6,12 +6,12 @@ import {
   getWordListPool,
   getWordMeaning,
   getWordText
-} from '@Functions/wordUtils'
-import { correctSound, wrongSound } from '@Assets/audios'
+} from '@Function/wordUtils'
+import { correctSound, wrongSound } from '@Asset/audios'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import { creatureImage } from '@Assets/images'
+import { creatureImage } from '@Asset/images'
 import CustomBackIcon from '@Com/CustomBackIcon'
 
 // Sound effects

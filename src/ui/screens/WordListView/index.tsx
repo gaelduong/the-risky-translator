@@ -1,6 +1,6 @@
 import CustomBackIcon from '@Com/CustomBackIcon'
 import { S3_BASE_AUDIO_URL } from '@Constant/index'
-import { getLocationId, getLocationName } from '@Functions/locationUtils'
+import { getLocationId, getLocationName } from '@Function/locationUtils'
 import {
   getSortedWordList,
   getWordAudio,
@@ -10,7 +10,7 @@ import {
   getWordListPool,
   getWordMeaning,
   getWordText
-} from '@Functions/wordUtils'
+} from '@Function/wordUtils'
 import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'

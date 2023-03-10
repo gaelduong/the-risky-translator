@@ -1,4 +1,4 @@
-import { Monster } from '@Types/monster'
+import { Monster } from '@Type/monster'
 
 const getMonsterById = (monsters: Monster[], id: number) => {
   return monsters.find(monster => monster.id === id)

@@ -1,5 +1,5 @@
-import { parkImg, storeImg } from '@Assets/images'
-import { Location } from '@Types/location'
+import { parkImg, storeImg } from '@Asset/images'
+import { Location } from '@Type/location'
 
 enum LocationType {
   REGULAR = 'REGULAR',

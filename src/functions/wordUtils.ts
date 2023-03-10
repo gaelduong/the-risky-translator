@@ -1,7 +1,7 @@
 import { LocationData } from '@Data/locationData'
 import { shuffleArray } from './generalUtils'
 
-import { Word } from '@Types/word'
+import { Word } from '@Type/word'
 
 const getWordId = (word: Word | null) => {
   if (typeof word !== 'object' || !word) return -1

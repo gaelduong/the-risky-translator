@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { creature2Image } from '@Assets/images'
+import { creature2Image } from '@Asset/images'
 import { Link, useLocation } from 'react-router-dom'
 import CustomBackIcon from '@Com/CustomBackIcon'
 import './index.css'

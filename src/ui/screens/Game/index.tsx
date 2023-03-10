@@ -33,12 +33,12 @@ import {
   bgImage5,
   bgImage6
   // bgImage6
-} from '@Assets/images'
+} from '@Asset/images'
 
 import Board from '../../../game/Board'
-import { useCurrentPath } from '@Hooks/useCurrentPath'
+import { useCurrentPath } from '@Hook/useCurrentPath'
 import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
-import { getWordAudio, getWordId } from '@Functions/wordUtils'
+import { getWordAudio, getWordId } from '@Function/wordUtils'
 
 // // Initialize the S3 client with the desired region
 // const s3 = new AWS.S3({
@@ -61,7 +61,7 @@ import { getWordAudio, getWordId } from '@Functions/wordUtils'
 
 // console.log(uploadUrl)
 
-// import * as images from '@Assets/images'
+// import * as images from '@Asset/images'
 
 // function ImagePreloader({ children }) {
 //   const [isLoading, setIsLoading] = useState(true)
@@ -162,7 +162,7 @@ const Game = () => {
   //       async (acc: Promise<any>, word: any) => {
   //         const resolvedAcc = await acc
   //         const audioFile = await import(
-  //           `@Assets/audios/words/${getWordAudio(word)}`
+  //           `@Asset/audios/words/${getWordAudio(word)}`
   //         )
   //         const audio = new Audio(audioFile.default)
   //         audio.load()

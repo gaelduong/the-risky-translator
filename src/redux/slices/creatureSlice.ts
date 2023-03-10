@@ -2,7 +2,7 @@ import { CreatureData } from '@Data/creatureData'
 import {
   getAttributeMaxLevel,
   getAttributeValueAtLevel
-} from '@Functions/attributeUtils'
+} from '@Function/attributeUtils'
 import { createSlice } from '@reduxjs/toolkit'
 
 const storedCreature = localStorage.getItem('creature')

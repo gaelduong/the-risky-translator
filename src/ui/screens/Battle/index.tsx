@@ -7,7 +7,7 @@ import { updateMoney } from '@Redux/slices/resourceSlice'
 import { updateMonsterBeaten } from '@Redux/slices/monsterSlice'
 
 // Assets
-import { creatureImage, monsterImage } from '@Assets/images'
+import { creatureImage, monsterImage } from '@Asset/images'
 
 const ProgressBar = ({
   progress,

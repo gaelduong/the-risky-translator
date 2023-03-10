@@ -8,16 +8,16 @@ import {
   getWordListPool,
   getWordMeaning,
   getWordText
-} from '@Functions/wordUtils'
-import { correctSound, wrongSound } from '@Assets/audios'
-import { creatureImage, speakerImage } from '@Assets/images'
+} from '@Function/wordUtils'
+import { correctSound, wrongSound } from '@Asset/audios'
+import { creatureImage, speakerImage } from '@Asset/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
 import CustomBackIcon from '@Com/CustomBackIcon'
-import { Word } from '@Types/word'
-import { shuffleArray } from '@Functions/generalUtils'
+import { Word } from '@Type/word'
+import { shuffleArray } from '@Function/generalUtils'
 import { S3_BASE_AUDIO_URL } from '@Constant/index'
 
 // Sound effects
@@ -68,7 +68,7 @@ const AudioMultipleChoice = () => {
   }, [totalAnswered])
 
   const playAudio2 = async (audio: any) => {
-    // const module = await import(`@Assets/audios/words/${audio}`)
+    // const module = await import(`@Asset/audios/words/${audio}`)
     const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
     audioToPlay.play()
   }

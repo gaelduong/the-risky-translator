@@ -6,9 +6,9 @@ import {
   getWordListPool,
   getWordMeaning,
   getWordText
-} from '@Functions/wordUtils'
-import { wrongSound } from '@Assets/audios'
-import { creatureImage } from '@Assets/images'
+} from '@Function/wordUtils'
+import { wrongSound } from '@Asset/audios'
+import { creatureImage } from '@Asset/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
