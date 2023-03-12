@@ -1,0 +1,46 @@
+.message-container {
+  margin: -1rem 0;
+}
+
+.message {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.correct {
+  color: #38a826;
+}
+
+.incorrect {
+  color: #b24b32;
+}
+
+.amount-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.reward-img {
+  width: 1rem;
+}
+
+.challenge-tag {
+  display: inline-block;
+  padding: 0.28rem 0.6rem;
+  margin: 1rem 0 0.5rem 0;
+  border-radius: 1.25rem;
+  background-color: #bae0f1;
+  color: #666;
+  font-size: 0.8rem;
+  font-weight: 700;
+  /* text-transform: uppercase; */
+  letter-spacing: 0.05rem;
+  box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.1);
+}
+
+.challenge-status {
+  letter-spacing: 0.05rem;
+  color: #666;
+  font-weight: 700;
+  font-size: 0.9rem;
+}

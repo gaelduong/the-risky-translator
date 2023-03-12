@@ -1,7 +1,7 @@
 import { parkImg, storeImg } from '@Asset/images'
 import { Location } from '@Type/location'
 
-enum LocationType {
+export enum LocationType {
   REGULAR = 'REGULAR',
   MIX = 'MIX',
   BIG_MIX = 'BIG_MIX',

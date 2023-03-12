@@ -42,8 +42,8 @@ a {
 }
 
 .creature {
-  width: 60%;
-  max-height: 50%;
+  width: 55%;
+  /* max-height: 50%; */
   object-fit: contain;
 }
 
