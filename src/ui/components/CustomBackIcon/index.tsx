@@ -7,7 +7,7 @@ const CustomBackIcon = ({
   popup,
   state
 }: {
-  linkTo: string
+  linkTo: string | number
   state?: any
   popup?: {
     prompt: string
@@ -24,6 +24,7 @@ const CustomBackIcon = ({
   if (!popup) {
     return (
       <div className="back-image">
+        {/* @ts-ignore */}
         <Link to={linkTo} state={state}>
           <img style={{ marginLeft: '1rem' }} src={backArrow} alt="back" />
         </Link>
@@ -45,6 +46,7 @@ const CustomBackIcon = ({
         <div className="popup">
           <p> {popup.prompt}</p>
           <div>
+            {/* @ts-ignore */}
             <Link to={linkTo}>
               <button className="close">{popup.yesText}</button>
             </Link>

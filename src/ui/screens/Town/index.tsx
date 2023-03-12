@@ -36,16 +36,21 @@ const Popup = ({
           <button>View Word List</button>
         </Link>
       </div>
+      {/* <div>
+        <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
+          <u>View Challenges</u>
+        </Link>
+      </div> */}
       <hr />
       <p> Or, select a training type:</p>
       <div>
         <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
-          <button>Multiple Choice</button>
+          <button>Text Multiple Choice</button>
         </Link>
       </div>
       <div>
         <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
-          <button>Audio</button>
+          <button>Audio Multiple Choice</button>
         </Link>
       </div>
       <div>

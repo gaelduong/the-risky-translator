@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import {
   getWordAudio,
   getWordCorrectsExposuresRatio,
@@ -9,13 +9,12 @@ import {
   getWordText
 } from '@Function/wordUtils'
 import { S3_BASE_AUDIO_URL } from '@Constant/index'
+import CustomBackIcon from '@Com/CustomBackIcon'
 
 const WordDetailView = () => {
   const {
     state: { word }
   } = useLocation()
-
-  const navigate = useNavigate()
 
   const stats = getWordStats(word)
 
@@ -27,8 +26,7 @@ const WordDetailView = () => {
   return (
     <div>
       <div>
-        <hr />
-        <button onClick={() => navigate(-1)}>Back</button>
+        <CustomBackIcon linkTo={-1} />
       </div>
       <h2>{getWordText(word)}</h2>
 
