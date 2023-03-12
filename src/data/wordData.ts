@@ -1,5 +1,4 @@
 import randomWords from 'random-words'
-import { wordSound } from '@Asset/audios'
 import { Word } from '@Type/word'
 
 const words = [
@@ -441,7 +440,7 @@ export const WordsData2: Word[] = [...Array(1920)].map((_, index) => {
         'quisquam est qui dolorem ipsum',
         'quisquam est qui dolorem ipsum'
       ],
-      audio: wordSound,
+      audio: null,
       groups: [Math.floor(index / 10)]
     },
     history: [],
@@ -466,7 +465,7 @@ export const WordsData1 = words.map((word, index) => {
         'quisquam est qui dolorem ipsum',
         'quisquam est qui dolorem ipsum'
       ],
-      audio: wordSound,
+      audio: null,
       groups: [Math.floor(index / 10)]
     },
     history: [],
