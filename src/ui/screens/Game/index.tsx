@@ -1,6 +1,5 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
 // Components
 import Header from '@Com/Header'
@@ -29,37 +28,17 @@ import {
   bgImage1,
   bgImage2,
   bgImage3,
-  bgImage4,
+  // bgImage4,
+  bgImage4svg,
   bgImage5,
-  bgImage6
+  // bgImage6,
+  bgImage6svg
   // bgImage6
 } from '@Asset/images'
 
 import Board from '../../../game/Board'
 import { useCurrentPath } from '@Hook/useCurrentPath'
 import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
-import { getWordAudio, getWordId } from '@Function/wordUtils'
-
-// // Initialize the S3 client with the desired region
-// const s3 = new AWS.S3({
-//   region: 'us-east-2'
-// })
-
-// // Define the object key and expiration time for the pre-signed URL
-// const objectKey = 'example-object-key'
-// const expirationTime = 3600 // 1 hour
-
-// // Generate the pre-signed URL for uploading the file
-// const params = {
-//   Bucket: 'presigned-test-gael',
-//   Key: objectKey,
-//   ContentType: 'text/plain', // Replace with the desired content type of the file
-//   Expires: expirationTime,
-//   ACL: 'public-read' // Replace with the desired access control list for the object
-// }
-// const uploadUrl = s3.getSignedUrl('putObject', params)
-
-// console.log(uploadUrl)
 
 // import * as images from '@Asset/images'
 
@@ -104,13 +83,13 @@ function CustomLayout({ children }: { children: ReactNode }) {
         return `url(${bgImage3})`
 
       case '/profile':
-        return `url(${bgImage4})`
+        return `url(${bgImage4svg})`
 
       case '/upgrade':
-        return `url(${bgImage4})`
+        return `url(${bgImage4svg})`
 
       case '/town/:id':
-        return `url(${bgImage6})`
+        return `url(${bgImage6svg})`
 
       case '/monster-map':
         return `url(${bgImage5})`
