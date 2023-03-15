@@ -17,7 +17,7 @@ const RegularLocationData = [...Array(NUM_REGULAR_LOCATIONS)].map(
   (_, index) => {
     return {
       type: LocationType.REGULAR,
-      locationName: `Regular ${index}`,
+      locationName: `Location ${index + 1}`,
       image: parkImg,
       hasGroups: [index]
     }

@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   max-width: 554px;
-  height: max(100vh, auto);
+  /* height: max(100vh, auto); */
   margin: 0 auto;
   min-height: 100vh;
   position: relative;

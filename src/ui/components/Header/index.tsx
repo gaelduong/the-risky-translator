@@ -75,9 +75,6 @@ const Header = () => {
             <b>{energy}</b>
           </span>
         </div>
-        {/* <Link to="/map">
-        <button>Map</button>
-      </Link> */}
       </div>
       <div
         style={{
@@ -92,25 +89,13 @@ const Header = () => {
           </Link>
         </h2> */}
 
-        <div>
-          {/* <button
-            onClick={() => dispatch(updateMoney({ amount: 1 }))}
-            className="button2"
-          >
-            +1
-          </button> */}
+        {/* <div>
           <button
             onClick={() => dispatch(updateMoney({ amount: 1000 }))}
             className="button2"
           >
             +1000
           </button>
-          {/* <button
-            onClick={() => dispatch(updateMoney({ amount: -5 }))}
-            className="button2"
-          >
-            -5
-          </button> */}
 
           <button
             onClick={() => dispatch(updateEnergy({ amount: 100 }))}
@@ -119,7 +104,7 @@ const Header = () => {
           >
             +100
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   )

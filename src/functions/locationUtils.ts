@@ -35,7 +35,7 @@ const getMaxLocationPage = (allLocations: Location[]) => {
 }
 
 const getTownNameByTownId = (townId: number) => {
-  return `Town ${townId}`
+  return `Town ${townId + 1}`
 }
 
 export {

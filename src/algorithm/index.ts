@@ -69,9 +69,9 @@ function selectWord(words: Word[], turn: number): any {
   if (turn % 4 === 4) {
     return selectHighestIncorrectsExposuresRatio(shuffledWords)
   }
-  if (turn % 4 === 5) {
-    return selectMostCorrects(shuffledWords)
-  }
+  // if (turn % 4 === 5) {
+  //   return selectMostCorrects(shuffledWords)
+  // }
 }
 
 function selectRandom(words: Word[]) {

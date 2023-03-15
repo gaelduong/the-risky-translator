@@ -1,5 +1,5 @@
 export const CreatureData = {
-  name: '',
+  name: null,
   attributes: {
     health: {
       displayName: 'Health',
