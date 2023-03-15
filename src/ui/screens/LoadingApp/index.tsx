@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import * as images from '@Asset/images'
 
@@ -7,10 +8,20 @@ const LoadingApp = () => {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
+  const { creature } = useSelector((state: any) => state)
+
+  const pathToNavigate = creature.name !== null ? '/town' : '/name'
+
   useEffect(() => {
     if (!isLoading) {
-      navigate('/name')
+      navigate(pathToNavigate)
     }
+
+    let timeout = setTimeout(() => {
+      navigate(pathToNavigate)
+    }, 15000)
+
+    return () => clearTimeout(timeout)
   }, [isLoading, navigate])
 
   useEffect(() => {
