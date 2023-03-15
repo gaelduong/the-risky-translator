@@ -46,7 +46,7 @@ const rewardAmountIncorrect = {
   energy: 0
 }
 
-const AudioMultipleChoice = () => {
+const AudioType = () => {
   const {
     state: { locationId, townId }
   } = useLocation()
@@ -70,8 +70,9 @@ const AudioMultipleChoice = () => {
   //   Word, choices, reveals
   const [totalAnswered, setTotalAnswered] = useState<number>(0)
   const [currentWord, setCurrentword] = useState<Word | null>(null)
-  const [choices, setChoices] = useState<Word[]>([])
   const [answerRevealed, setAnswerRevealed] = useState<boolean>(false)
+
+  const [answer, setAnswer] = useState('')
 
   //   Results
   const [showResult, setShowResult] = useState(false)
@@ -87,12 +88,17 @@ const AudioMultipleChoice = () => {
     dispatch(resetChallenge({ locationId, challenge: currentChallenge }))
   }, [])
 
-  // Generate choices for a given word
   useEffect(() => {
-    const wrongChoices = getRandomWordList(wordListPool, 1, wordId)
-    setChoices(shuffleArray([currentWord, ...wrongChoices]))
-    setResultStatus(null)
-  }, [currentWord])
+    setCurrentword(selectWord(wordListPool, totalAnswered))
+  }, [])
+
+  useEffect(() => {
+    if (checkAnswer(answer)) {
+      setAnswer('')
+      setAnswerRevealed(false)
+      setCurrentword(selectWord(wordListPool, totalAnswered))
+    }
+  }, [wordListPool, totalAnswered])
 
   useEffect(() => {
     const selectedWord = selectWord(wordListPool, totalAnswered)
@@ -117,23 +123,38 @@ const AudioMultipleChoice = () => {
   }
 
   function checkAnswer(answer: string) {
-    return getWordMeaning(currentWord).toLowerCase() === answer.toLowerCase()
+    return (
+      answer.length > 1 &&
+      getWordMeaning(currentWord).toLowerCase().startsWith(answer.toLowerCase())
+    )
   }
 
-  function submitAnswer(selectedAnswer: string, itemId: number) {
-    const isCorrect = checkAnswer(selectedAnswer)
+  function onAnswerChange(e: any) {
+    setAnswer(e.target.value)
+  }
+
+  function submitAnswer(e: any, itemId: number) {
+    e.preventDefault()
+
+    if (answer === '') return
+
+    const isCorrect = checkAnswer(answer)
     if (isCorrect) {
       correctAudio.play()
       setResultStatus('correct')
 
       // Update challenge status
-      dispatch(
-        updateChallenge({
-          locationId,
-          challenge: currentChallenge,
-          answerResult: ANSWER_RESULT.CORRECT
-        })
-      )
+      if (!answerRevealed) {
+        dispatch(
+          updateChallenge({
+            locationId,
+            challenge: currentChallenge,
+            answerResult: ANSWER_RESULT.CORRECT
+          })
+        )
+      } else {
+        dispatch(resetChallenge({ locationId, challenge: currentChallenge }))
+      }
 
       setTimeout(() => {
         if (!answerRevealed) {
@@ -182,6 +203,8 @@ const AudioMultipleChoice = () => {
 
   const handleRevealAnswer = (itemId: number) => {
     setAnswerRevealed(true)
+    dispatch(resetChallenge({ locationId, challenge: currentChallenge }))
+
     // dispatch(
     //   updateWordStats({
     //     id: itemId,
@@ -272,35 +295,33 @@ const AudioMultipleChoice = () => {
         />
       </div>
 
-      {choices.map(choice => (
-        <div key={getWordId(choice)}>
-          <button
-            className={`mc-select-button ${
-              showResult
-                ? wordMeaning === getWordMeaning(choice)
-                  ? 'mc-correct'
-                  : 'mc-wrong'
-                : ''
-            }`}
-            disabled={showResult}
-            onClick={() => submitAnswer(getWordMeaning(choice), wordId)}
-          >
-            {getWordMeaning(choice)}
-          </button>
-        </div>
-      ))}
+      <form
+        style={{ margin: 20 }}
+        onSubmit={e => submitAnswer(e, getWordId(currentWord))}
+      >
+        <input
+          style={{ height: 24 }}
+          type="text"
+          value={answer}
+          onChange={onAnswerChange}
+          onSubmit={e => submitAnswer(e, getWordId(currentWord))}
+        />
+        <button onSubmit={e => submitAnswer(e, getWordId(currentWord))}>
+          Submit
+        </button>
+      </form>
 
       <div style={{ marginTop: 20 }}>
         <span
           className="reveal"
           onClick={() => handleRevealAnswer(getWordId(currentWord))}
         >
-          {/* <u>reveal</u> */}
+          <u>reveal</u>
         </span>
-        {answerRevealed ? getWordMeaning(currentWord) : ''}
+        {answerRevealed ? ' ' + wordMeaning + '(' + wordText + ')' : ''}
       </div>
     </>
   )
 }
 
-export default AudioMultipleChoice
+export default AudioType

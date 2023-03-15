@@ -5,6 +5,7 @@ import {
   rightArrowImage
 } from '@Asset/images'
 import { LocationData } from '@Data/locationData'
+import { getChallengesCompleted } from '@Function/challengeUtils'
 import {
   getLocationId,
   getLocationImage,
@@ -53,6 +54,11 @@ const Popup = ({
           <button>Audio Multiple Choice</button>
         </Link>
       </div>
+      {/* <div>
+        <Link to="/recog-audio-type" state={{ locationId: locationId, townId }}>
+          <button>Audio Typing</button>
+        </Link>
+      </div>
       <div>
         <Link to="/recog-type" state={{ locationId: locationId, townId }}>
           <button>Typing</button>
@@ -62,7 +68,7 @@ const Popup = ({
         <Link to="/recog-yesno" state={{ locationId: locationId, townId }}>
           <button>Yes/No</button>
         </Link>
-      </div>
+      </div> */}
       <div>
         <button className="close" onClick={onClose}>
           Close
@@ -72,7 +78,15 @@ const Popup = ({
   )
 }
 
-const Location = ({ location, townId }: { location: any; townId: number }) => {
+const Location = ({
+  location,
+  townId,
+  challengeCompletedInfo
+}: {
+  location: any
+  townId: number
+  challengeCompletedInfo: any
+}) => {
   const [showPopup, setShowPopup] = useState(false)
 
   const locationName = getLocationName(location)
@@ -93,7 +107,12 @@ const Location = ({ location, townId }: { location: any; townId: number }) => {
         src={image}
         alt="location"
       />
-      <div>{locationName}</div>
+      <div>
+        <b>{locationName}</b>
+      </div>
+      <div>
+        Lv: {challengeCompletedInfo.numCompleted}/{challengeCompletedInfo.total}
+      </div>
     </div>
   )
 
@@ -134,6 +153,8 @@ const Town = () => {
   const locations = getLocationsByTownId(townId, LocationData)
   const maxLocationPage = getMaxLocationPage(LocationData)
 
+  const { challenges } = useSelector((state: any) => state)
+
   return (
     <div className="d-flex d-col items-center">
       <TownHeader townId={townId} />
@@ -165,11 +186,16 @@ const Town = () => {
       {/* Locations Display */}
       <div className="d-grid-3 flex-wrap justify-center">
         {locations.map(location => {
+          const challengeCompletedInfo = getChallengesCompleted(
+            getLocationId(location),
+            challenges
+          )
           return (
             <Location
               key={getLocationId(location)}
               location={location}
               townId={townId}
+              challengeCompletedInfo={challengeCompletedInfo}
             />
           )
         })}

@@ -1,5 +1,5 @@
 .message-container {
-  margin: -1rem 0;
+  /* margin: 0 0; */
 }
 
 .message {
@@ -24,13 +24,17 @@
   width: 1rem;
 }
 
+.challenge-container {
+  margin: 0rem 0 1rem 0;
+}
+
 .challenge-tag {
   display: inline-block;
   padding: 0.28rem 0.6rem;
-  margin: 1rem 0 0.5rem 0;
+  margin: 0 0 0.5rem 0;
   border-radius: 1.25rem;
-  background-color: #bae0f1;
-  color: #666;
+  background-color: #57a542;
+  color: rgb(255, 255, 255);
   font-size: 0.8rem;
   font-weight: 700;
   /* text-transform: uppercase; */
@@ -40,7 +44,7 @@
 
 .challenge-status {
   letter-spacing: 0.05rem;
-  color: #666;
+  color: rgb(47, 124, 78);
   font-weight: 700;
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
 }

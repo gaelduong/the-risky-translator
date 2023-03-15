@@ -20,6 +20,20 @@ const getChallengeCleared = (challenge: any) => {
   return challenge.challengeCleared
 }
 
+const getChallengesCompleted = (locationId: number, allChallenges: any[]) => {
+  const locationChallenges = allChallenges[locationId]
+
+  const numCompleted = locationChallenges.filter((challenge: any) =>
+    getChallengeCleared(challenge)
+  ).length
+  const total = locationChallenges.length
+
+  return {
+    numCompleted,
+    total
+  }
+}
+
 const getCurrentChallenge = (locationId: number, allChallenges: any[]) => {
   const locationChallenges = allChallenges[locationId]
 
@@ -51,5 +65,6 @@ export {
   getChallengeResultRequired,
   getChallengeCleared,
   getCurrentChallenge,
-  getChallengeCurrentStatusDisplay
+  getChallengeCurrentStatusDisplay,
+  getChallengesCompleted
 }

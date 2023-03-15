@@ -7,6 +7,7 @@ const NameCreation = () => {
   const [name, setName] = useState('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const handleCreateName = () => {
     dispatch(updateName({ name }))
 

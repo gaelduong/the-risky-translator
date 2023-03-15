@@ -18,9 +18,12 @@ const WordDetailView = () => {
 
   const stats = getWordStats(word)
 
-  const playAudio = async (audio: any) => {
-    const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
-    audioToPlay.play()
+  const playAudio = async (word: any) => {
+    // const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
+    // audioToPlay.play()
+
+    //@ts-ignore
+    window.responsiveVoice.speak(word, 'Spanish Latin American Female')
   }
 
   return (
@@ -30,7 +33,7 @@ const WordDetailView = () => {
       </div>
       <h2>{getWordText(word)}</h2>
 
-      <button onClick={() => playAudio(getWordAudio(word))}>Listen</button>
+      <button onClick={() => playAudio(getWordText(word))}>Listen</button>
 
       <h3>Meaning:</h3>
       <p>{getWordMeaning(word)}</p>

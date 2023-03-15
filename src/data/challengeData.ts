@@ -22,6 +22,8 @@ export const ChallengesData2 = {
   }
 }
 
+const bgColors = ['#0074D9', '#FF4136', '#FF851B', '#B10DC9', '#3D9970']
+
 const challengesCreator = (challenges: any[]) => {
   return challenges.map((challenge: any, i) => {
     if (challenge.type === CHALLENGES.CONSECUTIVE) {
@@ -39,7 +41,8 @@ const challengesCreator = (challenges: any[]) => {
         challengeCleared: false,
         reward: {
           energy: 100
-        }
+        },
+        bgColor: bgColors[i]
       }
     }
     if (challenge.type === CHALLENGES.PERCENTAGE) {
@@ -61,7 +64,8 @@ const challengesCreator = (challenges: any[]) => {
         challengeCleared: false,
         reward: {
           energy: 100
-        }
+        },
+        bgColor: bgColors[i]
       }
     }
     return null
@@ -98,13 +102,6 @@ const REGULAR_CHALLENGES = challengesCreator([
     type: CHALLENGES.CONSECUTIVE,
     resultRequired: {
       correct: 50
-    }
-  },
-  {
-    type: CHALLENGES.PERCENTAGE,
-    resultRequired: {
-      correct: 50,
-      total: 55
     }
   }
 ])

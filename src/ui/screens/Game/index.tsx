@@ -20,8 +20,11 @@ import MonsterMap from '@Screen/MonsterMap'
 import PreTraining from '@Screen/PreTraining'
 import RecognizeMultipleChoice from '@Screen/Training/RecognizeMultipleChoice'
 import RecognizeType from '@Screen/Training/RecognizeType'
+import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
+import AudioType from '@Screen/Training/AudioType'
 import RecognizeYesNo from '@Screen/Training/RecognizeYesNo'
 import WordDetailView from '@Screen/WordDetailView'
+import Board from '../../../game/Board'
 
 // Assets
 import {
@@ -36,37 +39,8 @@ import {
   // bgImage6
 } from '@Asset/images'
 
-import Board from '../../../game/Board'
+// Hooks
 import { useCurrentPath } from '@Hook/useCurrentPath'
-import AudioMultipleChoice from '@Screen/Training/AudioMultipleChoice'
-
-// import * as images from '@Asset/images'
-
-// function ImagePreloader({ children }) {
-//   const [isLoading, setIsLoading] = useState(true)
-
-//   useEffect(() => {
-//     const imagePaths = Object.values(images)
-//     let loadedImages = 0
-
-//     const preloadImage = image => {
-//       const img = new Image()
-//       img.onload = () => {
-//         loadedImages++
-//         if (loadedImages === imagePaths.length) {
-//           setIsLoading(false)
-//         }
-//       }
-//       img.src = image
-//     }
-
-//     imagePaths.forEach(image => {
-//       preloadImage(image)
-//     })
-//   }, [])
-
-//   return isLoading ? <p>Loading...</p> : <>{children}</>
-// }
 
 function CustomLayout({ children }: { children: ReactNode }) {
   const currentPath = useCurrentPath()
@@ -132,37 +106,10 @@ function CustomLayout({ children }: { children: ReactNode }) {
 }
 
 const Game = () => {
-  // const { vocabulary } = useSelector((state: any) => state.vocabulary)
-  // const [audioObjects, setAudioObjects] = useState<any>([])
-
-  // useEffect(() => {
-  //   async function loadAudios() {
-  //     const audioObject = await vocabulary.reduce(
-  //       async (acc: Promise<any>, word: any) => {
-  //         const resolvedAcc = await acc
-  //         const audioFile = await import(
-  //           `@Asset/audios/words/${getWordAudio(word)}`
-  //         )
-  //         const audio = new Audio(audioFile.default)
-  //         audio.load()
-  //         const wordId = getWordId(word)
-  //         return { ...resolvedAcc, [wordId]: audio }
-  //       },
-  //       Promise.resolve({})
-  //     )
-  //     setAudioObjects(audioObject)
-  //   }
-  //   loadAudios()
-  // }, [])
-
-  // console.log(audioObjects)
-
   return (
     <>
-      {/* <ImagePreloader> */}
       <CustomLayout>
         <Header />
-        {/* {Object.keys(audioObjects).length} */}
         <Routes>
           <Route path="/" element={<LoadingApp />} />
           <Route path="/loading" element={<LoadingApp />} />
@@ -176,6 +123,7 @@ const Game = () => {
           <Route path="/recog-mc" element={<RecognizeMultipleChoice />} />
           <Route path="/recog-type" element={<RecognizeType />} />
           <Route path="/recog-audio" element={<AudioMultipleChoice />} />
+          <Route path="/recog-audio-type" element={<AudioType />} />
           <Route path="/word-list" element={<WordListView />} />
           <Route path="/word-list/:id" element={<WordDetailView />} />
           <Route path="/bigmixes" element={<BigMixes />} />
@@ -187,7 +135,6 @@ const Game = () => {
           <Route path="*" element={<Town />} />
         </Routes>
       </CustomLayout>
-      {/* </ImagePreloader> */}
     </>
   )
 }

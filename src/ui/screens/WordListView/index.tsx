@@ -47,9 +47,11 @@ const WordListView = () => {
     navigate(`/word-list/${getWordId(word)}`, { state: { word } })
   }
 
-  const playAudio = async (audio: any) => {
-    const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
-    audioToPlay.play()
+  const playAudio = async (word: any) => {
+    // const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
+    // audioToPlay.play()
+    // @ts-ignore
+    window.responsiveVoice.speak(word, 'Spanish Latin American Female')
   }
 
   const getStatDisplay = (word: any, sort: string) => {
@@ -131,7 +133,7 @@ const WordListView = () => {
                   {getWordText(word)} {getStatDisplay(word, sort)}
                 </td>
                 <td>
-                  <button onClick={() => playAudio(getWordAudio(word))}>
+                  <button onClick={() => playAudio(getWordText(word))}>
                     Listen
                   </button>
                 </td>
