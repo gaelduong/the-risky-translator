@@ -12,7 +12,7 @@ import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
 import { creatureImage } from '@Asset/images'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)

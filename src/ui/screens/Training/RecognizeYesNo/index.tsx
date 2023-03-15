@@ -13,7 +13,7 @@ import { creatureImage } from '@Asset/images'
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 
 // Sound effects
 const wrongAudio = new Audio(wrongSound)
@@ -80,8 +80,6 @@ const RecognizeYesNo = () => {
     )
     setAnswerRevealed(true)
   }
-
-  console.log(townId)
 
   return (
     <>

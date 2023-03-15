@@ -7,8 +7,7 @@ import {
 } from '@Function/attributeUtils'
 import { upgradeAttribute } from '@Redux/slices/creatureSlice'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
-import CustomBackIcon from '@Com/CustomBackIcon'
-import './index.css'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { coinImage, creature2Image, energyImage } from '@Asset/images'
 
 const Upgrade = () => {
@@ -19,7 +18,7 @@ const Upgrade = () => {
   const dispatch = useDispatch()
 
   const { money, energy } = useSelector((state: any) => state.resource)
-  const { name } = creature
+  const { name, attributes } = creature
 
   const handleUpgradeAttribute = (
     attribute: string,
@@ -32,22 +31,33 @@ const Upgrade = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center ">
       <CustomBackIcon linkTo="/profile" state={{ townId }} />
 
       <h2>{name}</h2>
-      <img className="profile-image" src={creature2Image} alt="creature" />
+      <img
+        className="w-[12rem] -mt-5 max-h-[50%] object-contain"
+        src={creature2Image}
+        alt="creature"
+      />
 
-      <h3>Attributes</h3>
+      <h3 className="text-base text-graybrown font-semibold my-4">
+        Attributes
+      </h3>
 
-      {Object.keys(creature.attributes).map(key => {
-        const attribute = creature.attributes[key]
+      {Object.keys(attributes).map(key => {
+        const attribute = attributes[key]
         const { money: moneyRequired, energy: energyRequired } =
           getAttributeReqsAtLevel(key, attribute.level)
 
         return (
-          <div className="upgrade-line" key={key}>
-            <div className="upgrade-col-1">
+          <div
+            className="inline-grid grid-cols-3 items-center
+            px-4 mb-4 gap-4
+            text-left text-sm"
+            key={key}
+          >
+            <div className="text-left">
               <div>
                 <b>{attribute.displayName}</b>
               </div>
@@ -57,22 +67,29 @@ const Upgrade = () => {
             </div>
 
             <span>
-              <span className="current-value">{attribute.value}</span>
+              <span className="font-bold text-neutral-600">
+                {attribute.value}
+              </span>
               {' → '}
-              <span className="new-value">
+              <span className="font-bold text-green-600">
                 {getAttributeValueAtLevel(key, attribute.level + 1)}
               </span>
             </span>
 
             <span>
               <button
-                className="upgrade-btn-action"
+                className="bg-green-600 h-6
+                text-white font-semibold  
+                border-none rounded-md
+                py-[0.2rem] px-2 
+                disabled:bg-[#d6ddd770] disabled:text-[#7b7b7b]
+                active:bg-[#307032] active:shadow-gray-300 active:translate-y-0.5"
                 disabled={money < moneyRequired || energy < energyRequired}
                 onClick={() =>
                   handleUpgradeAttribute(key, moneyRequired, energyRequired)
                 }
               >
-                <div className="d-flex items-center gap-0 ">
+                <div className="flex items-center gap-0 ">
                   {moneyRequired}
                   <img
                     src={coinImage}
@@ -92,7 +109,7 @@ const Upgrade = () => {
         )
       })}
 
-      <h3>Skills</h3>
+      <h3 className="text-base text-graybrown font-semibold my-4">Skills</h3>
     </div>
   )
 }

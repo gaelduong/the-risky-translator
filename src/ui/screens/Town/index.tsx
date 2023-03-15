@@ -29,32 +29,44 @@ const Popup = ({
   const locationId = getLocationId(location)
 
   return (
-    <div className="popup">
-      <h3>{getLocationName(location)}</h3>
-
-      <div>
-        <Link to="/word-list" state={{ location, townId }}>
-          <button>View Word List</button>
-        </Link>
-      </div>
-      {/* <div>
+    <>
+      <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
+      <div
+        className="bg-[#f5fbfd] w-[70vw] max-w-[387px] min-w-[350px]
+    fixed top-[50vh] left-[50vw] -translate-x-1/2 -translate-y-1/2
+    p-5 shadow-md rounded-lg text-center z-50"
+      >
+        {/* <h3 className="text-xl text-left font-semibold mb-6">
+          {getLocationName(location)}
+        </h3> */}
+        <div>
+          <Link to="/word-list" state={{ location, townId }}>
+            <button className="block w-max mr-auto mb-4 text-gray-600 hover:text-gray-800">
+              <span className="text-xs">►</span> View Word List
+            </button>
+          </Link>
+        </div>
+        {/* <div>
         <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
           <u>View Challenges</u>
         </Link>
       </div> */}
-      <hr />
-      <p> Or, select a training type:</p>
-      <div>
-        <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
-          <button>Text Multiple Choice</button>
-        </Link>
-      </div>
-      <div>
-        <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
-          <button>Audio Multiple Choice</button>
-        </Link>
-      </div>
-      {/* <div>
+        <p className="text-lg font-semibold mb-4"> Select a training type:</p>
+        <div>
+          <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
+            <button className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-indigo-500 hover:bg-indigo-600">
+              Text Multiple Choice
+            </button>
+          </Link>
+        </div>
+        <div>
+          <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
+            <button className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600">
+              Audio Multiple Choice
+            </button>
+          </Link>
+        </div>
+        {/* <div>
         <Link to="/recog-audio-type" state={{ locationId: locationId, townId }}>
           <button>Audio Typing</button>
         </Link>
@@ -69,12 +81,16 @@ const Popup = ({
           <button>Yes/No</button>
         </Link>
       </div> */}
-      <div>
-        <button className="close" onClick={onClose}>
-          Close
-        </button>
+        <div>
+          <button
+            className="block w-full py-2 text-gray-600 font-semibold rounded-md border border-gray-400 hover:text-gray-800 hover:border-gray-600"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -129,17 +145,25 @@ const Location = ({
 const TownHeader = ({ townId }: { townId: number }) => {
   const { creature } = useSelector((state: any) => state)
   return (
-    <div className="town-header">
+    <div className="flex justify-between w-[80%]">
       <Link to="/profile" state={{ townId }}>
-        <div className="d-flex d-col items-center">
-          <img className="icon-map" src={creature2Image} alt="creature2" />
-          <span>{creature.name}</span>
+        <div className="flex flex-col items-center">
+          <img
+            className="w-[7rem] object-contain"
+            src={creature2Image}
+            alt="creature2"
+          />
+          <span className="font-bold">{creature.name}</span>
         </div>
       </Link>{' '}
       <Link to="/monster-map" state={{ townId }}>
-        <div className="d-flex d-col items-center">
-          <img className="icon-map" src={monsterImage} alt="monster-map" />
-          <span>Monsters</span>
+        <div className="flex flex-col items-center">
+          <img
+            className="w-[7rem] object-contain"
+            src={monsterImage}
+            alt="monster-map"
+          />
+          <span className="font-bold">Monsters</span>
         </div>
       </Link>
     </div>
@@ -156,14 +180,14 @@ const Town = () => {
   const { challenges } = useSelector((state: any) => state)
 
   return (
-    <div className="d-flex d-col items-center">
+    <div className="flex flex-col items-center">
       <TownHeader townId={townId} />
       {/* Arrows */}
       <div>
         {townId > 0 && (
           <Link to={`/town/${townId - 1}`}>
             <img
-              className="arrow left-arrow"
+              className="absolute top-[65vh] left-0"
               src={leftArrowImage}
               alt="left-arrow"
             />
@@ -172,7 +196,7 @@ const Town = () => {
         {townId < maxLocationPage && (
           <Link to={`/town/${townId + 1}`}>
             <img
-              className="arrow right-arrow"
+              className="absolute top-[65vh] right-0"
               src={rightArrowImage}
               alt="right-arrow"
             />
@@ -181,10 +205,10 @@ const Town = () => {
       </div>
 
       {/* Town Name */}
-      <h2> {getTownNameByTownId(townId)} </h2>
+      <h2 className="text-2xl font-bold"> {getTownNameByTownId(townId)} </h2>
 
       {/* Locations Display */}
-      <div className="d-grid-3 flex-wrap justify-center">
+      <div className="grid grid-cols-3 sm:gap-6 gap-2">
         {locations.map(location => {
           const challengeCompletedInfo = getChallengesCompleted(
             getLocationId(location),

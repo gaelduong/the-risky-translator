@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 // Components
-import Header from '@Com/Header'
+import Header from '@Com/shared/Header'
 
 // Screens
 import Battle from '@Screen/Battle'

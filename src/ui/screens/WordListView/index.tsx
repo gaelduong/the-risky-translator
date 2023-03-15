@@ -1,4 +1,5 @@
-import CustomBackIcon from '@Com/CustomBackIcon'
+import { speakerImage } from '@Asset/images'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { S3_BASE_AUDIO_URL } from '@Constant/index'
 import { getLocationId, getLocationName } from '@Function/locationUtils'
 import {
@@ -85,11 +86,18 @@ const WordListView = () => {
       <div>
         <CustomBackIcon linkTo={`/town/${townId}`} />
       </div>
-      <h2>{getLocationName(location)}</h2>
+      <h2 className="text-2xl font-bold">{getLocationName(location)}</h2>
 
       {/* Sorter */}
-      <label>Sort by:</label>
-      <select id="sorter" value={sort} onChange={handleSetSort}>
+      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        Sort by:
+      </label>
+      <select
+        id="sorter"
+        className="bg-gray-50 mx-auto my-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        value={sort}
+        onChange={handleSetSort}
+      >
         <option value="default">Default</option>
         <option value="random">Random order</option>
         {/* <option value="corrects">Corrects</option> */}
@@ -104,7 +112,6 @@ const WordListView = () => {
         </option> */}
         <option value="alphabetical">Alphabetical</option>
       </select>
-      <hr />
       {/* Search */}
       {/* <div>
         <label>Search:</label>
@@ -117,32 +124,54 @@ const WordListView = () => {
       </div> */}
 
       {/* Table */}
-      <table className="x-center">
-        <thead>
-          <tr>
-            <th>Word</th>
-            <th>Audio</th>
-            <th>Meaning</th>
-          </tr>
-        </thead>
-        <tbody>
-          {displayWords.map((word: any) => {
-            return (
-              <tr key={getWordId(word)}>
-                <td onClick={() => navigateToWordDetail(word)}>
-                  {getWordText(word)} {getStatDisplay(word, sort)}
-                </td>
-                <td>
-                  <button onClick={() => playAudio(getWordText(word))}>
-                    Listen
-                  </button>
-                </td>
-                <td>{getWordMeaning(word)}</td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
+      <div className="overflow-x-auto mb-4 md:text-lg">
+        <table className="mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-2 text-center font-bold text-gray-700">
+                Word
+              </th>
+              <th className="px-4 py-2 text-center font-bold text-gray-700">
+                Audio
+              </th>
+              <th className="px-4 py-2 text-center font-bold text-gray-700">
+                Meaning
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 text-left">
+            {displayWords.map((word: any) => {
+              return (
+                <tr key={getWordId(word)} className="hover:bg-gray-50">
+                  <td
+                    className="px-4 py-2 text-gray-700 cursor-pointer"
+                    onClick={() => navigateToWordDetail(word)}
+                  >
+                    {getWordText(word)} {getStatDisplay(word, sort)}
+                  </td>
+                  <td className="px-4 py-2">
+                    {/* <button
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      onClick={() => playAudio(getWordText(word))}
+                    >
+                      Listen
+                    </button> */}
+                    <img
+                      className="w-6 mx-auto"
+                      onClick={() => playAudio(getWordText(word))}
+                      src={speakerImage}
+                      alt="speaker"
+                    />
+                  </td>
+                  <td className="px-4 py-2 text-gray-700">
+                    {getWordMeaning(word)}
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

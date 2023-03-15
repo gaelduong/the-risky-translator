@@ -19,4 +19,13 @@ const formatNumberWithCommas = (number: number | string) => {
   return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-export { shuffleArray, formatTime, formatNumberWithCommas }
+const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+export {
+  shuffleArray,
+  formatTime,
+  formatNumberWithCommas,
+  capitalizeFirstLetter
+}

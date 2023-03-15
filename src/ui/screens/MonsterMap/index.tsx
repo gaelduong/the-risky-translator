@@ -1,5 +1,6 @@
 import { monsterImage } from '@Asset/images'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
+import { capitalizeFirstLetter } from '@Function/generalUtils'
 import {
   getIsMonsterUnlocked,
   getRequiredMonstersToBeat
@@ -20,61 +21,85 @@ const Popup = ({ customProps, onClose }: any) => {
     dispatch(updateEnergy({ amount: -battleReqs.energy }))
   }
 
-  if (!getIsMonsterUnlocked(monsters, monster)) {
-    const requiredToBeatMonsters = getRequiredMonstersToBeat(monsters, monster)
-    console.log(requiredToBeatMonsters)
-    return (
-      <div className="popup">
-        <h3>{name}</h3>
-        <p> Attributes</p>
-        <div>Health:?</div>
-        <div>Defence:?</div>
-        <div>Power:?</div>
-        <div>Accuracy:?</div>
-        <div>Attack Count:?</div>
-        <div>Cooldown:?</div>
-        <p>
-          Need to beat:
-          {requiredToBeatMonsters.map((m: any) => (
-            <span>{m.name}</span>
-          ))}{' '}
-        </p>
+  const monsterUnlocked = getIsMonsterUnlocked(monsters, monster)
 
-        <button className="close" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    )
-  }
+  // if (!getIsMonsterUnlocked(monsters, monster)) {
+  //   const requiredToBeatMonsters = getRequiredMonstersToBeat(monsters, monster)
+  //   console.log(requiredToBeatMonsters)
+  //   return (
+  //     <div className="popup">
+  //       <h3>{name}</h3>
+  //       <p> Attributes</p>
+  //       <div>Health:?</div>
+  //       <div>Defence:?</div>
+  //       <div>Power:?</div>
+  //       <div>Accuracy:?</div>
+  //       <div>Attack Count:?</div>
+  //       <div>Cooldown:?</div>
+  //       <p>
+  //         Need to beat:
+  //         {requiredToBeatMonsters.map((m: any) => (
+  //           <span>{m.name}</span>
+  //         ))}{' '}
+  //       </p>
+
+  //       <button className="close" onClick={onClose}>
+  //         Close
+  //       </button>
+  //     </div>
+  //   )
+  // }
 
   return (
-    <div className="popup">
-      <h3>{name}</h3>
-      <h4> Attributes</h4>
-      <div style={{ width: '80%', margin: '0 auto', textAlign: 'left' }}>
-        <div>Health: {attributes.health}</div>
-        <div>Defence: {attributes.defence}</div>
-        <div>Power: {attributes.power}</div>
-        <div>Accuracy: {attributes.accuracy}</div>
-        <div>Attack Count: {attributes.attackCount}</div>
-        <div>Cooldown: {attributes.cooldown}</div>
-      </div>
-      <div>
-        <Link to="/battle" state={monster}>
+    <>
+      <div className="absolute z-50 inset-0 bg-gray-900 opacity-50"></div>
+      <div
+        className="bg-[#f5fbfd] w-[70vw] max-w-[387px] min-w-[350px]
+    fixed top-[50vh] left-[50vw] -translate-x-1/2 -translate-y-1/2
+    p-5 shadow-md rounded-lg text-center z-50"
+      >
+        <h2 className="text-2xl font-bold text-gray-700 mb-4">{name}</h2>
+        <div>
+          {Object.keys(attributes).map((attributeKey: any) => (
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-lg font-medium text-gray-700">
+                {capitalizeFirstLetter(attributeKey)}:
+              </p>
+              <p className="text-lg font-medium text-gray-900">
+                {attributes[attributeKey]}
+              </p>
+            </div>
+          ))}
+        </div>
+        <div>
+          {monsterUnlocked ? (
+            <Link to="/battle" state={monster}>
+              <button
+                disabled={energy < battleReqs.energy}
+                onClick={() => handleEnterBattle(battleReqs)}
+                className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600"
+              >
+                Battle! -{battleReqs.energy}(E)
+              </button>
+            </Link>
+          ) : (
+            <p className="mb-4">
+              Need to beat:{' '}
+              {getRequiredMonstersToBeat(monsters, monster).map((m: any) => (
+                <span>{m.name}</span>
+              ))}
+            </p>
+          )}
+
           <button
-            disabled={energy < battleReqs.energy}
-            onClick={() => handleEnterBattle(battleReqs)}
+            onClick={onClose}
+            className="block w-full py-2 text-gray-600 font-semibold rounded-md border border-gray-400 hover:text-gray-800 hover:border-gray-600"
           >
-            Battle -{battleReqs.energy}(E)
+            Close
           </button>
-        </Link>
+        </div>
       </div>
-      <div>
-        <button className="close" onClick={onClose}>
-          Close
-        </button>
-      </div>
-    </div>
+    </>
   )
 }
 
@@ -106,7 +131,7 @@ const MonsterMap = () => {
     <div>
       <CustomBackIcon linkTo={`/town/${townId}`} />
 
-      <div className="d-grid-3 px-1 py-1">
+      <div className="inline-grid grid-cols-3 px-8 py-8 gap-5">
         {monsters.map((monster: any) => {
           return (
             <div key={monster.name}>
@@ -117,7 +142,6 @@ const MonsterMap = () => {
                       getIsMonsterUnlocked(monsters, monster) ? 1 : 0
                     })`
                   }}
-                  className="spotimg"
                   src={monsterImage}
                   alt="monster"
                 />

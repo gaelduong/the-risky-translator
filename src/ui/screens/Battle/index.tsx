@@ -8,40 +8,7 @@ import { updateMonsterBeaten } from '@Redux/slices/monsterSlice'
 
 // Assets
 import { creatureImage, monsterImage } from '@Asset/images'
-
-const ProgressBar = ({
-  progress,
-  color
-}: {
-  progress: number
-  color: string
-}) => {
-  const borderRadiusPx = 10
-
-  return (
-    <div
-      style={{
-        width: '40%',
-        height: '15px',
-        backgroundColor: '#ddd',
-        margin: '0 auto',
-        borderRadius: borderRadiusPx
-      }}
-    >
-      <div
-        style={{
-          width: `${Math.max(progress, 0) * 100}%`,
-          height: '100%',
-          backgroundColor: color,
-          borderRadius:
-            progress > 0.98
-              ? borderRadiusPx
-              : `${borderRadiusPx}px 0px 0px ${borderRadiusPx}px`
-        }}
-      ></div>
-    </div>
-  )
-}
+import ProgressBar from '@Com/shared/ProgressBar'
 
 enum BATTLE_STATUSES {
   NOT_STARTED = 'NOT_STARTED',
@@ -112,8 +79,9 @@ const Battle = () => {
       dispatch(updateMonsterBeaten({ id: monsterId }))
       setResultMessage(
         <>
-          <h2>Congrats! Monster killed.</h2>
+          <h2 className="text-xl font-bold">Congrats...you won!</h2>
           <button
+            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded-full"
             onClick={() =>
               handleLeaveBattle({ won: true, reward: { money: 25 } })
             }
@@ -129,8 +97,9 @@ const Battle = () => {
     if (creatureHp <= 0) {
       setResultMessage(
         <>
-          <h2>Oof! Creature beaten.</h2>
+          <h2 className="text-xl font-bold">Oof! You lost...</h2>
           <button
+            className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded-full"
             onClick={() => handleLeaveBattle({ won: false, reward: null })}
           >
             Leave
@@ -224,11 +193,13 @@ const Battle = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-5">
       {/* Monster */}
-      <h4>{monsterName}</h4>
-      <div onClick={creatureAttack}>
+      <div>
+        <h4 className="text-xl font-bold mb-6">{monsterName}</h4>
         <div>Cooldown: {(monsterCooldown / 1000).toFixed(2)}</div>
+
+        {/* Progress bar */}
         <ProgressBar
           progress={monsterHp / monsterAttributes.health}
           color="#F05E67"
@@ -236,16 +207,22 @@ const Battle = () => {
         <div>
           {Math.max(monsterHp, 0)}/{monsterAttributes.health}
         </div>
-        <img
-          className={`battle-creature ${isMonsterJiggling ? 'jiggle' : ''}`}
-          src={monsterImage}
-          alt="monster"
-        />
+        <div onClick={creatureAttack}>
+          <img
+            className={`w-[200px] ${
+              isMonsterJiggling
+                ? 'animate-[wiggle_1s_ease-in-out_infinite]'
+                : ''
+            }`}
+            src={monsterImage}
+            alt="monster"
+          />
+        </div>
       </div>
 
       {/* Countdown */}
       {battleStatus === BATTLE_STATUSES.NOT_STARTED ? (
-        <h2>Fight in {countDown} ... </h2>
+        <h2 className="text-2xl font-bold">Fight in {countDown} ... </h2>
       ) : battleStatus === BATTLE_STATUSES.IN_PROGRESS ? (
         <h2> </h2>
       ) : (
@@ -260,7 +237,9 @@ const Battle = () => {
           {Math.max(creatureHp, 0)}/{creatureHealth}
         </div>
         <img
-          className={`battle-creature  ${isCreatureJiggling ? 'jiggle' : ''}`}
+          className={`w-[200px]  ${
+            isCreatureJiggling ? 'animate-[wiggle_1s_ease-in-out_infinite]' : ''
+          }`}
           src={creatureImage}
           alt="creature"
         />

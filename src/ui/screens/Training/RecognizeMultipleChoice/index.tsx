@@ -9,18 +9,36 @@ import {
   getWordText
 } from '@Function/wordUtils'
 import { correctSound, wrongSound } from '@Asset/audios'
-import { creatureImage } from '@Asset/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { Word } from '@Type/word'
 import { shuffleArray } from '@Function/generalUtils'
+import { getCurrentChallenge } from '@Function/challengeUtils'
+import { updateChallenge } from '@Redux/slices/challengeSlice'
+import { ANSWER_RESULT } from '@Constant/index'
+import ChallengeDisplay from '@Com/training/ChallengeDisplay'
+import CreatureDisplay from '@Com/training/CreatureDisplay'
+import ResultDisplay from '@Com/training/ResultDisplay'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)
 const wrongAudio = new Audio(wrongSound)
+
+const mcSelectButtonStyle =
+  'w-[9.7rem] h-auto min-h-[2.75rem] text-lg bg-indigo-500 text-white rounded-lg mb-4 shadow-lg'
+
+const rewardAmountCorrect = {
+  money: 1,
+  energy: 0
+}
+
+const rewardAmountIncorrect = {
+  money: -1,
+  energy: 0
+}
 
 const RecognizeMultipleChoice = () => {
   const {
@@ -34,6 +52,10 @@ const RecognizeMultipleChoice = () => {
     [vocabulary, locationId]
   )
 
+  // Challenges
+  const { challenges } = useSelector((state: any) => state)
+  const currentChallenge = getCurrentChallenge(locationId, challenges)
+
   const dispatch = useDispatch()
 
   //   Word, choices, reveals
@@ -44,7 +66,7 @@ const RecognizeMultipleChoice = () => {
 
   //   Results
   const [showResult, setShowResult] = useState(false)
-  const [message, setMessage] = useState('')
+  const [resultStatus, setResultStatus] = useState<ANSWER_RESULT | null>(null)
 
   //   Get current word's content
   const wordId = getWordId(currentWord)
@@ -55,7 +77,7 @@ const RecognizeMultipleChoice = () => {
   useEffect(() => {
     const wrongChoices = getRandomWordList(wordListPool, 1, wordId)
     setChoices(shuffleArray([currentWord, ...wrongChoices]))
-    setMessage('')
+    setResultStatus(null)
   }, [currentWord])
 
   useEffect(() => {
@@ -69,7 +91,18 @@ const RecognizeMultipleChoice = () => {
   function submitAnswer(selectedAnswer: string, itemId: number) {
     if (checkAnswer(selectedAnswer)) {
       correctAudio.play()
-      setMessage(`Correct!\n ${answerRevealed ? '+$0' : '+$1'}`)
+      setResultStatus(ANSWER_RESULT.CORRECT)
+
+      // Update challenge status
+      if (!answerRevealed) {
+        dispatch(
+          updateChallenge({
+            locationId,
+            challenge: currentChallenge,
+            answerResult: ANSWER_RESULT.CORRECT
+          })
+        )
+      }
 
       setTimeout(() => {
         if (!answerRevealed) {
@@ -87,7 +120,7 @@ const RecognizeMultipleChoice = () => {
       }, 1000)
     } else {
       wrongAudio.play()
-      setMessage('Wrong!\n -$1')
+      setResultStatus(ANSWER_RESULT.INCORRECT)
       setTimeout(() => {
         dispatch(updateMoney({ amount: -1 }))
         dispatch(updateEnergy({ amount: 0 }))
@@ -95,6 +128,15 @@ const RecognizeMultipleChoice = () => {
           updateWordStats({
             id: itemId,
             log: { timestamp: Date.now(), result: 'INCORRECT' }
+          })
+        )
+
+        // Update challenge status
+        dispatch(
+          updateChallenge({
+            locationId,
+            challenge: currentChallenge,
+            answerResult: ANSWER_RESULT.INCORRECT
           })
         )
 
@@ -118,6 +160,7 @@ const RecognizeMultipleChoice = () => {
 
   return (
     <>
+      {/* Back Icon */}
       <CustomBackIcon
         linkTo={`/town/${townId}`}
         popup={{
@@ -126,18 +169,31 @@ const RecognizeMultipleChoice = () => {
           noText: 'Stay'
         }}
       />
-      <img className="creature" src={creatureImage} alt="person" />
 
-      <h2 className="header">{wordText}</h2>
+      {/* Creature Image */}
+      <CreatureDisplay />
 
+      {/* Challenge Display */}
+      <ChallengeDisplay locationId={locationId} />
+
+      <ResultDisplay
+        resultStatus={resultStatus}
+        rewardAmountCorrect={rewardAmountCorrect}
+        rewardAmountIncorrect={rewardAmountIncorrect}
+      />
+
+      {/* Current word */}
+      <h2 className="text-3xl font-bold mb-4">{wordText}</h2>
+
+      {/* Display Choices */}
       {choices.map(choice => (
         <div key={getWordId(choice)}>
           <button
-            className={`mc-select-button ${
+            className={`${mcSelectButtonStyle} ${
               showResult
                 ? wordMeaning === getWordMeaning(choice)
-                  ? 'mc-correct'
-                  : 'mc-wrong'
+                  ? 'bg-green-300 text-white'
+                  : 'bg-red-600 text-white'
                 : ''
             }`}
             disabled={showResult}
@@ -148,15 +204,15 @@ const RecognizeMultipleChoice = () => {
         </div>
       ))}
 
-      <div style={{ marginTop: 20 }}>
+      {/* Reveal */}
+      <div>
         <span
-          className="reveal"
+          className="text-lg mt-4"
           onClick={() => handleRevealAnswer(getWordId(currentWord))}
         >
           <u>reveal</u>
         </span>
         {answerRevealed ? getWordMeaning(currentWord) : ''}
-        <h3>{message}</h3>
       </div>
     </>
   )

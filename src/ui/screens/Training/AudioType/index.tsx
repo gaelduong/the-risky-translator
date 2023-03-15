@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectWord } from '@Algorithm/index'
 import {
-  getRandomWordList,
   getWordAudio,
   getWordId,
   getWordListPool,
@@ -20,17 +19,16 @@ import {
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { Word } from '@Type/word'
-import { shuffleArray } from '@Function/generalUtils'
 import { ANSWER_RESULT, S3_BASE_AUDIO_URL } from '@Constant/index'
 
-import '../index.css'
 import {
   getChallengeCurrentStatusDisplay,
   getCurrentChallenge
 } from '@Function/challengeUtils'
 import { resetChallenge, updateChallenge } from '@Redux/slices/challengeSlice'
+import ResultDisplay from '@Com/training/ResultDisplay'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)
@@ -76,7 +74,7 @@ const AudioType = () => {
 
   //   Results
   const [showResult, setShowResult] = useState(false)
-  const [resultStatus, setResultStatus] = useState<string | null>(null)
+  const [resultStatus, setResultStatus] = useState<ANSWER_RESULT | null>(null)
 
   //   Get current word's content
   const wordId = getWordId(currentWord)
@@ -141,7 +139,7 @@ const AudioType = () => {
     const isCorrect = checkAnswer(answer)
     if (isCorrect) {
       correctAudio.play()
-      setResultStatus('correct')
+      setResultStatus(ANSWER_RESULT.CORRECT)
 
       // Update challenge status
       if (!answerRevealed) {
@@ -172,7 +170,7 @@ const AudioType = () => {
       }, 1000)
     } else {
       wrongAudio.play()
-      setResultStatus('incorrect')
+      setResultStatus(ANSWER_RESULT.INCORRECT)
 
       // Update challenge status
       dispatch(
@@ -213,46 +211,6 @@ const AudioType = () => {
     // )
   }
 
-  const resultMessage = resultStatus ? (
-    (() => {
-      const amountObj =
-        resultStatus === 'correct' ? rewardAmountCorrect : rewardAmountIncorrect
-
-      const amountMoneyDisplay =
-        amountObj.money > 0 ? `+${amountObj.money}` : amountObj.money
-      const amountEnergyDisplay =
-        amountObj.energy > 0 ? `+${amountObj.energy}` : amountObj.energy
-
-      return (
-        <div className="message-container d-flex justify-center items-center gap-2">
-          <span
-            className={`message ${
-              resultStatus === 'correct' ? 'correct' : 'incorrect'
-            }`}
-          >
-            {resultStatus === 'correct' ? 'Correct' : 'Incorrect'}
-          </span>
-          <div className="d-flex d-col gap-0">
-            {amountObj.money !== 0 && (
-              <div className="d-flex justify-center items-center gap-0">
-                <span className="amount-text"> {amountMoneyDisplay}</span>
-                <img className="reward-img" src={coinImage} alt="coin" />
-              </div>
-            )}
-            {amountObj.energy !== 0 && (
-              <div className="d-flex justify-center items-center gap-0">
-                <span className="amount-text"> {amountEnergyDisplay}</span>
-                <img className="reward-img" src={energyImage} alt="energy" />
-              </div>
-            )}
-          </div>
-        </div>
-      )
-    })()
-  ) : (
-    <div style={{ height: '2.59375rem', margin: '-1.5rem 0' }}></div>
-  )
-
   return (
     <>
       <CustomBackIcon
@@ -284,7 +242,7 @@ const AudioType = () => {
         </div>
       )}
 
-      {resultMessage}
+      {/* <ResultDisplay resultStatus={resultStatus} rewardAmountCorrect={rewardAmountCorrect} rewardAmountIncorrect={rewardAmountIncorrect}> */}
 
       {/* <h2 className="header">{wordText}</h2> */}
       <div ref={speakerRef} onClick={() => playAudio2(wordText)}>

@@ -10,40 +10,37 @@ import {
   getWordText
 } from '@Function/wordUtils'
 import { correctSound, wrongSound } from '@Asset/audios'
-import {
-  coinImage,
-  creatureImage,
-  energyImage,
-  speakerImage
-} from '@Asset/images'
+import { speakerImage } from '@Asset/images'
 
 import { updateMoney, updateEnergy } from '@Redux/slices/resourceSlice'
 import { useLocation } from 'react-router-dom'
 import { updateWordStats } from '@Redux/slices/vocabularySlice'
-import CustomBackIcon from '@Com/CustomBackIcon'
+import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { Word } from '@Type/word'
 import { shuffleArray } from '@Function/generalUtils'
 import { ANSWER_RESULT, S3_BASE_AUDIO_URL } from '@Constant/index'
 
-import '../index.css'
-import {
-  getChallengeCurrentStatusDisplay,
-  getCurrentChallenge
-} from '@Function/challengeUtils'
+import { getCurrentChallenge } from '@Function/challengeUtils'
 import { resetChallenge, updateChallenge } from '@Redux/slices/challengeSlice'
+import ChallengeDisplay from '@Com/training/ChallengeDisplay'
+import CreatureDisplay from '@Com/training/CreatureDisplay'
+import ResultDisplay from '@Com/training/ResultDisplay'
 
 // Sound effects
 const correctAudio = new Audio(correctSound)
 const wrongAudio = new Audio(wrongSound)
 
+const mcSelectButtonStyle =
+  'w-[9.7rem] h-auto min-h-[2.75rem] text-lg bg-indigo-500 text-white rounded-lg mb-4 shadow-lg'
+
 const rewardAmountCorrect = {
-  money: 1,
-  energy: 0
+  money: 2,
+  energy: 1
 }
 
 const rewardAmountIncorrect = {
   money: -1,
-  energy: 0
+  energy: -1
 }
 
 const AudioMultipleChoice = () => {
@@ -75,7 +72,7 @@ const AudioMultipleChoice = () => {
 
   //   Results
   const [showResult, setShowResult] = useState(false)
-  const [resultStatus, setResultStatus] = useState<string | null>(null)
+  const [resultStatus, setResultStatus] = useState<ANSWER_RESULT | null>(null)
 
   //   Get current word's content
   const wordId = getWordId(currentWord)
@@ -111,7 +108,7 @@ const AudioMultipleChoice = () => {
     audioToPlay.play()
   }
 
-  const playAudio2 = (word: string) => {
+  const generateTextToSpeech = (word: string) => {
     //@ts-ignore
     window.responsiveVoice.speak(word, 'Spanish Latin American Female')
   }
@@ -124,16 +121,18 @@ const AudioMultipleChoice = () => {
     const isCorrect = checkAnswer(selectedAnswer)
     if (isCorrect) {
       correctAudio.play()
-      setResultStatus('correct')
+      setResultStatus(ANSWER_RESULT.CORRECT)
 
       // Update challenge status
-      dispatch(
-        updateChallenge({
-          locationId,
-          challenge: currentChallenge,
-          answerResult: ANSWER_RESULT.CORRECT
-        })
-      )
+      if (!answerRevealed) {
+        dispatch(
+          updateChallenge({
+            locationId,
+            challenge: currentChallenge,
+            answerResult: ANSWER_RESULT.CORRECT
+          })
+        )
+      }
 
       setTimeout(() => {
         if (!answerRevealed) {
@@ -151,7 +150,7 @@ const AudioMultipleChoice = () => {
       }, 1000)
     } else {
       wrongAudio.play()
-      setResultStatus('incorrect')
+      setResultStatus(ANSWER_RESULT.INCORRECT)
 
       // Update challenge status
       dispatch(
@@ -182,6 +181,7 @@ const AudioMultipleChoice = () => {
 
   const handleRevealAnswer = (itemId: number) => {
     setAnswerRevealed(true)
+    dispatch(resetChallenge({ locationId, challenge: currentChallenge }))
     // dispatch(
     //   updateWordStats({
     //     id: itemId,
@@ -190,48 +190,9 @@ const AudioMultipleChoice = () => {
     // )
   }
 
-  const resultMessage = resultStatus ? (
-    (() => {
-      const amountObj =
-        resultStatus === 'correct' ? rewardAmountCorrect : rewardAmountIncorrect
-
-      const amountMoneyDisplay =
-        amountObj.money > 0 ? `+${amountObj.money}` : amountObj.money
-      const amountEnergyDisplay =
-        amountObj.energy > 0 ? `+${amountObj.energy}` : amountObj.energy
-
-      return (
-        <div className="message-container d-flex justify-center items-center gap-2">
-          <span
-            className={`message ${
-              resultStatus === 'correct' ? 'correct' : 'incorrect'
-            }`}
-          >
-            {resultStatus === 'correct' ? 'Correct' : 'Incorrect'}
-          </span>
-          <div className="d-flex d-col gap-0">
-            {amountObj.money !== 0 && (
-              <div className="d-flex justify-center items-center gap-0">
-                <span className="amount-text"> {amountMoneyDisplay}</span>
-                <img className="reward-img" src={coinImage} alt="coin" />
-              </div>
-            )}
-            {amountObj.energy !== 0 && (
-              <div className="d-flex justify-center items-center gap-0">
-                <span className="amount-text"> {amountEnergyDisplay}</span>
-                <img className="reward-img" src={energyImage} alt="energy" />
-              </div>
-            )}
-          </div>
-        </div>
-      )
-    })()
-  ) : (
-    <div style={{ height: '2.59375rem', margin: '-1.5rem 0' }}></div>
-  )
-
   return (
     <>
+      {/* Back Icon */}
       <CustomBackIcon
         linkTo={`/town/${townId}`}
         popup={{
@@ -240,46 +201,38 @@ const AudioMultipleChoice = () => {
           noText: 'Stay'
         }}
       />
-      <img className="creature" src={creatureImage} alt="person" />
 
-      {currentChallenge && (
-        <div className="challenge-container">
-          <div>
-            <span
-              className="challenge-tag"
-              style={{ backgroundColor: currentChallenge.bgColor }}
-            >
-              <b>Level {currentChallenge.challengeLevel}</b>:{' '}
-              {currentChallenge.challengeTitle}
-            </span>
-          </div>
-          <div>
-            <span className="challenge-status">
-              {getChallengeCurrentStatusDisplay(currentChallenge)}
-            </span>
-          </div>
-        </div>
-      )}
+      {/* Creature Image */}
+      <CreatureDisplay />
 
-      {resultMessage}
+      {/* Challenge Display */}
+      <ChallengeDisplay locationId={locationId} />
 
-      {/* <h2 className="header">{wordText}</h2> */}
-      <div ref={speakerRef} onClick={() => playAudio2(wordText)}>
-        <img
-          style={{ width: '3rem', margin: '1rem 0' }}
-          src={speakerImage}
-          alt="speaker"
-        />
+      {/* Display Correct/Incorrect result */}
+      <ResultDisplay
+        resultStatus={resultStatus}
+        rewardAmountCorrect={rewardAmountCorrect}
+        rewardAmountIncorrect={rewardAmountIncorrect}
+      />
+
+      {/* Speaker */}
+      <div
+        className="mx-auto w-12 mb-5 mt-2"
+        ref={speakerRef}
+        onClick={() => generateTextToSpeech(wordText)}
+      >
+        <img src={speakerImage} alt="speaker" />
       </div>
 
+      {/* Display choices */}
       {choices.map(choice => (
         <div key={getWordId(choice)}>
           <button
-            className={`mc-select-button ${
+            className={`${mcSelectButtonStyle} ${
               showResult
                 ? wordMeaning === getWordMeaning(choice)
-                  ? 'mc-correct'
-                  : 'mc-wrong'
+                  ? 'bg-green-300 text-white'
+                  : 'bg-red-600 text-white'
                 : ''
             }`}
             disabled={showResult}
@@ -290,14 +243,15 @@ const AudioMultipleChoice = () => {
         </div>
       ))}
 
+      {/* Reveal */}
       <div style={{ marginTop: 20 }}>
         <span
-          className="reveal"
+          className="text-lg"
           onClick={() => handleRevealAnswer(getWordId(currentWord))}
         >
-          {/* <u>reveal</u> */}
+          <u>reveal</u>
         </span>
-        {answerRevealed ? getWordMeaning(currentWord) : ''}
+        {answerRevealed ? ' ' + wordMeaning + '(' + wordText + ')' : ''}
       </div>
     </>
   )
