@@ -246,11 +246,7 @@ const AudioType = () => {
 
       {/* <h2 className="header">{wordText}</h2> */}
       <div ref={speakerRef} onClick={() => playAudio2(wordText)}>
-        <img
-          style={{ width: '3rem', margin: '1rem 0' }}
-          src={speakerImage}
-          alt="speaker"
-        />
+        <img className="w-12 my-4" src={speakerImage} alt="speaker" />
       </div>
 
       <form

@@ -231,7 +231,7 @@ const AudioMultipleChoice = () => {
             className={`${mcSelectButtonStyle} ${
               showResult
                 ? wordMeaning === getWordMeaning(choice)
-                  ? 'bg-green-300 text-white'
+                  ? 'bg-green-00 text-white'
                   : 'bg-red-600 text-white'
                 : ''
             }`}
@@ -244,7 +244,7 @@ const AudioMultipleChoice = () => {
       ))}
 
       {/* Reveal */}
-      <div style={{ marginTop: 20 }}>
+      <div className="mt-5">
         <span
           className="text-lg"
           onClick={() => handleRevealAnswer(getWordId(currentWord))}

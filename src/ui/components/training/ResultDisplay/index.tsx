@@ -1,7 +1,7 @@
 import { coinImage, energyImage } from '@Asset/images'
 import { ANSWER_RESULT } from '@Constant/index'
 
-interface ResultDisplay {
+interface ResultDisplayProps {
   resultStatus: ANSWER_RESULT | null
   rewardAmountCorrect: any
   rewardAmountIncorrect: any
@@ -11,7 +11,7 @@ const ResultDisplay = ({
   resultStatus,
   rewardAmountCorrect,
   rewardAmountIncorrect
-}: ResultDisplay) => {
+}: ResultDisplayProps) => {
   // If there's no result yet, display blank line
   if (resultStatus === null) {
     return <div className="h-[4.6rem] -my-[1.5rem]"></div>

@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
 import {
   creature2Image,
   leftArrowImage,
@@ -14,9 +17,7 @@ import {
   getMaxLocationPage,
   getTownNameByTownId
 } from '@Function/locationUtils'
-import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import useClickSound from '@Hook/useClickSound'
 
 const Popup = ({
   customProps,
@@ -27,6 +28,9 @@ const Popup = ({
 }) => {
   const { location, townId } = customProps
   const locationId = getLocationId(location)
+
+  useClickSound('data-press-sound')
+  useClickSound('data-start-sound')
 
   return (
     <>
@@ -41,7 +45,10 @@ const Popup = ({
         </h3> */}
         <div>
           <Link to="/word-list" state={{ location, townId }}>
-            <button className="block w-max mr-auto mb-4 text-gray-600 hover:text-gray-800">
+            <button
+              data-press-sound
+              className="block w-max mr-auto mb-4 text-gray-600 hover:text-gray-800"
+            >
               <span className="text-xs">►</span> View Word List
             </button>
           </Link>
@@ -54,14 +61,20 @@ const Popup = ({
         <p className="text-lg font-semibold mb-4"> Select a training type:</p>
         <div>
           <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
-            <button className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-indigo-500 hover:bg-indigo-600">
+            <button
+              data-start-sound
+              className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-indigo-500 hover:bg-indigo-600"
+            >
               Text Multiple Choice
             </button>
           </Link>
         </div>
         <div>
           <Link to="/recog-audio" state={{ locationId: locationId, townId }}>
-            <button className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600">
+            <button
+              data-start-sound
+              className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600"
+            >
               Audio Multiple Choice
             </button>
           </Link>
@@ -83,6 +96,7 @@ const Popup = ({
       </div> */}
         <div>
           <button
+            data-press-sound
             className="block w-full py-2 text-gray-600 font-semibold rounded-md border border-gray-400 hover:text-gray-800 hover:border-gray-600"
             onClick={onClose}
           >
@@ -113,16 +127,8 @@ const Location = ({
   }
 
   const locationDisplay = (
-    <div className="location" onClick={() => setShowPopup(true)}>
-      <img
-        style={{
-          width: 100,
-          aspectRatio: 1 / 1
-          //   filter: isUnlocked ? '' : 'grayscale(100%)'
-        }}
-        src={image}
-        alt="location"
-      />
+    <div data-press-sound onClick={() => setShowPopup(true)}>
+      <img className="w-[100px] aspect-square" src={image} alt="location" />
       <div>
         <b>{locationName}</b>
       </div>
@@ -147,7 +153,7 @@ const TownHeader = ({ townId }: { townId: number }) => {
   return (
     <div className="flex justify-between w-[80%]">
       <Link to="/profile" state={{ townId }}>
-        <div className="flex flex-col items-center">
+        <div data-press-sound className="flex flex-col items-center">
           <img
             className="w-[7rem] object-contain"
             src={creature2Image}
@@ -156,7 +162,7 @@ const TownHeader = ({ townId }: { townId: number }) => {
           <span className="font-bold">{creature.name}</span>
         </div>
       </Link>{' '}
-      <Link to="/monster-map" state={{ townId }}>
+      <Link data-press-sound to="/monster-map" state={{ townId }}>
         <div className="flex flex-col items-center">
           <img
             className="w-[7rem] object-contain"
@@ -187,6 +193,7 @@ const Town = () => {
         {townId > 0 && (
           <Link to={`/town/${townId - 1}`}>
             <img
+              data-press-sound
               className="absolute top-[65vh] left-0"
               src={leftArrowImage}
               alt="left-arrow"
@@ -196,6 +203,7 @@ const Town = () => {
         {townId < maxLocationPage && (
           <Link to={`/town/${townId + 1}`}>
             <img
+              data-press-sound
               className="absolute top-[65vh] right-0"
               src={rightArrowImage}
               alt="right-arrow"

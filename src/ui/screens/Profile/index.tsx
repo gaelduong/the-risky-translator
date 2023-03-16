@@ -22,9 +22,10 @@ const Profile = () => {
       <Link to="/upgrade" state={{ townId }}>
         <div>
           <button
+            data-press-sound
             className="bg-olivedrab 
             text-base font-bold text-white text-center
-            w-20 h-6
+            w-20 h-6 mb-2
             rounded-md
             active:translate-y-1"
           >
@@ -33,7 +34,10 @@ const Profile = () => {
         </div>
       </Link>
 
-      <h3 className="text-base text-graybrown font-semibold my-4">
+      <h3
+        className="text-lg text-graybrown font-semibold my-4"
+        data-press-sound
+      >
         Attributes
       </h3>
       <div className="flex flex-col items-start gap-3">
@@ -52,7 +56,7 @@ const Profile = () => {
           </div>
         ))}
       </div>
-      <h3 className="text-base text-graybrown font-semibold my-4">Skills</h3>
+      <h3 className="text-lg text-graybrown font-semibold mt-4">Skills</h3>
     </div>
   )
 }

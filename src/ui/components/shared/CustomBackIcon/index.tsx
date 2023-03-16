@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { backArrow } from '@Asset/images'
+import useClickSound from '@Hook/useClickSound'
 
 const CustomBackIcon = ({
   linkTo,
@@ -16,6 +17,7 @@ const CustomBackIcon = ({
   } | null
 }) => {
   const [showPopup, setShowPopup] = useState(false)
+  useClickSound('data-press-sound', showPopup)
 
   function handlePopupClose() {
     setShowPopup(false)
@@ -23,10 +25,13 @@ const CustomBackIcon = ({
 
   if (!popup) {
     return (
-      <div className="absolute top-[10vh] left-[1vh] drop-shadow-md">
+      <div
+        data-press-sound
+        className="absolute top-[10vh] left-[1vh] drop-shadow-md"
+      >
         {/* @ts-ignore */}
         <Link to={linkTo} state={state}>
-          <img style={{ marginLeft: '1rem' }} src={backArrow} alt="back" />
+          <img src={backArrow} alt="back" />
         </Link>
       </div>
     )
@@ -34,7 +39,10 @@ const CustomBackIcon = ({
 
   return (
     <>
-      <div className="absolute top-[10vh] left-[1vh] drop-shadow-md">
+      <div
+        data-press-sound
+        className="absolute top-[10vh] left-[1vh] drop-shadow-md"
+      >
         <img src={backArrow} alt="back" onClick={() => setShowPopup(true)} />
       </div>
       {showPopup && (
@@ -49,7 +57,10 @@ const CustomBackIcon = ({
             <div>
               {/* @ts-ignore */}
               <Link to={linkTo}>
-                <button className="w-full py-2 mb-2 text-white font-semibold rounded-md bg-[#e74141] hover:bg-red-600">
+                <button
+                  data-press-sound
+                  className="w-full py-2 mb-2 text-white font-semibold rounded-md bg-[#e74141] hover:bg-red-600"
+                >
                   {popup.yesText}
                 </button>
               </Link>
@@ -57,6 +68,7 @@ const CustomBackIcon = ({
 
             <div>
               <button
+                data-press-sound
                 className="block w-full py-2 text-gray-600 font-semibold rounded-md border border-gray-400 hover:text-gray-800 hover:border-gray-600"
                 onClick={handlePopupClose}
               >

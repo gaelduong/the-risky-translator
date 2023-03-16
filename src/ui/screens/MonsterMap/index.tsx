@@ -5,12 +5,15 @@ import {
   getIsMonsterUnlocked,
   getRequiredMonstersToBeat
 } from '@Function/monsterUtils'
+import useClickSound from '@Hook/useClickSound'
 import { updateEnergy } from '@Redux/slices/resourceSlice'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 const Popup = ({ customProps, onClose }: any) => {
+  useClickSound('data-press-sound')
+
   const { energy } = useSelector((state: any) => state.resource)
   const { monster, monsters } = customProps
   const { name, attributes, battleReqs } = monster
@@ -23,33 +26,6 @@ const Popup = ({ customProps, onClose }: any) => {
 
   const monsterUnlocked = getIsMonsterUnlocked(monsters, monster)
 
-  // if (!getIsMonsterUnlocked(monsters, monster)) {
-  //   const requiredToBeatMonsters = getRequiredMonstersToBeat(monsters, monster)
-  //   console.log(requiredToBeatMonsters)
-  //   return (
-  //     <div className="popup">
-  //       <h3>{name}</h3>
-  //       <p> Attributes</p>
-  //       <div>Health:?</div>
-  //       <div>Defence:?</div>
-  //       <div>Power:?</div>
-  //       <div>Accuracy:?</div>
-  //       <div>Attack Count:?</div>
-  //       <div>Cooldown:?</div>
-  //       <p>
-  //         Need to beat:
-  //         {requiredToBeatMonsters.map((m: any) => (
-  //           <span>{m.name}</span>
-  //         ))}{' '}
-  //       </p>
-
-  //       <button className="close" onClick={onClose}>
-  //         Close
-  //       </button>
-  //     </div>
-  //   )
-  // }
-
   return (
     <>
       <div className="absolute z-50 inset-0 bg-gray-900 opacity-50"></div>
@@ -61,7 +37,10 @@ const Popup = ({ customProps, onClose }: any) => {
         <h2 className="text-2xl font-bold text-gray-700 mb-4">{name}</h2>
         <div>
           {Object.keys(attributes).map((attributeKey: any) => (
-            <div className="flex items-center justify-between mb-4">
+            <div
+              key={attributeKey}
+              className="flex items-center justify-between mb-4"
+            >
               <p className="text-lg font-medium text-gray-700">
                 {capitalizeFirstLetter(attributeKey)}:
               </p>
@@ -75,6 +54,7 @@ const Popup = ({ customProps, onClose }: any) => {
           {monsterUnlocked ? (
             <Link to="/battle" state={monster}>
               <button
+                data-press-sound
                 disabled={energy < battleReqs.energy}
                 onClick={() => handleEnterBattle(battleReqs)}
                 className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600"
@@ -86,12 +66,13 @@ const Popup = ({ customProps, onClose }: any) => {
             <p className="mb-4">
               Need to beat:{' '}
               {getRequiredMonstersToBeat(monsters, monster).map((m: any) => (
-                <span>{m.name}</span>
+                <span key={m.name}>{m.name}</span>
               ))}
             </p>
           )}
 
           <button
+            data-press-sound
             onClick={onClose}
             className="block w-full py-2 text-gray-600 font-semibold rounded-md border border-gray-400 hover:text-gray-800 hover:border-gray-600"
           >
@@ -135,7 +116,10 @@ const MonsterMap = () => {
         {monsters.map((monster: any) => {
           return (
             <div key={monster.name}>
-              <div onClick={() => handleOpenPopup(monster.name)}>
+              <div
+                data-press-sound
+                onClick={() => handleOpenPopup(monster.name)}
+              >
                 <img
                   style={{
                     filter: `brightness(${

@@ -41,6 +41,7 @@ import {
 
 // Hooks
 import { useCurrentPath } from '@Hook/useCurrentPath'
+import useClickSound from '@Hook/useClickSound'
 
 function CustomLayout({ children }: { children: ReactNode }) {
   const currentPath = useCurrentPath()
@@ -82,23 +83,10 @@ function CustomLayout({ children }: { children: ReactNode }) {
 
   return (
     <div
-      style={{
-        backgroundImage,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        minHeight: '100vh'
-      }}
+      className="bg-cover bg-center min-h-screen"
+      style={{ backgroundImage }}
     >
-      <div
-        style={{
-          position: 'absolute',
-          background: 'rgba(255,255,255,0.12)',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100vh'
-        }}
-      >
+      <div className="absolute bg-[#ffffff1f] top-0 left-0 w-full h-screen">
         {children}
       </div>
     </div>
@@ -106,6 +94,10 @@ function CustomLayout({ children }: { children: ReactNode }) {
 }
 
 const Game = () => {
+  useClickSound('data-press-sound')
+  useClickSound('data-attack-sound')
+  useClickSound('data-start-sound')
+
   return (
     <>
       <CustomLayout>

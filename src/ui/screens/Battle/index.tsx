@@ -81,6 +81,7 @@ const Battle = () => {
         <>
           <h2 className="text-xl font-bold">Congrats...you won!</h2>
           <button
+            data-start-sound
             className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded-full"
             onClick={() =>
               handleLeaveBattle({ won: true, reward: { money: 25 } })
@@ -207,7 +208,7 @@ const Battle = () => {
         <div>
           {Math.max(monsterHp, 0)}/{monsterAttributes.health}
         </div>
-        <div onClick={creatureAttack}>
+        <div data-attack-sound onClick={creatureAttack}>
           <img
             className={`w-[200px] ${
               isMonsterJiggling

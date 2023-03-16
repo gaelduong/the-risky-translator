@@ -41,9 +41,7 @@ const Upgrade = () => {
         alt="creature"
       />
 
-      <h3 className="text-base text-graybrown font-semibold my-4">
-        Attributes
-      </h3>
+      <h3 className="text-lg text-graybrown font-semibold my-4">Attributes</h3>
 
       {Object.keys(attributes).map(key => {
         const attribute = attributes[key]
@@ -89,19 +87,11 @@ const Upgrade = () => {
                   handleUpgradeAttribute(key, moneyRequired, energyRequired)
                 }
               >
-                <div className="flex items-center gap-0 ">
+                <div className="flex items-center gap-1 ">
                   {moneyRequired}
-                  <img
-                    src={coinImage}
-                    style={{ width: '0.75rem' }}
-                    alt="coin"
-                  />
+                  <img src={coinImage} className="w-3" alt="coin" />
                   {energyRequired}{' '}
-                  <img
-                    src={energyImage}
-                    style={{ width: '0.75rem' }}
-                    alt="energy"
-                  />
+                  <img src={energyImage} className="w-3" alt="energy" />
                 </div>
               </button>
             </span>
@@ -109,7 +99,7 @@ const Upgrade = () => {
         )
       })}
 
-      <h3 className="text-base text-graybrown font-semibold my-4">Skills</h3>
+      <h3 className="text-lg text-graybrown font-semibold my-4">Skills</h3>
     </div>
   )
 }
