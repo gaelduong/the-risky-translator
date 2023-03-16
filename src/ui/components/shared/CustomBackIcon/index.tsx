@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { backArrow } from '@Asset/images'
 import useClickSound from '@Hook/useClickSound'
+import { pressSound } from '@Asset/audios'
 
 const CustomBackIcon = ({
   linkTo,
@@ -25,13 +26,14 @@ const CustomBackIcon = ({
 
   if (!popup) {
     return (
-      <div
-        data-press-sound
-        className="absolute top-[10vh] left-[1vh] drop-shadow-md"
-      >
+      <div className="absolute top-[10vh] left-[1vh] drop-shadow-md">
         {/* @ts-ignore */}
         <Link to={linkTo} state={state}>
-          <img src={backArrow} alt="back" />
+          <img
+            onClick={() => new Audio(pressSound).play()}
+            src={backArrow}
+            alt="back"
+          />
         </Link>
       </div>
     )
@@ -39,11 +41,16 @@ const CustomBackIcon = ({
 
   return (
     <>
-      <div
-        data-press-sound
-        className="absolute top-[10vh] left-[1vh] drop-shadow-md"
-      >
-        <img src={backArrow} alt="back" onClick={() => setShowPopup(true)} />
+      <div className="absolute top-[10vh] left-[1vh] drop-shadow-md">
+        <img
+          // data-press-sound
+          src={backArrow}
+          alt="back"
+          onClick={() => {
+            new Audio(pressSound).play()
+            setShowPopup(true)
+          }}
+        />
       </div>
       {showPopup && (
         <>
