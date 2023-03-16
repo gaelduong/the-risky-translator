@@ -18,6 +18,7 @@ import {
   getTownNameByTownId
 } from '@Function/locationUtils'
 import useClickSound from '@Hook/useClickSound'
+import { pressSound } from '@Asset/audios'
 
 const Popup = ({
   customProps,
@@ -193,7 +194,7 @@ const Town = () => {
         {townId > 0 && (
           <Link to={`/town/${townId - 1}`}>
             <img
-              data-press-sound
+              onClick={() => new Audio(pressSound).play()}
               className="absolute top-[65vh] left-0"
               src={leftArrowImage}
               alt="left-arrow"
@@ -203,7 +204,7 @@ const Town = () => {
         {townId < maxLocationPage && (
           <Link to={`/town/${townId + 1}`}>
             <img
-              data-press-sound
+              onClick={() => new Audio(pressSound).play()}
               className="absolute top-[65vh] right-0"
               src={rightArrowImage}
               alt="right-arrow"
