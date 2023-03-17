@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { creature2Image } from '@Asset/images'
 import { Link, useLocation } from 'react-router-dom'
 import CustomBackIcon from '@Com/shared/CustomBackIcon'
+import { ROUTE } from '@Route/index'
 
 const Profile = () => {
   const { state } = useLocation()
@@ -19,14 +20,14 @@ const Profile = () => {
         src={creature2Image}
         alt="creature"
       />
-      <Link to="/upgrade" state={{ townId }}>
+      <Link to={ROUTE.UPGRADE.path} state={{ townId }}>
         <div>
           <button
             data-press-sound
             className="bg-olivedrab 
             text-base font-bold text-white text-center
-            w-20 h-6 mb-2
-            rounded-md
+            px-4 py-2 mb-2
+            rounded-md shadow-md
             active:translate-y-1"
           >
             Upgrade

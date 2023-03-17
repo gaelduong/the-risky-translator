@@ -11,7 +11,8 @@
       "@Function/*": ["./functions/*"],
       "@Hook/*": ["./hooks/*"],
       "@Data/*": ["./data/*"],
-      "@Type/*": ["./types/*"]
+      "@Type/*": ["./types/*"],
+      "@Route/*": ["./routes/*"]
     }
   }
 }

@@ -1,14 +1,14 @@
 import { useLocation } from 'react-router-dom'
 import {
-  getWordAudio,
   getWordCorrectsExposuresRatio,
   getWordInCorrectsExposuresRatio,
   getWordLongMeaning,
   getWordMeaning,
   getWordStats,
   getWordText
+  // getWordAudio,
 } from '@Function/wordUtils'
-import { S3_BASE_AUDIO_URL } from '@Constant/index'
+// import { S3_BASE_AUDIO_URL } from '@Constant/index'
 import CustomBackIcon from '@Com/shared/CustomBackIcon'
 
 const WordDetailView = () => {
@@ -21,7 +21,6 @@ const WordDetailView = () => {
   const playAudio = async (word: any) => {
     // const audioToPlay = new Audio(`${S3_BASE_AUDIO_URL}/${audio}`)
     // audioToPlay.play()
-
     //@ts-ignore
     window.responsiveVoice.speak(word, 'Spanish Latin American Female')
   }

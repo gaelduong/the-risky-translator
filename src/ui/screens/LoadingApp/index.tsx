@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import * as images from '@Asset/images'
+import { ROUTE } from '@Route/index'
 
 const LoadingApp = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -10,7 +11,7 @@ const LoadingApp = () => {
 
   const { creature } = useSelector((state: any) => state)
 
-  const pathToNavigate = creature.name !== null ? '/town' : '/name'
+  const pathToNavigate = creature.name !== null ? '/town' : ROUTE.NAME.path
 
   useEffect(() => {
     if (!isLoading) {

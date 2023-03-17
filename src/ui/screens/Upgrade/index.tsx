@@ -9,6 +9,7 @@ import { upgradeAttribute } from '@Redux/slices/creatureSlice'
 import { updateEnergy, updateMoney } from '@Redux/slices/resourceSlice'
 import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { coinImage, creature2Image, energyImage } from '@Asset/images'
+import { ROUTE } from '@Route/index'
 
 const Upgrade = () => {
   const { state } = useLocation()
@@ -32,7 +33,7 @@ const Upgrade = () => {
 
   return (
     <div className="flex flex-col items-center ">
-      <CustomBackIcon linkTo="/profile" state={{ townId }} />
+      <CustomBackIcon linkTo={ROUTE.PROFILE.path} state={{ townId }} />
 
       <h2>{name}</h2>
       <img
@@ -79,7 +80,7 @@ const Upgrade = () => {
                 className="bg-green-600 h-6
                 text-white font-semibold  
                 border-none rounded-md
-                py-[0.2rem] px-2 
+                py-[0.3rem] px-2 
                 disabled:bg-[#d6ddd770] disabled:text-[#7b7b7b]
                 active:bg-[#307032] active:shadow-gray-300 active:translate-y-0.5"
                 disabled={money < moneyRequired || energy < energyRequired}

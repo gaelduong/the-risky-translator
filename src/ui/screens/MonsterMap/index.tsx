@@ -1,4 +1,4 @@
-import { monsterImage } from '@Asset/images'
+import { coinImage, monsterImage } from '@Asset/images'
 import CustomBackIcon from '@Com/shared/CustomBackIcon'
 import { capitalizeFirstLetter } from '@Function/generalUtils'
 import {
@@ -6,22 +6,27 @@ import {
   getRequiredMonstersToBeat
 } from '@Function/monsterUtils'
 import useClickSound from '@Hook/useClickSound'
-import { updateEnergy } from '@Redux/slices/resourceSlice'
+import { updateMoney } from '@Redux/slices/resourceSlice'
+import { Monster } from '@Type/monster'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { ROUTE } from '@Route/index'
 
 const Popup = ({ customProps, onClose }: any) => {
   useClickSound('data-press-sound')
 
-  const { energy } = useSelector((state: any) => state.resource)
+  const navigate = useNavigate()
+
+  const { money } = useSelector((state: any) => state.resource)
   const { monster, monsters } = customProps
   const { name, attributes, battleReqs } = monster
 
   const dispatch = useDispatch()
 
-  const handleEnterBattle = (battleReqs: any) => {
-    dispatch(updateEnergy({ amount: -battleReqs.energy }))
+  const handleEnterBattle = (battleReqs: any, monster: Monster) => {
+    dispatch(updateMoney({ amount: -battleReqs.money }))
+    navigate(ROUTE.BATTLE.path, { state: monster })
   }
 
   const monsterUnlocked = getIsMonsterUnlocked(monsters, monster)
@@ -52,16 +57,15 @@ const Popup = ({ customProps, onClose }: any) => {
         </div>
         <div>
           {monsterUnlocked ? (
-            <Link to="/battle" state={monster}>
-              <button
-                data-press-sound
-                disabled={energy < battleReqs.energy}
-                onClick={() => handleEnterBattle(battleReqs)}
-                className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600"
-              >
-                Battle! -{battleReqs.energy}(E)
-              </button>
-            </Link>
+            <button
+              data-press-sound
+              disabled={money < battleReqs.money}
+              onClick={() => handleEnterBattle(battleReqs, monster)}
+              className="w-full py-2 mb-4 flex items-center justify-center gap-1 text-white font-semibold rounded-md bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300"
+            >
+              <span>Battle! -{battleReqs.money}</span>
+              <img className="w-4" src={coinImage} alt="money" />
+            </button>
           ) : (
             <p className="mb-4">
               Need to beat:{' '}

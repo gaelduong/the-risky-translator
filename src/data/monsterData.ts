@@ -3,6 +3,7 @@ export const MonstersData = [...Array(30)].map((_, index) => {
   const defence = 10 + index * index
   const power = 1 + index * index
   const energyRequired = 0
+  const moneyRequired = 10
   const monsterIdsToBeat = index === 0 ? [] : [index - 1]
 
   return {
@@ -18,6 +19,7 @@ export const MonstersData = [...Array(30)].map((_, index) => {
     },
     battleReqs: {
       energy: energyRequired,
+      money: moneyRequired,
       monsterIdsToBeat
     },
     isBeaten: false

@@ -10,6 +10,9 @@ import { updateMonsterBeaten } from '@Redux/slices/monsterSlice'
 import { creatureImage, monsterImage } from '@Asset/images'
 import ProgressBar from '@Com/shared/ProgressBar'
 
+// Routes
+import { ROUTE } from '@Route/index'
+
 enum BATTLE_STATUSES {
   NOT_STARTED = 'NOT_STARTED',
   IN_PROGRESS = 'IN_PROGRESS',
@@ -53,7 +56,7 @@ const Battle = () => {
       dispatch(updateMoney({ amount: result.reward.money }))
     }
     setTimeout(() => {
-      navigate('/monster-map')
+      navigate(ROUTE.MONSTER_MAP.path)
     }, 200)
   }
 

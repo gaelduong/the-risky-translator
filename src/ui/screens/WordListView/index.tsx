@@ -1,16 +1,16 @@
 import { speakerImage } from '@Asset/images'
 import CustomBackIcon from '@Com/shared/CustomBackIcon'
-import { S3_BASE_AUDIO_URL } from '@Constant/index'
+// import { S3_BASE_AUDIO_URL } from '@Constant/index'
 import { getLocationId, getLocationName } from '@Function/locationUtils'
 import {
   getSortedWordList,
-  getWordAudio,
   getWordCorrectsExposuresRatio,
   getWordId,
   getWordInCorrectsExposuresRatio,
   getWordListPool,
   getWordMeaning,
   getWordText
+  // getWordAudio,
 } from '@Function/wordUtils'
 import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'

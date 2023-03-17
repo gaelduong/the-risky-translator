@@ -19,6 +19,7 @@ import {
 } from '@Function/locationUtils'
 import useClickSound from '@Hook/useClickSound'
 import { pressSound } from '@Asset/audios'
+import { ROUTE } from '@Route/index'
 
 const Popup = ({
   customProps,
@@ -45,7 +46,7 @@ const Popup = ({
           {getLocationName(location)}
         </h3> */}
         <div>
-          <Link to="/word-list" state={{ location, townId }}>
+          <Link to={ROUTE.WORD_LIST.path} state={{ location, townId }}>
             <button
               data-press-sound
               className="block w-max mr-auto mb-4 text-gray-600 hover:text-gray-800"
@@ -61,7 +62,10 @@ const Popup = ({
       </div> */}
         <p className="text-lg font-semibold mb-4"> Select a training type:</p>
         <div>
-          <Link to="/recog-mc" state={{ locationId: locationId, townId }}>
+          <Link
+            to={ROUTE.AUDIO_MC.path}
+            state={{ locationId: locationId, townId }}
+          >
             <button
               data-start-sound
               className="w-full py-2 mb-4 text-white font-semibold rounded-md bg-indigo-500 hover:bg-indigo-600"
@@ -153,7 +157,7 @@ const TownHeader = ({ townId }: { townId: number }) => {
   const { creature } = useSelector((state: any) => state)
   return (
     <div className="flex justify-between w-[80%]">
-      <Link to="/profile" state={{ townId }}>
+      <Link to={ROUTE.PROFILE.path} state={{ townId }}>
         <div data-press-sound className="flex flex-col items-center">
           <img
             className="w-[7rem] object-contain"
@@ -163,7 +167,7 @@ const TownHeader = ({ townId }: { townId: number }) => {
           <span className="font-bold">{creature.name}</span>
         </div>
       </Link>{' '}
-      <Link data-press-sound to="/monster-map" state={{ townId }}>
+      <Link data-press-sound to={ROUTE.MONSTER_MAP.path} state={{ townId }}>
         <div className="flex flex-col items-center">
           <img
             className="w-[7rem] object-contain"
