@@ -46,9 +46,9 @@ const LoadingApp = () => {
   }, [])
 
   return (
-    <div>
-      <h2>App Name</h2>
-      <p>Loading...</p>
+    <div className="h-screen flex flex-col justify-center items-center">
+      <p className="text-3xl font-bold mb-6">Krulo lingo</p>
+      <div>Loading...</div>
     </div>
   )
 }

@@ -62,12 +62,14 @@ function CustomLayout({ children }: { children: ReactNode }) {
   }
   const backgroundImage = getBackgroundImage(currentPath)
 
+  const startPaths = [ROUTE.LOADING.path, ROUTE.NAME.path]
   return (
     <div
       className="bg-cover bg-center min-h-screen"
       style={{ backgroundImage }}
     >
       <div className="absolute bg-[#ffffff1f] top-0 left-0 w-full h-screen">
+        {!startPaths.includes(currentPath) && <Header />}
         {children}
       </div>
     </div>
@@ -82,7 +84,6 @@ const Game = () => {
   return (
     <>
       <CustomLayout>
-        <Header />
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             {Object.values(ROUTE).map(route => (
